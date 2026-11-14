@@ -1,0 +1,36 @@
+# Private material (interview notes, correspondence) — never committed
+private/
+
+# Secrets
+.env
+.env.*
+*.pem
+.modal.toml
+**/secrets/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
+# C++
+cpp/build/
+
+# Rust
+rust/target/
+
+# Worktrees for parallel feature branches
+.worktrees/
+
+# Generated workloads are reproducible from the generator (seed 42)
+generated/*
+!generated/README.md
+
+# Scratch run outputs (authoritative results live in results/)
+out/
