@@ -32,8 +32,9 @@ lint-rust:
 conformance: build
 	$(PYTHON) tests/run_cases.py --impl all
 
-cross:
-	@if [ -f tests/cross_language.py ]; then $(PYTHON) tests/cross_language.py; else echo "cross: tests/cross_language.py not present, skipping"; fi
+cross: build
+	$(PYTHON) benchmarks/generate_workloads.py
+	$(PYTHON) tests/cross_language.py
 
 test: check-fixtures unit lint-rust conformance cross
 
