@@ -66,12 +66,12 @@ r_image = (
 app = modal.App("colorframe-bench")
 
 
-def _sh(cmd, log):
+def _sh(cmd, log, required=True):
     log.write(f"$ {cmd}\n")
     p = subprocess.run(cmd, shell=True, cwd="/repo", capture_output=True, text=True)
     log.write(p.stdout + p.stderr + f"[exit {p.returncode}]\n")
     log.flush()
-    if p.returncode != 0:
+    if p.returncode != 0 and required:
         raise RuntimeError(f"command failed: {cmd}\n{p.stdout[-2000:]}\n{p.stderr[-2000:]}")
     return p.stdout
 
@@ -90,8 +90,10 @@ def pipeline(reps: int = 7, warmup: int = 2, skip: str = "") -> bytes:
     t0 = time.time()
     with open(out / "pipeline.log", "w") as log:
         log.write(f"commit={COMMIT} dirty={os.environ.get('COLORFRAME_DIRTY')}\n")
+        # Environment capture is informational and must never discard results.
         _sh("python3 --version; g++ --version | head -1; rustc --version; nproc; "
-            "cat /proc/cpuinfo | grep 'model name' | head -1; free -m | head -2", log)
+            "grep -m1 'model name' /proc/cpuinfo; grep -E 'MemTotal|MemAvailable' /proc/meminfo", log,
+            required=False)
         _sh("python3 tests/check_fixtures.py", log)
         _sh("python3 tests/run_cases.py --impl all", log)
         _sh("python3 benchmarks/generate_workloads.py", log)
@@ -99,7 +101,8 @@ def pipeline(reps: int = 7, warmup: int = 2, skip: str = "") -> bytes:
         _sh(f"python3 benchmarks/evaluate_rq1.py --impl rust --out {out}/rq1_recovery.tsv", log)
         skip_arg = f"--skip {skip}" if skip.strip() else ""
         _sh(f"python3 benchmarks/run_benchmarks.py --out {out} --reps {reps} --warmup {warmup} {skip_arg}", log)
-        _sh(f"cat /proc/cpuinfo > {out}/cpuinfo.txt; free -m > {out}/meminfo.txt", log)
+        _sh(f"cat /proc/cpuinfo > {out}/cpuinfo.txt; cat /proc/meminfo > {out}/meminfo.txt", log,
+            required=False)
         log.write(f"container_wall_seconds={time.time() - t0:.1f}\n")
     return _tar(out)
 
