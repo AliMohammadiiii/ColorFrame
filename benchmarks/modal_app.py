@@ -3,6 +3,8 @@
     modal run benchmarks/modal_app.py                       # full pipeline
     modal run benchmarks/modal_app.py --reps 7 --warmup 2 --skip "python:stress_s800000"
     modal run benchmarks/modal_app.py --stage analysis --run-id <existing results/modal/ID>
+    modal run --detach benchmarks/modal_app.py       # survives a dropped client; results also in the
+                                                     # "colorframe-results" Volume as <run_id>.tar.gz
 
 Credentials come from the active Modal profile (`modal token set` / `modal profile activate`);
 nothing secret is read or written by this file. See MODAL_EXECUTION.md.
@@ -64,6 +66,9 @@ r_image = (
 )
 
 app = modal.App("colorframe-bench")
+# Results are also persisted here so a dropped client connection (`modal run --detach`) loses nothing:
+#   modal volume get colorframe-results <run_id>.tar.gz .
+results_volume = modal.Volume.from_name("colorframe-results", create_if_missing=True)
 
 
 def _sh(cmd, log, required=True):
@@ -83,8 +88,8 @@ def _tar(path: Path) -> bytes:
     return buf.getvalue()
 
 
-@app.function(image=bench_image, cpu=1.0, memory=4096, timeout=4 * 3600)
-def pipeline(reps: int = 7, warmup: int = 2, skip: str = "") -> bytes:
+@app.function(image=bench_image, cpu=1.0, memory=4096, timeout=4 * 3600, volumes={"/vol": results_volume})
+def pipeline(reps: int = 7, warmup: int = 2, skip: str = "", run_id: str = "run") -> bytes:
     out = Path("/repo/results/run")
     out.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
@@ -104,7 +109,10 @@ def pipeline(reps: int = 7, warmup: int = 2, skip: str = "") -> bytes:
         _sh(f"cat /proc/cpuinfo > {out}/cpuinfo.txt; cat /proc/meminfo > {out}/meminfo.txt", log,
             required=False)
         log.write(f"container_wall_seconds={time.time() - t0:.1f}\n")
-    return _tar(out)
+    data = _tar(out)
+    Path(f"/vol/{run_id}.tar.gz").write_bytes(data)
+    results_volume.commit()
+    return data
 
 
 @app.function(image=r_image, cpu=1.0, memory=2048, timeout=900)
@@ -138,7 +146,7 @@ def main(stage: str = "all", reps: int = 7, warmup: int = 2, skip: str = "", run
     if stage in ("all", "bench"):
         if DIRTY == "1":
             print("WARNING: working tree has uncommitted changes; results will be marked dirty")
-        _untar(pipeline.remote(reps=reps, warmup=warmup, skip=skip), rdir)
+        _untar(pipeline.remote(reps=reps, warmup=warmup, skip=skip, run_id=run_id), rdir)
         print(f"benchmark results -> {rdir}")
     if stage in ("all", "analysis"):
         usage = (REPO / "results" / "agent_usage.csv").read_bytes()
