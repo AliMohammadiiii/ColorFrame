@@ -3,7 +3,8 @@
 
 For every generated workload that has planted ORFs, run one implementation (outputs are
 byte-identical across implementations once tests/cross_language.py passes) with
-`--policy both` and default limits, then compare with planted.tsv.
+`--policy both` and the workload's own limits from params.json (its --policy is overridden
+with both), then compare with planted.tsv.
 
 Definitions (per workload x policy):
   candidates            all candidate records
@@ -53,8 +54,11 @@ def main():
         nodes = {r["node_id"]: r for r in read(w / "nodes.tsv")}
         with tempfile.TemporaryDirectory() as t:
             c, s = Path(t) / "c.tsv", Path(t) / "s.tsv"
+            toks = params["cli_args"].split()
+            limits = [t for i, t in enumerate(toks)
+                      if t != "--policy" and (i == 0 or toks[i - 1] != "--policy")]
             subprocess.run(IMPLS[a.impl] + ["--nodes", str(w / "nodes.tsv"), "--edges", str(w / "edges.tsv"),
-                                            "--out", str(c), "--summary", str(s), "--policy", "both"],
+                                            "--out", str(c), "--summary", str(s), "--policy", "both"] + limits,
                            check=True, capture_output=True)
             cands = read(c)
             summ = {r["policy"]: r for r in read(s)}
@@ -80,7 +84,7 @@ def main():
                 "extra_candidates": len(pc) - rec,
                 "fragmented": sum(r["status"] == "fragmented_support" for r in pc),
                 "search_states": summ[pol]["search_states"], "color_pruned": summ[pol]["color_pruned"],
-                "exhaustive": summ[pol]["exhaustive"],
+                "exhaustive": summ[pol]["exhaustive"], "state_limit_hit": summ[pol]["state_limit_hit"],
             })
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
     with open(a.out, "w") as f:

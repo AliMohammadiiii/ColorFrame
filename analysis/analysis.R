@@ -126,6 +126,10 @@ if (nrow(summ) > 0) {
   legend("topleft", legend = impls, fill = impl_cols[impls], bty = "n")
   dev.off()
   note("Peak RSS is for the whole process: it includes the Python interpreter itself.")
+  floor_mb <- min(raw$peak_rss_mb)
+  share <- mean(abs(raw$peak_rss_mb - floor_mb) < 0.01)
+  if (share > 0.5) note(sprintf(paste0("WARNING: %.0f%% of runs report the same peak RSS (%.2f MB): the environment ",
+                                       "reports a floor, so peak RSS below it is not measurable here."), 100 * share, floor_mb))
 }
 
 # ---------------------------------------------------------------- RQ1: support policies
@@ -160,12 +164,14 @@ uf <- file.path(res_dir, "agent_usage.csv")
 if (file.exists(uf)) {
   u <- read.csv(uf, stringsAsFactors = FALSE, na.strings = c("NOT_EXPOSED", ""))
   u$total_tokens <- suppressWarnings(as.numeric(u$total_tokens))
+  nsum <- function(x) if (all(is.na(x))) NA else sum(x, na.rm = TRUE)  # NOT_EXPOSED stays NA
   agg <- aggregate(cbind(total_tokens = u$total_tokens, tool_calls = suppressWarnings(as.numeric(u$tool_calls)),
                          duration_seconds = suppressWarnings(as.numeric(u$duration_seconds)),
                          retries = suppressWarnings(as.numeric(u$retries))) ~ language + agent,
-                   data = u, FUN = function(x) sum(x, na.rm = TRUE), na.action = na.pass)
+                   data = u, FUN = nsum, na.action = na.pass)
   write_tsv(agg, "usage_summary.tsv")
-  lang <- aggregate(total_tokens ~ language, data = u, FUN = function(x) sum(x, na.rm = TRUE), na.action = na.pass)
+  lang <- aggregate(total_tokens ~ language, data = u, FUN = nsum, na.action = na.pass)
+  lang <- lang[!is.na(lang$total_tokens), ]
   open_fig("fig5_agent_tokens", 7, 4.5)
   par(mar = c(5, 5, 2.5, 1))
   barplot(lang$total_tokens / 1000, names.arg = lang$language, las = 2, col = "#8C8C8C",
