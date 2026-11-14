@@ -271,8 +271,8 @@ static void test_branching_dead_end() {
 }
 
 static void test_strict_vs_permissive() {
-    const std::string nodes = "g\tn1\tATGCCC\t1\ng\tn2\tGCCGCC\t1,2\ng\tn3\tGCCTAA\t2\n"
-                              "g\tn4\tGCCTGA\t1\ng\tn5\tGCCTAA\t.\n";
+    const std::string nodes = "g\tn1\tATGCCC\t1\ng\tn2\tGCCGCC\t1,2\ng\tn3\tGCCTAAC\t2\n"
+                              "g\tn4\tGCCTGAC\t1\ng\tn5\tGCCTAAC\t.\n";
     const std::string edges = "g\tn1\tn2\t0\ng\tn2\tn3\t0\ng\tn2\tn4\t0\ng\tn2\tn5\t0\n";
     auto s = search(nodes, edges, Policy::Strict);
     CHECK(paths(s) == std::vector<std::string>({"n1>n2>n4"}));
@@ -285,12 +285,13 @@ static void test_strict_vs_permissive() {
 }
 
 static void test_color_gate_on_start_node() {
+    // Two start frames (ATG at 0, lone A at 5, spec 4.2 note 2); both stopped by the gate.
     auto s = search("g\tn\tATGTAA\t.\n", "", Policy::Strict);
     CHECK(s.candidates.empty());
-    CHECK_EQ(s.stats.color_pruned, 1u);
+    CHECK_EQ(s.stats.color_pruned, 2u);
     auto p = search("g\tn\tATGTAA\t.\n", "", Policy::Permissive);
     CHECK(p.candidates.empty());
-    CHECK_EQ(p.stats.color_pruned, 1u);
+    CHECK_EQ(p.stats.color_pruned, 2u);
 }
 
 static void test_cycle_termination_by_visit_bound() {
@@ -360,7 +361,7 @@ static void test_no_duplicates() {
 // ---- runs and rendering ----------------------------------------------------
 static void test_render_and_ordering() {
     // graphs given in reverse order; both policies; permissive sorts before strict (bytes)
-    auto gs = build("z\tn\tATGCCCTAA\t1\ny\tn\tATGCCCTAA\t.\n", "");
+    auto gs = build("z\tn\tATGCCCTAAC\t1\ny\tn\tATGCCCTAAC\t.\n", "");
     auto runs = run_all(gs, PolicyChoice::Both, Limits());
     CHECK_EQ(runs.size(), 4u);
     const std::string cand = render_candidates(runs);
