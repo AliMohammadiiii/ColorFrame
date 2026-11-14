@@ -28,6 +28,13 @@ written on output. Blank lines are not allowed on input.
 
 An edges file containing only the header is valid (graphs without edges).
 
+### Numeric fields
+
+- Colour values: decimal digits only, no sign, no leading zeros (`0` itself is allowed), value
+  ≤ 2 147 483 647. Anything else → `INVALID_COLORS`.
+- `overlap_nt`: must match `-?[0-9]+` and fit in a signed 64-bit integer, otherwise
+  `MALFORMED_INPUT`. Negative values then fail with `INVALID_OVERLAP`.
+
 ## 2. Validation errors
 
 Validation runs over the complete input before any search. On the first error the program writes
@@ -61,7 +68,10 @@ Each invalid fixture contains exactly one defect, and tests compare only `<CODE>
 | `OVERLAP_MISMATCH` | source suffix ≠ target prefix for the declared overlap |
 | `INCONSISTENT_OVERLAP` | edges of one graph declare different overlaps |
 
-Usage errors (bad flags, unreadable files) exit with status **64** and an `ERROR USAGE:` line.
+Usage errors exit with status **64** and an `ERROR USAGE: <message>` line on standard error:
+missing required flag, unknown flag, flag without value, non-integer limit value, limit below
+its minimum (`ALGORITHM_SPEC.md` §3), invalid `--policy`, unreadable input or unwritable output
+path. (Python implementations must override `argparse`'s default exit status 2.)
 Successful runs exit with status **0**.
 
 ## 3. Command-line interface (identical for all implementations)
