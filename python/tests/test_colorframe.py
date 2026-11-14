@@ -236,8 +236,9 @@ class SearchTests(unittest.TestCase):
         self.assertEqual(perm.stats.color_pruned, 0)
 
     def test_uncoloured_node_is_pruned_by_both_policies(self):
-        res_s = run([("n1", "ATGTAA", ".")], policy="strict")
-        res_p = run([("n1", "ATGTAA", ".")], policy="permissive")
+        # ATGTAC: the only frame starts at offset 0 (a trailing A would create a second frame).
+        res_s = run([("n1", "ATGTAC", ".")], policy="strict")
+        res_p = run([("n1", "ATGTAC", ".")], policy="permissive")
         for res in (res_s, res_p):
             self.assertEqual(res.candidates, [])
             self.assertEqual(res.stats.color_pruned, 1)
