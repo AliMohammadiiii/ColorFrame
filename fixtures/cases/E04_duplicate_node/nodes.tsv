@@ -1,0 +1,4 @@
+graph_id	node_id	sequence	colors
+E	n1	ATGCCC	1
+E	n2	GGGTAA	1
+E	n1	ATG	1

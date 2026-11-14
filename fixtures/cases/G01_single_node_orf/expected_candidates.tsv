@@ -1,0 +1,3 @@
+graph_id	policy	candidate_id	path	start_offset	length_nt	sequence	support_colors	status
+G01	permissive	1	n1	2	12	ATGCCCGCCTAA	1	shared_support
+G01	strict	1	n1	2	12	ATGCCCGCCTAA	1	shared_support

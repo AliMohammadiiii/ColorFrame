@@ -1,0 +1,6 @@
+graph_id	node_id	sequence	colors
+G09	n1	ATGCCC	1
+G09	n2	GCCGCC	1,2
+G09	n3	TAACC	2
+G09	n4	GGGTGACC	1
+G09	n5	TAGCC	.

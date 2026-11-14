@@ -1,0 +1,3 @@
+graph_id	policy	search_states	max_depth	candidates	start_rejected	color_pruned	dead_ends	orf_length_cuts	path_length_cuts	node_visit_cuts	state_limit_hit	exhaustive
+G06	permissive	2	2	1	0	0	0	0	0	0	1	0
+G06	strict	2	2	1	0	0	0	0	0	0	1	0
