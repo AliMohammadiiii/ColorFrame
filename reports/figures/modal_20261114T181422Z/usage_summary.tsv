@@ -1,0 +1,7 @@
+language	agent	total_tokens	tool_calls	duration_seconds	retries
+shared	ci-agent	75172	11	52	0
+cpp	cpp-agent	116682	9	184	1
+shared	dev-agent-coordinator	NA	NA	NA	0
+docs	lit-agent	90884	5	43.8	1
+python	python-agent	108958	8	117.4	1
+rust	rust-agent	126251	5	61.5	2

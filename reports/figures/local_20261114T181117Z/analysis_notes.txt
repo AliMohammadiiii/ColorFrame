@@ -1,0 +1,5 @@
+R.4.2.2
+Speed-up = median Python search_ms / median compiled search_ms (in-process search phase).
+Peak RSS is for the whole process: it includes the Python interpreter itself.
+RQ4 table pairs recorded implementation-agent tokens with stress_s800000 performance; n = 3, descriptive only.
+Token totals include only legs whose usage the harness exposed; legs cut off by API errors are NOT_EXPOSED.
