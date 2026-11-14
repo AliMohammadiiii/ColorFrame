@@ -3,7 +3,7 @@
 **Title:** ColorFrame: Algorithmic Trade-offs and Cross-language Performance of Frame-aware
 Candidate Path Search in Colored Sequence Graphs
 
-**Status:** In progress · charter version 1.0 · 2026-11-14
+**Status:** Delivered (v1.0.0) · charter version 1.0 · 2026-11-14
 
 ## 1. People and roles
 

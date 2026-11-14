@@ -1,0 +1,10 @@
+null device 
+          1 
+null device 
+          1 
+analysis complete
+Warning message:
+In arrows(e$n_nodes, pmax(e$search_ms_q1, 0.001), e$n_nodes, e$search_ms_q3,  :
+  zero-length arrow is of indeterminate angle and so skipped
+
+[exit 0]
