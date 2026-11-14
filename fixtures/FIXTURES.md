@@ -12,6 +12,9 @@ Layout: `fixtures/cases/<CASE>/{nodes.tsv, edges.tsv, args.txt}` plus either
 Default limits unless `args.txt` overrides: ORF ≤ 1200 nt, walk ≤ 12 nodes, ≤ 2 visits per
 node, ≤ 50 000 states. `K` is the graph's uniform overlap.
 
+Corrections: B09 and B10 summary counters were corrected on 2026-11-14 after the Python
+implementation reported a disagreement (see `DECISION_LOG.md` D-014).
+
 Design rule: filler is built from `C`/`G` so that every `ATG` and every stop codon is placed
 deliberately. Node-boundary junctions were checked for accidental `ATG`s.
 
@@ -47,8 +50,8 @@ after a specific number of traversals.
 | B06 | G06, `--max-states 2` | `n1`, `n1>n2` (emitted), limit hit before `n3`; 1 candidate, `state_limit_hit=1` |
 | B07 | G02, `--max-path-nodes 2` | `n3` refused → `path_length_cuts=1`, 0 candidates |
 | B08 | G08, `--max-node-visits 1` | the revisit candidate is lost; `node_visit_cuts=1` |
-| B09 | G11, `--max-node-visits 1` | the frame-shift candidate is lost |
-| B10 | `ATGTAA` with colours `.` | pruned under both policies (`color_pruned=1`) |
+| B09 | G11, `--max-node-visits 1` | the frame-shift candidate is lost; `e` is still entered at depth 3 via `n1>l>e` (`max_depth=3`) |
+| B10 | `ATGTAA` with colours `.` | two start frames (offset 0 `ATG`, offset 5 trailing `A`), both pruned under both policies (`search_states=2`, `color_pruned=2`) |
 | B11 | all valid G graphs in one file, input in reverse order | outputs sorted by `graph_id` |
 | B12/B13 | G09 with `--policy strict` / `permissive` | single-policy output |
 

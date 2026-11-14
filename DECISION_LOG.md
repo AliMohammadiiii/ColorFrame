@@ -113,3 +113,17 @@ scope Ali set; they do not change the research questions.
 - **Reason:** directly tests whether a loop is "in frame": a 4-nt loop shifts the frame by one
   per traversal, and the stop codon becomes in-frame only after two traversals.
 - **Date / by:** 2026-11-14 · proposed by dev agent.
+
+### D-014 — Correction of two hand-derived summary expectations (B09, B10)
+- **Decision:** correct `expected_summary.tsv` of B09 (`max_depth` 2 → 3) and B10
+  (`search_states` 1 → 2, `color_pruned` 1 → 2). Candidate expectations were unchanged.
+- **How found:** the Python implementation agent passed 37/39 cases and, as instructed, stopped
+  and reported the two disagreements instead of editing fixtures. Re-derivation by hand from
+  `ALGORITHM_SPEC.md` confirmed the report: in B09 `e` is re-entered at depth 3 after
+  backtracking (`n1>l>e`); in B10 the trailing `A` of `ATGTAA` creates a second start frame
+  (§4.2 note 2).
+- **Why the oracle did not catch it:** `tests/check_fixtures.py` verifies candidate sets only;
+  traversal counters are hand-derived. Counters are now independently confirmed by agreement
+  between the hand derivation and the implementations.
+- **Consequence:** B10 keeps its sequence because it now also exercises the trailing-`A` rule.
+- **Date / by:** 2026-11-14 · dev agent (correction), reported by the Python implementation agent.
