@@ -1,0 +1,5 @@
+graph_id	source	target	overlap_nt
+G08	n1	r	0
+G08	r	n3	0
+G08	r	x	0
+G08	x	r	0

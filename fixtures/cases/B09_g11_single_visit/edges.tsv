@@ -1,0 +1,5 @@
+graph_id	source	target	overlap_nt
+G11	l	e	0
+G11	l	l	0
+G11	n1	e	0
+G11	n1	l	0
