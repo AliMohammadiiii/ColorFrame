@@ -1,6 +1,6 @@
 # Test Plan
 
-**Status:** Fixtures validated; implementation tests in progress.
+**Status:** Validated: all layers pass for Python, C++17 and Rust (`make test`).
 
 ## 1. TDD workflow (mandatory)
 

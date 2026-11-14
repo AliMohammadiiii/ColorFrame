@@ -127,3 +127,35 @@ scope Ali set; they do not change the research questions.
   between the hand derivation and the implementations.
 - **Consequence:** B10 keeps its sequence because it now also exercises the trailing-`A` rule.
 - **Date / by:** 2026-11-14 · dev agent (correction), reported by the Python implementation agent.
+
+### D-015 — Peak memory measured locally, not on Modal
+- **Decision:** Modal is the authority for timing; peak RSS is reported from a local macOS run
+  with the same harness and the same implementation code (`results/local/20261114T181117Z`).
+- **Reason:** in the Modal sandbox `wait4` reports a peak-RSS floor (51–52 MB) for child
+  processes; 94% of runs show exactly the floor, so smaller footprints are not measurable there.
+  The R analysis now detects and reports such a floor automatically.
+- **Consequences:** memory and timing come from different environments, and both are labelled.
+  Modal RSS values above the floor (`perf_n10000_*`) agree in ordering with the local run.
+- **Date / by:** 2026-11-14 · dev agent.
+
+### D-016 — Detached Modal runs with results persisted to a Volume
+- **Decision:** run with `modal run --detach`; the pipeline also writes `<run_id>.tar.gz` to the
+  `colorframe-results` Volume.
+- **Reason:** a dropped client connection (unstable network) stopped one run; another run
+  completed all benchmarks and then failed on a missing `free` binary, discarding results. Both
+  failure modes now lose nothing; environment capture is non-fatal.
+- **Date / by:** 2026-11-14 · dev agent.
+
+### D-017 — Superseded first run kept, not used
+- **Decision:** keep `results/modal/20261114T180059Z` with a `NOTE.md`; report only
+  `20261114T181422Z`.
+- **Reason:** its RQ1 file evaluated `perf_n10000_*` with the default state limit (bug fixed),
+  and its RSS has the D-015 floor. Keeping it preserves an honest record.
+- **Date / by:** 2026-11-14 · dev agent.
+
+### D-018 — Release tagging
+- **Decision:** tag `v0.2.0` at the merge that completed the three equivalent implementations and
+  `v1.0.0` after documentation, the authoritative run and the final review.
+- **Reason:** charter §12.5. GitHub CI has not run, because no remote exists (publishing needs the
+  lead's permission); `make test` (the same commands as CI) passes locally.
+- **Date / by:** 2026-11-14 · dev agent.

@@ -1,6 +1,6 @@
 # Architecture
 
-**Status:** Implemented for v1 skeleton; component status in `TASK_BOARD.md`.
+**Status:** Validated for v1; component status in `TASK_BOARD.md`.
 
 (`DESIGN.md` from the original layout is folded into this file — see D-009.)
 
@@ -25,7 +25,7 @@
                                      │
                     results/benchmarks/*.tsv  +  results/agent_usage.csv
                                      │
-                       analysis/analysis.R (run on Modal: rocker/r-ver)
+                       analysis/analysis.R (run on Modal: Debian r-base-core)
                                      │
                         reports/figures/*, reports/TECHNICAL_REPORT.md
 ```
@@ -66,7 +66,7 @@ ColorFrame/
 ├── benchmarks/                   workload generator, local runner, Modal app
 ├── generated/                    generated workloads (gitignored, reproducible)
 ├── analysis/                     R analysis scripts
-├── results/                      raw benchmark data, agent usage ledger
+├── results/                      modal/<run> (timing authority), local/<run> (memory), agent_usage.csv
 ├── reports/                      technical report and figures
 └── .github/workflows/ci.yml      lightweight CI
 ```
