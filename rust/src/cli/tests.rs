@@ -17,7 +17,10 @@ fn minimal_valid_arguments_use_defaults() {
 
 #[test]
 fn both_policy_orders_permissive_first() {
-    let c = parse_args(&args("--nodes n --edges e --out o --summary s --policy both")).unwrap();
+    let c = parse_args(&args(
+        "--nodes n --edges e --out o --summary s --policy both",
+    ))
+    .unwrap();
     assert_eq!(c.policies, vec![Policy::Permissive, Policy::Strict]);
 }
 

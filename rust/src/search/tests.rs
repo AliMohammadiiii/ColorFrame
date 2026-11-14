@@ -49,7 +49,12 @@ fn stop_codon_detection() {
 
 #[test]
 fn single_node_orf_record() {
-    let r = run("g\tn1\tCCATGCCCGCCTAACC\t1,3\n", "", Policy::Strict, Limits::default());
+    let r = run(
+        "g\tn1\tCCATGCCCGCCTAACC\t1,3\n",
+        "",
+        Policy::Strict,
+        Limits::default(),
+    );
     assert_eq!(r.candidates.len(), 1);
     let c = &r.candidates[0];
     assert_eq!(c.path, "n1");
@@ -75,7 +80,12 @@ fn every_stop_codon_ends_the_orf() {
 
 #[test]
 fn first_in_frame_stop_wins_and_out_of_frame_is_ignored() {
-    let r = run("g\tn\tATGCTAACCTAGCCCTAACC\t1\n", "", Policy::Strict, Limits::default());
+    let r = run(
+        "g\tn\tATGCTAACCTAGCCCTAACC\t1\n",
+        "",
+        Policy::Strict,
+        Limits::default(),
+    );
     assert_eq!(r.candidates.len(), 1);
     assert_eq!(r.candidates[0].sequence, "ATGCTAACCTAG");
 }
@@ -83,11 +93,21 @@ fn first_in_frame_stop_wins_and_out_of_frame_is_ignored() {
 #[test]
 fn start_codon_spanning_nodes_is_detected_and_rejected_when_not_atg() {
     // a=CAT, b=GAAATAA: offset 1 of a gives "AT" -> frame; first codon ATG across boundary.
-    let r = run("g\ta\tCAT\t1\ng\tb\tGAAATAA\t1\n", "g\ta\tb\t0\n", Policy::Strict, Limits::default());
+    let r = run(
+        "g\ta\tCAT\t1\ng\tb\tGAAATAA\t1\n",
+        "g\ta\tb\t0\n",
+        Policy::Strict,
+        Limits::default(),
+    );
     assert_eq!(paths(&r), vec![("a>b".to_string(), 1)]);
     assert_eq!(r.candidates[0].sequence, "ATGAAATAA");
     // a=AT, b=CAAA: first codon ATC -> start_rejected.
-    let r = run("g\ta\tAT\t1\ng\tb\tCAAA\t1\n", "g\ta\tb\t0\n", Policy::Strict, Limits::default());
+    let r = run(
+        "g\ta\tAT\t1\ng\tb\tCAAA\t1\n",
+        "g\ta\tb\t0\n",
+        Policy::Strict,
+        Limits::default(),
+    );
     assert!(r.candidates.is_empty());
     assert_eq!(r.stats.start_rejected, 1);
 }
@@ -120,7 +140,8 @@ fn strict_prunes_and_permissive_reports_fragmented_support() {
     let edges = "g\ta\tb\t0\n";
     let s = run(nodes, edges, Policy::Strict, Limits::default());
     assert!(s.candidates.is_empty());
-    assert_eq!(s.stats.color_pruned, 1);
+    // b is pruned from the frame at a@0 and from the trailing-A frame at a@5
+    assert_eq!(s.stats.color_pruned, 2);
     let p = run(nodes, edges, Policy::Permissive, Limits::default());
     assert_eq!(p.candidates.len(), 1);
     assert!(!p.candidates[0].shared);
@@ -132,14 +153,20 @@ fn node_without_colours_is_pruned_under_both_policies() {
     for pol in [Policy::Strict, Policy::Permissive] {
         let r = run("g\ta\tATGTAA\t.\n", "", pol, Limits::default());
         assert!(r.candidates.is_empty());
-        assert_eq!(r.stats.color_pruned, 1);
-        assert_eq!(r.stats.search_states, 1);
+        // start frames: ATG at 0 and the trailing A at 5 (a one-base prefix of ATG)
+        assert_eq!(r.stats.color_pruned, 2);
+        assert_eq!(r.stats.search_states, 2);
     }
 }
 
 #[test]
 fn cycle_terminates_by_visit_bound() {
-    let r = run("g\ta\tATGC\t1\n", "g\ta\ta\t0\n", Policy::Strict, Limits::default());
+    let r = run(
+        "g\ta\tATGC\t1\n",
+        "g\ta\ta\t0\n",
+        Policy::Strict,
+        Limits::default(),
+    );
     assert!(r.candidates.is_empty());
     assert_eq!(r.stats.search_states, 2);
     assert_eq!(r.stats.max_depth, 2);
@@ -149,7 +176,10 @@ fn cycle_terminates_by_visit_bound() {
 
 #[test]
 fn path_length_bound_cuts() {
-    let lim = Limits { max_path_nodes: 1, ..Limits::default() };
+    let lim = Limits {
+        max_path_nodes: 1,
+        ..Limits::default()
+    };
     let r = run("g\ta\tATGC\t1\n", "g\ta\ta\t0\n", Policy::Strict, lim);
     assert_eq!(r.stats.search_states, 1);
     assert_eq!(r.stats.path_length_cuts, 1);
@@ -164,7 +194,10 @@ fn bounded_revisit_finds_candidate_only_when_allowed() {
     let r = run(nodes, edges, Policy::Strict, Limits::default());
     assert!(paths(&r).contains(&("x>y".to_string(), 0)));
     assert_eq!(r.stats.node_visit_cuts, 1); // third x refused
-    let lim = Limits { max_node_visits: 1, ..Limits::default() };
+    let lim = Limits {
+        max_node_visits: 1,
+        ..Limits::default()
+    };
     let r = run(nodes, edges, Policy::Strict, lim);
     assert!(paths(&r).contains(&("x>y".to_string(), 0)));
     assert!(r.stats.node_visit_cuts >= 1);
@@ -174,11 +207,27 @@ fn bounded_revisit_finds_candidate_only_when_allowed() {
 #[test]
 fn orf_length_cut_and_exact_limit() {
     let nodes = "g\tn\tATGAAATAA\t1\n";
-    let r = run(nodes, "", Policy::Strict, Limits { max_orf_nt: 6, ..Limits::default() });
+    let r = run(
+        nodes,
+        "",
+        Policy::Strict,
+        Limits {
+            max_orf_nt: 6,
+            ..Limits::default()
+        },
+    );
     assert!(r.candidates.is_empty());
     assert_eq!(r.stats.orf_length_cuts, 1);
     // stop at exactly the limit is still emitted
-    let r = run(nodes, "", Policy::Strict, Limits { max_orf_nt: 9, ..Limits::default() });
+    let r = run(
+        nodes,
+        "",
+        Policy::Strict,
+        Limits {
+            max_orf_nt: 9,
+            ..Limits::default()
+        },
+    );
     assert_eq!(r.candidates.len(), 1);
     assert_eq!(r.stats.orf_length_cuts, 0);
 }
@@ -188,7 +237,15 @@ fn state_limit_aborts_immediately_keeping_earlier_candidates() {
     // a>b emits; a limit of 2 states stops before c is entered.
     let nodes0 = "g\ta\tATGCCC\t1,2\ng\tb\tGCCTAACC\t1\ng\tc\tGGGCCCTGACC\t2\n";
     let edges0 = "g\ta\tb\t0\ng\ta\tc\t0\n";
-    let r = run(nodes0, edges0, Policy::Strict, Limits { max_states: 2, ..Limits::default() });
+    let r = run(
+        nodes0,
+        edges0,
+        Policy::Strict,
+        Limits {
+            max_states: 2,
+            ..Limits::default()
+        },
+    );
     assert!(r.stats.state_limit_hit);
     assert_eq!(r.stats.search_states, 2);
     assert_eq!(paths(&r), vec![("a>b".to_string(), 0)]);

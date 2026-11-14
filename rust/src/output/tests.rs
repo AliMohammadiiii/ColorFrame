@@ -55,7 +55,10 @@ fn empty_output_is_header_only() {
 #[test]
 fn summary_row_format() {
     let s = render_summary(&[run(Policy::Strict, vec![])]);
-    assert_eq!(s, format!("{SUMMARY_HEADER}g\tstrict\t3\t2\t0\t0\t0\t0\t0\t0\t0\t0\t1\n"));
+    assert_eq!(
+        s,
+        format!("{SUMMARY_HEADER}g\tstrict\t3\t2\t0\t0\t0\t0\t0\t0\t0\t0\t1\n")
+    );
 }
 
 #[test]

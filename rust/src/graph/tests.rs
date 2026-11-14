@@ -33,11 +33,7 @@ fn graph_construction_sorts_nodes_and_successors() {
 
 #[test]
 fn startable_range_excludes_overlap_when_node_has_successors() {
-    let gs = build(
-        "g\ta\tCCATG\t.\ng\tb\tATGAA\t.\n",
-        "g\ta\tb\t3\n",
-    )
-    .unwrap();
+    let gs = build("g\ta\tCCATG\t.\ng\tb\tATGAA\t.\n", "g\ta\tb\t3\n").unwrap();
     let g = &gs[0];
     assert_eq!(g.overlap, 3);
     assert_eq!(g.startable_end(0), 2); // 5 - K
@@ -46,21 +42,36 @@ fn startable_range_excludes_overlap_when_node_has_successors() {
 
 #[test]
 fn overlap_bounds() {
-    assert_eq!(err_code("g\ta\tACG\t.\ng\tb\tACG\t.\n", "g\ta\tb\t3\n"), INVALID_OVERLAP); // >= len(target)
-    assert_eq!(err_code("g\ta\tAC\t.\ng\tb\tACGT\t.\n", "g\ta\tb\t3\n"), INVALID_OVERLAP); // > len(source)
-    assert_eq!(err_code("g\ta\tAC\t.\ng\tb\tACGT\t.\n", "g\ta\tb\t-1\n"), INVALID_OVERLAP);
+    assert_eq!(
+        err_code("g\ta\tACG\t.\ng\tb\tACG\t.\n", "g\ta\tb\t3\n"),
+        INVALID_OVERLAP
+    ); // >= len(target)
+    assert_eq!(
+        err_code("g\ta\tAC\t.\ng\tb\tACGT\t.\n", "g\ta\tb\t3\n"),
+        INVALID_OVERLAP
+    ); // > len(source)
+    assert_eq!(
+        err_code("g\ta\tAC\t.\ng\tb\tACGT\t.\n", "g\ta\tb\t-1\n"),
+        INVALID_OVERLAP
+    );
     assert!(build("g\ta\tAC\t.\ng\tb\tACGT\t.\n", "g\ta\tb\t2\n").is_ok());
 }
 
 #[test]
 fn overlap_mismatch() {
-    assert_eq!(err_code("g\ta\tATGCCC\t.\ng\tb\tGGGTAA\t.\n", "g\ta\tb\t2\n"), OVERLAP_MISMATCH);
+    assert_eq!(
+        err_code("g\ta\tATGCCC\t.\ng\tb\tGGGTAA\t.\n", "g\ta\tb\t2\n"),
+        OVERLAP_MISMATCH
+    );
 }
 
 #[test]
 fn inconsistent_overlap_between_edges() {
     let nodes = "g\ta\tAAAA\t.\ng\tb\tAAAA\t.\ng\tc\tAAAA\t.\n";
-    assert_eq!(err_code(nodes, "g\ta\tb\t1\ng\tb\tc\t2\n"), INCONSISTENT_OVERLAP);
+    assert_eq!(
+        err_code(nodes, "g\ta\tb\t1\ng\tb\tc\t2\n"),
+        INCONSISTENT_OVERLAP
+    );
 }
 
 #[test]

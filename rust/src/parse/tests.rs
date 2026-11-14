@@ -1,5 +1,4 @@
 use super::*;
-use crate::error::*;
 
 const NH: &str = "graph_id\tnode_id\tsequence\tcolors\n";
 const EH: &str = "graph_id\tsource\ttarget\toverlap_nt\n";
