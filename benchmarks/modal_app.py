@@ -130,9 +130,11 @@ def _untar(data: bytes, dest: Path):
 
 
 @app.local_entrypoint()
-def main(stage: str = "all", reps: int = 7, warmup: int = 2, skip: str = "", run_id: str = ""):
+def main(stage: str = "all", reps: int = 7, warmup: int = 2, skip: str = "", run_id: str = "",
+         results_dir: str = ""):
+    """results_dir (analysis stage only): analyse e.g. results/local/<id> instead of a Modal run."""
     run_id = run_id or time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
-    rdir = REPO / "results" / "modal" / run_id
+    rdir = (REPO / results_dir) if results_dir else REPO / "results" / "modal" / run_id
     if stage in ("all", "bench"):
         if DIRTY == "1":
             print("WARNING: working tree has uncommitted changes; results will be marked dirty")
@@ -140,5 +142,6 @@ def main(stage: str = "all", reps: int = 7, warmup: int = 2, skip: str = "", run
         print(f"benchmark results -> {rdir}")
     if stage in ("all", "analysis"):
         usage = (REPO / "results" / "agent_usage.csv").read_bytes()
-        _untar(analysis.remote(_tar(rdir), usage), REPO / "reports" / "figures")
-        print(f"analysis outputs -> {REPO / 'reports' / 'figures'}")
+        fdir = REPO / "reports" / "figures" / f"{rdir.parent.name}_{rdir.name}"
+        _untar(analysis.remote(_tar(rdir), usage), fdir)
+        print(f"analysis outputs -> {fdir}")
