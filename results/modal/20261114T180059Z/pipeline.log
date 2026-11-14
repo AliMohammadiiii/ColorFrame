@@ -1,0 +1,91 @@
+commit=3eeea9760e829fae413f4b62f34b2a087ca93720 dirty=0
+$ python3 --version; g++ --version | head -1; rustc --version; nproc; grep -m1 'model name' /proc/cpuinfo; grep -E 'MemTotal|MemAvailable' /proc/meminfo
+Python 3.12.10
+g++ (Debian 12.2.0-14+deb12u1) 12.2.0
+rustc 1.99.1 (58cf8f9c3 2026-10-13)
+1
+model name	: unknown
+MemTotal:       345333660 kB
+MemAvailable:   345274852 kB
+[exit 0]
+$ python3 tests/check_fixtures.py
+39/39 fixture cases consistent
+[exit 0]
+$ python3 tests/run_cases.py --impl all
+[python] 39/39 cases passed; usage check ok
+[cpp] 39/39 cases passed; usage check ok
+[rust] 39/39 cases passed; usage check ok
+[exit 0]
+$ python3 benchmarks/generate_workloads.py
+perf_n50_low         nodes=    50 edges=    61 mean_deg=1.22 planted=5
+perf_n50_high        nodes=    50 edges=    97 mean_deg=1.94 planted=5
+perf_n200_low        nodes=   200 edges=   239 mean_deg=1.20 planted=20
+perf_n200_high       nodes=   200 edges=   397 mean_deg=1.99 planted=20
+perf_n500_low        nodes=   500 edges=   593 mean_deg=1.19 planted=50
+perf_n500_high       nodes=   500 edges=   997 mean_deg=1.99 planted=50
+perf_n2000_low       nodes=  2000 edges=  2408 mean_deg=1.20 planted=200
+perf_n2000_high      nodes=  2000 edges=  3997 mean_deg=2.00 planted=200
+perf_n10000_low      nodes= 10000 edges= 12048 mean_deg=1.20 planted=1000
+perf_n10000_high     nodes= 10000 edges= 19997 mean_deg=2.00 planted=1000
+stress_s12500        nodes=   200 edges=   400 mean_deg=2.00 planted=0
+stress_s50000        nodes=   200 edges=   400 mean_deg=2.00 planted=0
+stress_s200000       nodes=   200 edges=   400 mean_deg=2.00 planted=0
+stress_s800000       nodes=   200 edges=   400 mean_deg=2.00 planted=0
+rq1_p10              nodes=   500 edges=   997 mean_deg=1.99 planted=100
+rq1_p20              nodes=   500 edges=   997 mean_deg=1.99 planted=100
+rq1_p30              nodes=   500 edges=   997 mean_deg=1.99 planted=100
+rq1_p50              nodes=   500 edges=   997 mean_deg=1.99 planted=100
+rq1_p70              nodes=   500 edges=   997 mean_deg=1.99 planted=100
+rq1_p90              nodes=   500 edges=   997 mean_deg=1.99 planted=100
+[exit 0]
+$ python3 tests/cross_language.py --out /repo/results/run/cross_language.tsv
+OK   perf_n10000_high   candidates=  56264 cand_sha=064084e588297bb6 summ_sha=127ba9c4a0fe0769
+OK   perf_n10000_low    candidates=  21247 cand_sha=f85fa14164f6a663 summ_sha=8f4ce7cc2a117604
+OK   perf_n2000_high    candidates=  10878 cand_sha=abe70e93a045ad54 summ_sha=177add8bd0fbb854
+OK   perf_n2000_low     candidates=   4093 cand_sha=ae3f32d8a240bd2f summ_sha=2ae7e3f80a6f4915
+OK   perf_n200_high     candidates=   1005 cand_sha=b43ba464d4eceac7 summ_sha=78df233fb058cafd
+OK   perf_n200_low      candidates=    390 cand_sha=f8b59730354cd202 summ_sha=3c5d073d9f927701
+OK   perf_n500_high     candidates=   2579 cand_sha=0745bb79fd73d9d1 summ_sha=9cc98507e76bfd67
+OK   perf_n500_low      candidates=   1094 cand_sha=db1e995492465888 summ_sha=2cd4ba637a44a875
+OK   perf_n50_high      candidates=    195 cand_sha=8d0d7e47478608b3 summ_sha=93997f04fb54e892
+OK   perf_n50_low       candidates=     89 cand_sha=7294bca207992d10 summ_sha=41e5420be07061b7
+OK   rq1_p10            candidates=    316 cand_sha=3f918c4e842f3d11 summ_sha=fa69085fc901d419
+OK   rq1_p20            candidates=    872 cand_sha=dba21fb412723257 summ_sha=cb1ccd88071be3d8
+OK   rq1_p30            candidates=   1569 cand_sha=49db4ec63c402906 summ_sha=eafe4247709ec990
+OK   rq1_p50            candidates=   2817 cand_sha=9db029811de677d3 summ_sha=6ddd8ab9e447f1a4
+OK   rq1_p70            candidates=   4005 cand_sha=4705a03876c54b3e summ_sha=ad75eff9fb6798b3
+OK   rq1_p90            candidates=   4894 cand_sha=5231be64524782dc summ_sha=8f1ff82034e29945
+OK   stress_s12500      candidates=      0 cand_sha=3692af6d627491bc summ_sha=013b8cf6d1e54256
+OK   stress_s200000     candidates=      0 cand_sha=3692af6d627491bc summ_sha=2c6d81924d88e538
+OK   stress_s50000      candidates=      0 cand_sha=3692af6d627491bc summ_sha=2d7e651d7b64dd5f
+OK   stress_s800000     candidates=      0 cand_sha=3692af6d627491bc summ_sha=2788dd2a77053171
+20/20 workloads equivalent across python, cpp, rust
+[exit 0]
+$ python3 benchmarks/evaluate_rq1.py --impl rust --out /repo/results/run/rq1_recovery.tsv
+wrote 32 rows to /repo/results/run/rq1_recovery.tsv
+[exit 0]
+$ python3 benchmarks/run_benchmarks.py --out /repo/results/run --reps 7 --warmup 2 
+perf_n10000_high   impls=python,cpp,rust identical=True
+perf_n10000_low    impls=python,cpp,rust identical=True
+perf_n2000_high    impls=python,cpp,rust identical=True
+perf_n2000_low     impls=python,cpp,rust identical=True
+perf_n200_high     impls=python,cpp,rust identical=True
+perf_n200_low      impls=python,cpp,rust identical=True
+perf_n500_high     impls=python,cpp,rust identical=True
+perf_n500_low      impls=python,cpp,rust identical=True
+perf_n50_high      impls=python,cpp,rust identical=True
+perf_n50_low       impls=python,cpp,rust identical=True
+rq1_p10            impls=python,cpp,rust identical=True
+rq1_p20            impls=python,cpp,rust identical=True
+rq1_p30            impls=python,cpp,rust identical=True
+rq1_p50            impls=python,cpp,rust identical=True
+rq1_p70            impls=python,cpp,rust identical=True
+rq1_p90            impls=python,cpp,rust identical=True
+stress_s12500      impls=python,cpp,rust identical=True
+stress_s200000     impls=python,cpp,rust identical=True
+stress_s50000      impls=python,cpp,rust identical=True
+stress_s800000     impls=python,cpp,rust identical=True
+[exit 0]
+$ cat /proc/cpuinfo > /repo/results/run/cpuinfo.txt; cat /proc/meminfo > /repo/results/run/meminfo.txt
+[exit 0]
+container_wall_seconds=219.0

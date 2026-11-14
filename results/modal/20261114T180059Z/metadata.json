@@ -1,0 +1,587 @@
+{
+  "utc": "2026-11-14T18:01:30Z",
+  "git_commit": "3eeea9760e829fae413f4b62f34b2a087ca93720",
+  "host": "modal-container",
+  "environment": "modal",
+  "platform": "Linux-4.19.0-gvisor-x86_64-with-glibc2.36",
+  "machine": "x86_64",
+  "cpu_count_visible": 17,
+  "python": "3.12.10",
+  "cxx": "g++ (Debian 12.2.0-14+deb12u1) 12.2.0",
+  "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+  "binaries_sha256": {
+    "python": "546651c143fe66ab9f1e2d9b6da4c62348078463d31c0f9cfd9b8b799b2b55d8",
+    "cpp": "f3cfed782eb294fdf588dc17f8d86381783181033b754629759b7a8cdbd0e6b1",
+    "rust": "7e7ce12aebab812087d2dd840cf36df34c906133700980374923f36d75baca47"
+  },
+  "reps": 7,
+  "warmup": 2,
+  "order_seed": 42,
+  "impls": [
+    "python",
+    "cpp",
+    "rust"
+  ],
+  "workloads": {
+    "perf_n10000_high": {
+      "params": {
+        "name": "perf_n10000_high",
+        "seed": "42:perf_n10000_high",
+        "n_nodes": 10000,
+        "target_mean_out_degree": 2.0,
+        "realised_mean_out_degree": 1.9997,
+        "n_edges": 19997,
+        "cyclic": false,
+        "alphabet": "ACGT",
+        "colour_density": 0.5,
+        "n_samples": 8,
+        "node_length_range": [
+          30,
+          90
+        ],
+        "forward_window": 10,
+        "planted_requested": 1000,
+        "planted": 1000,
+        "plant_nodes": 3,
+        "total_bases": 601026,
+        "cli_args": "--policy both --max-states 1000000"
+      },
+      "nodes_sha256": "8182eab288d956af96d72e1c184f63ab111012daa7728d1472f000e4b57e3000",
+      "edges_sha256": "34f821d8c603c1a463cc00625b32dc3f18b312ffa78637874ca207c4c044a96c",
+      "outputs_identical_across_impls_and_reps": true,
+      "skipped_impls": []
+    },
+    "perf_n10000_low": {
+      "params": {
+        "name": "perf_n10000_low",
+        "seed": "42:perf_n10000_low",
+        "n_nodes": 10000,
+        "target_mean_out_degree": 1.2,
+        "realised_mean_out_degree": 1.2048,
+        "n_edges": 12048,
+        "cyclic": false,
+        "alphabet": "ACGT",
+        "colour_density": 0.5,
+        "n_samples": 8,
+        "node_length_range": [
+          30,
+          90
+        ],
+        "forward_window": 10,
+        "planted_requested": 1000,
+        "planted": 1000,
+        "plant_nodes": 3,
+        "total_bases": 601579,
+        "cli_args": "--policy both --max-states 1000000"
+      },
+      "nodes_sha256": "9b51b0465665dff2fdebf728e13fc035b842f36c946777c74d4acf6c1eb8851c",
+      "edges_sha256": "07a53f7a897cfbf2addd151f14b815fc61a991bccf1b936bff670f0b911a0f2b",
+      "outputs_identical_across_impls_and_reps": true,
+      "skipped_impls": []
+    },
+    "perf_n2000_high": {
+      "params": {
+        "name": "perf_n2000_high",
+        "seed": "42:perf_n2000_high",
+        "n_nodes": 2000,
+        "target_mean_out_degree": 2.0,
+        "realised_mean_out_degree": 1.9985,
+        "n_edges": 3997,
+        "cyclic": false,
+        "alphabet": "ACGT",
+        "colour_density": 0.5,
+        "n_samples": 8,
+        "node_length_range": [
+          30,
+          90
+        ],
+        "forward_window": 10,
+        "planted_requested": 200,
+        "planted": 200,
+        "plant_nodes": 3,
+        "total_bases": 119856,
+        "cli_args": "--policy both --max-states 1000000"
+      },
+      "nodes_sha256": "cab5719b607a30ca7edbed914867fc730d95b2c75e3a4ae375ceeb3fe233afc0",
+      "edges_sha256": "2d05c1ad440f2baf95dbe4b336f2721329ef024ab3fd5fa877bdb92a4d7fffdf",
+      "outputs_identical_across_impls_and_reps": true,
+      "skipped_impls": []
+    },
+    "perf_n2000_low": {
+      "params": {
+        "name": "perf_n2000_low",
+        "seed": "42:perf_n2000_low",
+        "n_nodes": 2000,
+        "target_mean_out_degree": 1.2,
+        "realised_mean_out_degree": 1.204,
+        "n_edges": 2408,
+        "cyclic": false,
+        "alphabet": "ACGT",
+        "colour_density": 0.5,
+        "n_samples": 8,
+        "node_length_range": [
+          30,
+          90
+        ],
+        "forward_window": 10,
+        "planted_requested": 200,
+        "planted": 200,
+        "plant_nodes": 3,
+        "total_bases": 120401,
+        "cli_args": "--policy both --max-states 1000000"
+      },
+      "nodes_sha256": "d739ec5716ca68638e726ab29f841b4eb44512ac2463591101548a0ce8f73982",
+      "edges_sha256": "4cdd067140eb8fed4fc50eca5181a212bc2c736fbfb053fe7d61241ce8f7bed0",
+      "outputs_identical_across_impls_and_reps": true,
+      "skipped_impls": []
+    },
+    "perf_n200_high": {
+      "params": {
+        "name": "perf_n200_high",
+        "seed": "42:perf_n200_high",
+        "n_nodes": 200,
+        "target_mean_out_degree": 2.0,
+        "realised_mean_out_degree": 1.985,
+        "n_edges": 397,
+        "cyclic": false,
+        "alphabet": "ACGT",
+        "colour_density": 0.5,
+        "n_samples": 8,
+        "node_length_range": [
+          30,
+          90
+        ],
+        "forward_window": 10,
+        "planted_requested": 20,
+        "planted": 20,
+        "plant_nodes": 3,
+        "total_bases": 11754,
+        "cli_args": "--policy both --max-states 1000000"
+      },
+      "nodes_sha256": "474df4c71aa86491b3a6545c1efec59e2c91a2fcc4ae13896fabb6a30ec43c4a",
+      "edges_sha256": "d6c94219d45ce3031c314b733df32e5f26643a4466a1393d102245c16721a1d2",
+      "outputs_identical_across_impls_and_reps": true,
+      "skipped_impls": []
+    },
+    "perf_n200_low": {
+      "params": {
+        "name": "perf_n200_low",
+        "seed": "42:perf_n200_low",
+        "n_nodes": 200,
+        "target_mean_out_degree": 1.2,
+        "realised_mean_out_degree": 1.195,
+        "n_edges": 239,
+        "cyclic": false,
+        "alphabet": "ACGT",
+        "colour_density": 0.5,
+        "n_samples": 8,
+        "node_length_range": [
+          30,
+          90
+        ],
+        "forward_window": 10,
+        "planted_requested": 20,
+        "planted": 20,
+        "plant_nodes": 3,
+        "total_bases": 11666,
+        "cli_args": "--policy both --max-states 1000000"
+      },
+      "nodes_sha256": "874576d8b478fcac11014e227897fb4f6ecb869f32f6018b4a21e58d782a5de7",
+      "edges_sha256": "31d06a94fe79b941fb2f0bdd8bfb9f24d66d1dc5451c34b7bcb8f1e9f7c1468e",
+      "outputs_identical_across_impls_and_reps": true,
+      "skipped_impls": []
+    },
+    "perf_n500_high": {
+      "params": {
+        "name": "perf_n500_high",
+        "seed": "42:perf_n500_high",
+        "n_nodes": 500,
+        "target_mean_out_degree": 2.0,
+        "realised_mean_out_degree": 1.994,
+        "n_edges": 997,
+        "cyclic": false,
+        "alphabet": "ACGT",
+        "colour_density": 0.5,
+        "n_samples": 8,
+        "node_length_range": [
+          30,
+          90
+        ],
+        "forward_window": 10,
+        "planted_requested": 50,
+        "planted": 50,
+        "plant_nodes": 3,
+        "total_bases": 29753,
+        "cli_args": "--policy both --max-states 1000000"
+      },
+      "nodes_sha256": "e3861d5dc0259ad09b691a5e689ceb3144a0760c3f818aa171490850ac49e2ec",
+      "edges_sha256": "bf86a9a86f69ac691a4c9d7bbbd755fb39e2c3b60a576fed51465d6bec372bb1",
+      "outputs_identical_across_impls_and_reps": true,
+      "skipped_impls": []
+    },
+    "perf_n500_low": {
+      "params": {
+        "name": "perf_n500_low",
+        "seed": "42:perf_n500_low",
+        "n_nodes": 500,
+        "target_mean_out_degree": 1.2,
+        "realised_mean_out_degree": 1.186,
+        "n_edges": 593,
+        "cyclic": false,
+        "alphabet": "ACGT",
+        "colour_density": 0.5,
+        "n_samples": 8,
+        "node_length_range": [
+          30,
+          90
+        ],
+        "forward_window": 10,
+        "planted_requested": 50,
+        "planted": 50,
+        "plant_nodes": 3,
+        "total_bases": 30313,
+        "cli_args": "--policy both --max-states 1000000"
+      },
+      "nodes_sha256": "9b6221332834f432ed9f650e33e6220c1391f8670d66fb58e28712c58627a79a",
+      "edges_sha256": "4a13119431892b27697d8405bbc98a2a38a5fd22172b92e14b1ccf7340d2aefa",
+      "outputs_identical_across_impls_and_reps": true,
+      "skipped_impls": []
+    },
+    "perf_n50_high": {
+      "params": {
+        "name": "perf_n50_high",
+        "seed": "42:perf_n50_high",
+        "n_nodes": 50,
+        "target_mean_out_degree": 2.0,
+        "realised_mean_out_degree": 1.94,
+        "n_edges": 97,
+        "cyclic": false,
+        "alphabet": "ACGT",
+        "colour_density": 0.5,
+        "n_samples": 8,
+        "node_length_range": [
+          30,
+          90
+        ],
+        "forward_window": 10,
+        "planted_requested": 5,
+        "planted": 5,
+        "plant_nodes": 3,
+        "total_bases": 3198,
+        "cli_args": "--policy both --max-states 1000000"
+      },
+      "nodes_sha256": "b65b1c32c10498da500b4070a3dd3aef143532e916e05600b74b447c6935503f",
+      "edges_sha256": "dae8dc66f850ec92f5ddbe2cbf24058a9e8cc83d9710a4af6afc5f25691454e2",
+      "outputs_identical_across_impls_and_reps": true,
+      "skipped_impls": []
+    },
+    "perf_n50_low": {
+      "params": {
+        "name": "perf_n50_low",
+        "seed": "42:perf_n50_low",
+        "n_nodes": 50,
+        "target_mean_out_degree": 1.2,
+        "realised_mean_out_degree": 1.22,
+        "n_edges": 61,
+        "cyclic": false,
+        "alphabet": "ACGT",
+        "colour_density": 0.5,
+        "n_samples": 8,
+        "node_length_range": [
+          30,
+          90
+        ],
+        "forward_window": 10,
+        "planted_requested": 5,
+        "planted": 5,
+        "plant_nodes": 3,
+        "total_bases": 2981,
+        "cli_args": "--policy both --max-states 1000000"
+      },
+      "nodes_sha256": "0f88eb5cc4c76ea1d3104832aff495e05b28c95196750eb7f27eb5a9bc78ce6a",
+      "edges_sha256": "e4a94623b99f65524f1b4894dd4b94db398ce2beefdeafd7015d5e811f49241b",
+      "outputs_identical_across_impls_and_reps": true,
+      "skipped_impls": []
+    },
+    "rq1_p10": {
+      "params": {
+        "name": "rq1_p10",
+        "seed": "42:rq1_p10",
+        "n_nodes": 500,
+        "target_mean_out_degree": 2.0,
+        "realised_mean_out_degree": 1.994,
+        "n_edges": 997,
+        "cyclic": false,
+        "alphabet": "ACGT",
+        "colour_density": 0.1,
+        "n_samples": 8,
+        "node_length_range": [
+          30,
+          90
+        ],
+        "forward_window": 10,
+        "planted_requested": 100,
+        "planted": 100,
+        "plant_nodes": 3,
+        "total_bases": 29684,
+        "cli_args": "--policy both --max-states 1000000"
+      },
+      "nodes_sha256": "c5f5269bef0a1e8b6d0bd9cca8b79e10299eae94a42d767c5031b00532f45a92",
+      "edges_sha256": "5d9a27a3de1d75b0ccea5b331d49ea0647dad018dfd24d3db7ba03783ac4c89c",
+      "outputs_identical_across_impls_and_reps": true,
+      "skipped_impls": []
+    },
+    "rq1_p20": {
+      "params": {
+        "name": "rq1_p20",
+        "seed": "42:rq1_p20",
+        "n_nodes": 500,
+        "target_mean_out_degree": 2.0,
+        "realised_mean_out_degree": 1.994,
+        "n_edges": 997,
+        "cyclic": false,
+        "alphabet": "ACGT",
+        "colour_density": 0.2,
+        "n_samples": 8,
+        "node_length_range": [
+          30,
+          90
+        ],
+        "forward_window": 10,
+        "planted_requested": 100,
+        "planted": 100,
+        "plant_nodes": 3,
+        "total_bases": 30415,
+        "cli_args": "--policy both --max-states 1000000"
+      },
+      "nodes_sha256": "8a4e809027b72b3958b52bd5760a5657921fca524817332d1b67aad04087b45f",
+      "edges_sha256": "8f4deeca3fb0ac9dc6cb6fe494259311a1c01c6d8873e0287b5de049bc93e91f",
+      "outputs_identical_across_impls_and_reps": true,
+      "skipped_impls": []
+    },
+    "rq1_p30": {
+      "params": {
+        "name": "rq1_p30",
+        "seed": "42:rq1_p30",
+        "n_nodes": 500,
+        "target_mean_out_degree": 2.0,
+        "realised_mean_out_degree": 1.994,
+        "n_edges": 997,
+        "cyclic": false,
+        "alphabet": "ACGT",
+        "colour_density": 0.3,
+        "n_samples": 8,
+        "node_length_range": [
+          30,
+          90
+        ],
+        "forward_window": 10,
+        "planted_requested": 100,
+        "planted": 100,
+        "plant_nodes": 3,
+        "total_bases": 29567,
+        "cli_args": "--policy both --max-states 1000000"
+      },
+      "nodes_sha256": "8b81d445c5bc2f30a4b80f56958ca4859477f23e608cd777ba47b6c5b890d221",
+      "edges_sha256": "7d1092f6445dc4c60ee51f8c2827c9e2ec9da09f3275daa75b28b8afa328c188",
+      "outputs_identical_across_impls_and_reps": true,
+      "skipped_impls": []
+    },
+    "rq1_p50": {
+      "params": {
+        "name": "rq1_p50",
+        "seed": "42:rq1_p50",
+        "n_nodes": 500,
+        "target_mean_out_degree": 2.0,
+        "realised_mean_out_degree": 1.994,
+        "n_edges": 997,
+        "cyclic": false,
+        "alphabet": "ACGT",
+        "colour_density": 0.5,
+        "n_samples": 8,
+        "node_length_range": [
+          30,
+          90
+        ],
+        "forward_window": 10,
+        "planted_requested": 100,
+        "planted": 100,
+        "plant_nodes": 3,
+        "total_bases": 30068,
+        "cli_args": "--policy both --max-states 1000000"
+      },
+      "nodes_sha256": "37ee1bd4e1b0b531ed9ebd404e82fb9f34c1b7bffd7e6ee5bab48393787871aa",
+      "edges_sha256": "a5992d1a45d1fc13fc572f9e24127f3b145507f45d6e249afb31df3834f84fd1",
+      "outputs_identical_across_impls_and_reps": true,
+      "skipped_impls": []
+    },
+    "rq1_p70": {
+      "params": {
+        "name": "rq1_p70",
+        "seed": "42:rq1_p70",
+        "n_nodes": 500,
+        "target_mean_out_degree": 2.0,
+        "realised_mean_out_degree": 1.994,
+        "n_edges": 997,
+        "cyclic": false,
+        "alphabet": "ACGT",
+        "colour_density": 0.7,
+        "n_samples": 8,
+        "node_length_range": [
+          30,
+          90
+        ],
+        "forward_window": 10,
+        "planted_requested": 100,
+        "planted": 100,
+        "plant_nodes": 3,
+        "total_bases": 30051,
+        "cli_args": "--policy both --max-states 1000000"
+      },
+      "nodes_sha256": "44ec01a0a5845e9f1fb523106ae2ef15c4701d7bc25cdfac5b58e7983ce83dd1",
+      "edges_sha256": "4b81ea55940b545cd29efd46d349017489484d441cb0dda908a7a4acb02f258a",
+      "outputs_identical_across_impls_and_reps": true,
+      "skipped_impls": []
+    },
+    "rq1_p90": {
+      "params": {
+        "name": "rq1_p90",
+        "seed": "42:rq1_p90",
+        "n_nodes": 500,
+        "target_mean_out_degree": 2.0,
+        "realised_mean_out_degree": 1.994,
+        "n_edges": 997,
+        "cyclic": false,
+        "alphabet": "ACGT",
+        "colour_density": 0.9,
+        "n_samples": 8,
+        "node_length_range": [
+          30,
+          90
+        ],
+        "forward_window": 10,
+        "planted_requested": 100,
+        "planted": 100,
+        "plant_nodes": 3,
+        "total_bases": 29859,
+        "cli_args": "--policy both --max-states 1000000"
+      },
+      "nodes_sha256": "1759522c7d493a0eb553e0420cdbc7d55504e640b5ce3af1a51109dda081561a",
+      "edges_sha256": "a6d3ca5f5c0c2ee57b50a3cd4504f2a548e0a9d327d4d9f84d41413f80664c1d",
+      "outputs_identical_across_impls_and_reps": true,
+      "skipped_impls": []
+    },
+    "stress_s12500": {
+      "params": {
+        "name": "stress_s12500",
+        "seed": "42:stress_s12500",
+        "n_nodes": 200,
+        "target_mean_out_degree": 2.0,
+        "realised_mean_out_degree": 2.0,
+        "n_edges": 400,
+        "cyclic": true,
+        "alphabet": "CG",
+        "colour_density": 1.0,
+        "n_samples": 8,
+        "node_length_range": [
+          30,
+          90
+        ],
+        "forward_window": null,
+        "planted_requested": 0,
+        "planted": 0,
+        "plant_nodes": 3,
+        "total_bases": 11884,
+        "cli_args": "--policy strict --max-states 12500"
+      },
+      "nodes_sha256": "d96a0ccc5e480e5bd014b09a98ade28d26b57c5d7a7d88de3e72f4fe11f27a06",
+      "edges_sha256": "80de91627b5ab01f9bd3d4626121677cd41ee95b49cae678d4ab990e51116952",
+      "outputs_identical_across_impls_and_reps": true,
+      "skipped_impls": []
+    },
+    "stress_s200000": {
+      "params": {
+        "name": "stress_s200000",
+        "seed": "42:stress_s200000",
+        "n_nodes": 200,
+        "target_mean_out_degree": 2.0,
+        "realised_mean_out_degree": 2.0,
+        "n_edges": 400,
+        "cyclic": true,
+        "alphabet": "CG",
+        "colour_density": 1.0,
+        "n_samples": 8,
+        "node_length_range": [
+          30,
+          90
+        ],
+        "forward_window": null,
+        "planted_requested": 0,
+        "planted": 0,
+        "plant_nodes": 3,
+        "total_bases": 11908,
+        "cli_args": "--policy strict --max-states 200000"
+      },
+      "nodes_sha256": "ee9de8b162efeda84da3b36da72a9ca9f16b56d0d0ac610757fb4aa014f4a0e6",
+      "edges_sha256": "777082d0d03729a6e80540c6f81770c25ec51e77bb41cb8533e9014b48a9ec11",
+      "outputs_identical_across_impls_and_reps": true,
+      "skipped_impls": []
+    },
+    "stress_s50000": {
+      "params": {
+        "name": "stress_s50000",
+        "seed": "42:stress_s50000",
+        "n_nodes": 200,
+        "target_mean_out_degree": 2.0,
+        "realised_mean_out_degree": 2.0,
+        "n_edges": 400,
+        "cyclic": true,
+        "alphabet": "CG",
+        "colour_density": 1.0,
+        "n_samples": 8,
+        "node_length_range": [
+          30,
+          90
+        ],
+        "forward_window": null,
+        "planted_requested": 0,
+        "planted": 0,
+        "plant_nodes": 3,
+        "total_bases": 12381,
+        "cli_args": "--policy strict --max-states 50000"
+      },
+      "nodes_sha256": "27ade112efe9ab9718456343a9e3f7ba198c1021ec4da148975f896c484b1f72",
+      "edges_sha256": "d67b89cef0f011224cde0ac42da82b7f37617aceaba02d6c17463d42e9411d41",
+      "outputs_identical_across_impls_and_reps": true,
+      "skipped_impls": []
+    },
+    "stress_s800000": {
+      "params": {
+        "name": "stress_s800000",
+        "seed": "42:stress_s800000",
+        "n_nodes": 200,
+        "target_mean_out_degree": 2.0,
+        "realised_mean_out_degree": 2.0,
+        "n_edges": 400,
+        "cyclic": true,
+        "alphabet": "CG",
+        "colour_density": 1.0,
+        "n_samples": 8,
+        "node_length_range": [
+          30,
+          90
+        ],
+        "forward_window": null,
+        "planted_requested": 0,
+        "planted": 0,
+        "plant_nodes": 3,
+        "total_bases": 11623,
+        "cli_args": "--policy strict --max-states 800000"
+      },
+      "nodes_sha256": "874a424036bf9a1cbdcf43c9bf9e55bb3ef065f2f6994f5e27e8da094d122c19",
+      "edges_sha256": "1c365a416f984ac228c944b0d447e5942d41948fce6719d2b75b644f3a4abcba",
+      "outputs_identical_across_impls_and_reps": true,
+      "skipped_impls": []
+    }
+  }
+}
