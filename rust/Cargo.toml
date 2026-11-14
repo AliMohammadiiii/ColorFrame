@@ -1,0 +1,15 @@
+[package]
+name = "colorframe"
+version = "1.0.0"
+edition = "2021"
+description = "Bounded ORF traversal over small coloured sequence graphs"
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "colorframe"
+path = "src/main.rs"
+
+[profile.release]
+opt-level = 3
