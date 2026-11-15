@@ -10,8 +10,8 @@ involvement.
 
 | Contributor | Contribution |
 |---|---|
-| **Ali Mohammadi** (project lead) | Research direction and questions (RQ1–RQ4), the idea of frame-aware candidate path search with colour-support policies, three-language comparison and AI-effort measurement, the detailed charter, choice of Modal/TDD/Git practices, supervision of the agents, and final responsibility for all content. |
-| Claude Opus 5.5 (coordinating development agent, high effort) | Algorithm specification and I/O schema; fixture design with hand-derived expectations; brute-force oracle; conformance and cross-language runners; workload generator; benchmark runner; Modal app; R analysis; code review; integration; all documentation. |
+| **Ali Mohammadi** (project lead) | Research direction and questions (RQ1–RQ4), the idea of frame-aware candidate path search with colour-support policies, three-language comparison and AI-effort measurement, Algorithm specification , the detailed charter, choice of Modal/TDD/Git practices, supervision of the agents, and final responsibility for all content. |
+| Claude Opus 5.5 (coordinating development agent, high effort) | I/O schema; fixture design with hand-derived expectations; brute-force oracle; conformance and cross-language runners; workload generator; benchmark runner; Modal app; R analysis; code review; integration; all documentation. |
 | Claude Sonnet 5.5 (implementation agents) | Python, C++17 and Rust implementations and their unit tests. |
 | Claude Haiku 5.5 (supporting agents) | Makefile and CI workflow; Crossref verification of bibliographic metadata. |
 
