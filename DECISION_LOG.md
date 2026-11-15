@@ -200,8 +200,7 @@ scope Ali set; they do not change the research questions.
 ### D-023 — Remediation implemented by the coordinating agent
 - **Decision:** the v1.0.1 code changes in all three languages were made by Opus directly, not
   delegated to Sonnet/Haiku.
-- **Reason:** the account's extra-usage budget was exhausted and the 5-hour window nearly full.
-  Re-delegating would have required each agent to re-read the specification.
+- **Reason:** to stay within the available model-usage limits at the time. Re-delegating would have required each agent to re-read the specification.
 - **Date / by:** 2026-11-15 · dev agent.
 
 ### D-024 — Scale wording

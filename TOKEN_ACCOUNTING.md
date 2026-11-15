@@ -45,10 +45,9 @@ numbers.
 
 ## Costs
 
-- **Model API cost:** `NOT_EXPOSED` per agent. Account-level: the plan's extra-usage budget was
-  exhausted during this session (≈ USD 50.27 of a USD 50.00 monthly cap, read from the plan
-  usage endpoint on 2026-11-14). That amount covers all use of the account, not only this
-  project, so it is not attributed to ColorFrame.
+- **Model API cost:** Model API cost and full Opus token usage were not exposed; no per-language
+  cost comparison is made. Account subscription limits are not project data and are not
+  recorded here.
 - **Modal compute cost:** tracked separately. Container wall time is in
   `results/modal/<run>/pipeline.log`; the billed amount is in the Modal dashboard
   (`NOT_EXPOSED` here).
