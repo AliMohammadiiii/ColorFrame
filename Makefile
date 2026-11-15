@@ -30,6 +30,7 @@ lint-rust:
 	cd rust && cargo clippy --release --all-targets -- -D warnings
 
 conformance: build
+	$(PYTHON) tests/test_timing_contract.py
 	$(PYTHON) tests/run_cases.py --impl all
 
 cross: build
