@@ -1,0 +1,2 @@
+# External archives (git archive) exclude internal remediation artefacts; they stay in the repository.
+archive/remediation/ export-ignore
