@@ -25,7 +25,7 @@ is not yet known; it matters for every ECOR complete genome used as truth. Next 
 
 **CDS eligibility** (complete genome + PGAP GFF; `cds_eligibility_summary.tsv`, per-CDS table
 gzipped). At `max_orf_nt` 6000 with both strands searched, 3,868–4,088 of 4,445–4,737
-annotated CDSs per isolate are eligible (87–86%). Exclusions:
+annotated CDSs per isolate are eligible (86–88%). Exclusions:
 - 138–200 pseudo;
 - 405–437 non-ATG starts;
 - ≤ 3 internal stops;
