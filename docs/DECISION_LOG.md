@@ -237,12 +237,16 @@ scope Ali set; they do not change the research questions.
   `v1.0.0`, `v1.0.1`).
 - **Date / by:** 2026-11-15 · Ali; carried out by dev agent.
 
-### D-028 — Biological validation: dataset selection and pilot (PENDING Ali)
+### D-028 — Biological validation: dataset selection and pilot (APPROVED by Ali)
 - **Context:** Ali's biological-validation programme (research direction: Ali). Feasibility
   package in `docs/biological_validation/`.
 - **Proposal:** primary ECOR (Illumina per isolate, independent complete ONT genomes);
   secondary CAMISIM simulated from the ECOR genomes; optional single-cell de Bourcy 2014.
   Pilot ≈ 1.86 GB. No engine change for the pilot; schema v2 (`edge_support.tsv`,
   `strict_edge`) deferred until the pilot data are in.
-- **Decision:** awaiting Ali. No data downloaded; no graph-semantics change.
-- **Date / by:** 2026-11-15 · dev agent (Opus).
+- **Decision (Ali, 2026-11-15, in chat):** proceed; do the work on Modal preferably, downloading
+  where needed. Taken as approval of the dataset selection and the ≈ 1.86 GB pilot download to the
+  Modal Volume `colorframe-bioval`. Schema v2 was not addressed, so it stays deferred until the
+  pilot data are in (the memo's default). Revocation of the earlier exposed Modal token was not
+  confirmed; Ali notes that Modal access still works.
+- **Date / by:** 2026-11-15 · proposal by dev agent (Opus); decision by Ali.
