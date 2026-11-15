@@ -2,6 +2,23 @@
 
 All notable changes. Format: Keep a Changelog; versions follow the charter's release plan.
 
+## [1.0.1] — 2026-11-15 (release candidate, unmerged)
+
+### Fixed
+- Equivalent timing phases (new `canonicalize`), strict-then-permissive in all implementations (D-019).
+- Peak RSS measured through `/usr/bin/time`; v1.0.0 Modal floor was fork inheritance (D-020).
+- RQ1: explicit true-observation and spurious-colour processes, true-sample evaluation, 10 paired replicates (D-021).
+
+### Added
+- Timing-contract, RQ1-model, RSS and release-archive tests; verified prior-art review; remediation documents.
+
+### Superseded
+- v1.0.0 search speed-ups, Modal memory figures and RQ1 results (kept, labelled).
+
+## [1.0.0] — 2026-11-14
+
+Tagged release; see below.
+
 ## [0.2.0] — 2026-11-14
 
 ### Added

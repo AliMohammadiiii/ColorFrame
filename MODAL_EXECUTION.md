@@ -46,9 +46,7 @@ parameters and input SHA-256, reps/warm-up/order seed), `pipeline.log` (every co
 output), `cpuinfo.txt`, `meminfo.txt`, `raw_runs.tsv`, `cross_language.tsv`,
 `rq1_recovery.tsv`, `r_version.txt`.
 
-**Known environment limitation:** child-process peak RSS from `wait4` has a floor of ~51 MB in the
-Modal sandbox, and `/proc/cpuinfo` reports `model name: unknown` (vendor AuthenticAMD, 2.45 GHz).
-Peak memory is therefore measured locally (D-015).
+**Environment notes:** `/proc/cpuinfo` reports `model name: unknown`; `/proc/<pid>/status` has no `VmHWM` (gVisor). Peak RSS is measured through GNU `time` (installed in the image), which avoids fork-inherited RSS (D-020). Each run also records `modal_env.txt` (non-secret `MODAL_*` identifiers such as the image and task ids) and the CPU/memory allocation.
 
 ## Cost
 

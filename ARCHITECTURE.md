@@ -49,7 +49,8 @@ discrepancy into a concrete diff.
 Data representation (common shape, language-idiomatic types):
 
 - node index `0..n-1` in **sorted id order**, so "sorted by id" is "ascending index";
-- `seq: bytes`, `colors: sorted int vector`, `succ: index list sorted by target id`;
+- `seq: bytes`, `succ: index list sorted by target id`; colours are **language-specific**: Python `frozenset`, C++/Rust sorted `u32` vectors (`ALGORITHM_SPEC.md` §5a);
+- stages and timing: parse → validate → search → **canonicalize** → write (spec v1.1);
 - search state: walk stack of indices, visit-count array, a byte buffer for `seq` that is
   truncated on backtrack (no per-step string copies), colour intersection saved per frame.
 

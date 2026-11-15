@@ -23,6 +23,10 @@ and, if the fixture is wrong, fixed in a separate `test:` commit with a decision
 | Unit (per language) | `python -m unittest`, `make -C cpp test`, `cargo test` | DNA validation, colour parsing, overlap validation, colour intersection, start/stop detection, frame tracking, candidate construction, cycle and repeat bounds |
 | Cross-language | `tests/cross_language.py` | all three implementations byte-identical on every generated workload |
 | Regression | new case under `fixtures/cases/R*` | every reproducible defect becomes a permanent case |
+| Timing contract | `tests/test_timing_contract.py` | six phases, non-negative, total = sum, all implementations |
+| RQ1 model | `tests/test_rq1_model.py` | true-sample support cases, ceilings, determinism, pairing, noise |
+| RSS method | `tests/test_rss_measurement.py` | peak RSS independent of the harness |
+| Release | `tests/check_release_archive.py ARCHIVE` | no private/VCS/build/OS/secret content; required files present |
 | Static | `cargo fmt --check`, `cargo clippy -D warnings`, `-Wall -Wextra -Wpedantic -Werror` | code quality |
 
 ## 3. Required unit tests (each language)

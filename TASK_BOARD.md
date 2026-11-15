@@ -21,3 +21,4 @@ Every item is accountable to Ali (project lead). Agent attribution: `AI_USAGE.md
 | — | Reverse strand, partial genes, candidate scoring | — | — | Deferred (out of v1 scope) |
 | — | Publish to a public remote | — | Ali | Planned (requires lead's permission) |
 | — | Rotate the Modal token pasted in chat | — | Ali | Planned (owner action, see SECURITY.md) |
+| R1–R9 | v1.0.1 remediation | remediation/v1.0.1 | Opus | see `REMEDIATION_STATUS.md` |

@@ -31,11 +31,12 @@
    is fully specified (D-004), but a different order would keep a different subset.
 9. **Recursion.** All implementations recurse to depth `max_path_nodes`; extreme values could
    exhaust the stack (D-005). Python raises its recursion limit accordingly.
-10. **C++ review note.** `expand()` keeps a reference into the per-depth colour buffer vector,
+10. **C++ review note (still applicable).** `expand()` keeps a reference into the per-depth colour buffer vector,
     which deeper calls may reallocate. It is not used after the recursive calls, so it is
     correct today, but it is fragile under refactoring.
-11. **Benchmarks** describe these implementations on one Modal CPU configuration. See
-    `BENCHMARK_PROTOCOL.md` §5.
+11. **Benchmarks** describe these idiomatic implementations (different colour-set representations, `ALGORITHM_SPEC.md` §5a) on one Modal CPU configuration whose model the sandbox does not report. Vertex ids are sorted, and sensitivity to id permutation and generator seed was **not** tested; synthetic topology and ordering can distort graph benchmarks (Mehrotra et al. 2024).
+11a. **No path validation.** ggCaller removes walks not present in any input with an FM-index; ColorFrame has no equivalent, so even strict candidates may be graph artefacts.
+11b. **RQ1 model.** Independent per-(node, sample) observation and spurious-colour draws; real dropout is correlated with coverage, cell and genome position.
 
 ## Process
 

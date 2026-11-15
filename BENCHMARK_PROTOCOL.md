@@ -1,6 +1,8 @@
 # Benchmark Protocol
 
-**Status:** Validated. Authoritative run `results/modal/20261114T181422Z`; memory reference run `results/local/20261114T181117Z`; superseded first run kept with a note.
+**Status:** Validated (v1.0.1). Authoritative run `results/modal/20261115T065950Z`. Earlier runs are superseded and labelled.
+
+Phase boundaries: `INPUT_OUTPUT_SCHEMA.md` §4 (contract-tested). `--policy both` runs strict, then permissive, in every implementation. Comparisons are of these idiomatic implementations under one semantic contract (`ALGORITHM_SPEC.md` §5a). Timed workloads: perf (10), stress (4), and RQ1 replicate 0 clean (6); all 134 workloads are equivalence-checked.
 
 ## 1. Preconditions
 
@@ -39,7 +41,8 @@ input checksums in `params.json` / `metadata.json`.
 |---|---|---|
 | `wall_ms` | parent `perf_counter_ns` around the child | end-to-end, **includes interpreter start-up** |
 | `parse_ms`, `validate_ms`, `search_ms`, `write_ms`, `total_ms` | the implementation's `--timings` | monotonic clock inside the process |
-| `peak_rss_mb` | `os.wait4` rusage of the child | whole process, includes the Python interpreter. **On Modal the sandbox reports a floor (~51 MB), so authoritative memory figures come from the local macOS run** (D-015) |
+| `peak_rss_mb` | `/usr/bin/time` wrapper (GNU `%M` / BSD `-l`) | whole process, including the Python interpreter. The wrapper prevents fork-inherited RSS (D-020); the floor (`true`) and interpreter baselines are recorded in `metadata.json` |
+| `canonicalize_ms` | `--timings` | canonical ordering only (spec v1.1) |
 | `search_states`, cut counters | `summary.tsv` | identical across implementations by construction |
 | throughput | `search_states / search_ms` | states per second |
 

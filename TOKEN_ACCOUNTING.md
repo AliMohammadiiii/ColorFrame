@@ -1,6 +1,17 @@
 # Token Accounting
 
-**Status:** Recorded where exposed; analysis in `reports/figures/usage_summary.tsv`.
+**Status:** v1.0.1 — a **descriptive AI-assisted development process trace**, not an inferential study (review finding F).
+
+Why the totals are incomplete: several agent legs ended in API errors without exposed usage; the coordinating agent's (Opus) usage is never exposed, including all v1.0.1 remediation work (D-023); there is one implementation episode per language; human development time was not recorded. Recorded totals are therefore lower bounds, and the differences between languages are smaller than the unrecorded parts.
+
+| Quantity | Value |
+|---|---|
+| Model tokens (completed subagent legs) | see ledger below |
+| Opus (shared architecture, review, remediation) | NOT_EXPOSED |
+| Human development time | not recorded |
+| Modal compute, authoritative v1.0.1 run | 179.5 s container wall time (`pipeline.log`), plus a 34 s R analysis and two small probes |
+| Modal cost | NOT_EXPOSED (dashboard only) |
+| Model API cost | NOT_EXPOSED (no per-agent input/output split) |
 
 ## What the harness exposes
 

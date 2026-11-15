@@ -159,3 +159,54 @@ scope Ali set; they do not change the research questions.
 - **Reason:** charter §12.5. GitHub CI has not run, because no remote exists (publishing needs the
   lead's permission); `make test` (the same commands as CI) passes locally.
 - **Date / by:** 2026-11-14 · dev agent.
+
+### D-019 — v1.1 timing phases and policy execution order
+- **Decision:** six phases (`parse, validate, search, canonicalize, write, total`) with contiguous
+  timestamps; sorting moves out of `search`; `--policy both` runs strict then permissive in every
+  implementation. Emit-time deduplication stays in `search` (spec §4.4, an O(1)/O(log M) set
+  check), rather than a separate pass, so the canonicalize phase is ordering only.
+- **Reason:** independent review finding A. C++ and Rust timed sorting as search; Python did not.
+- **Consequence:** v1.0.0 search speed-ups are invalid and superseded. Outputs are unchanged
+  (byte-identical).
+- **Date / by:** 2026-11-15 · dev agent, under the lead's remediation mission.
+
+### D-020 — Peak RSS measured through a `/usr/bin/time` wrapper
+- **Decision:** every benchmark run is wrapped by `/usr/bin/time` (GNU `%M` on Linux, BSD `-l` on
+  macOS); floor (`true`) and Python-interpreter baselines are recorded per run.
+- **Reason:** on Linux a child's `ru_maxrss` inherits the parent's RSS high-water mark through
+  fork, and it survives exec. That produced v1.0.0's ~51 MB Modal floor, which D-015 wrongly
+  attributed to the sandbox. Verified with a Modal probe: direct fork from an 80 MB parent
+  reported 141 MB for `true`; the wrapper reported 2.4 MB.
+- **Consequence:** D-015's local-memory workaround is no longer needed; memory comes from Modal.
+- **Date / by:** 2026-11-15 · dev agent.
+
+### D-021 — RQ1 redesign
+- **Decision:** paired replicates (10), explicit `p_true_observation` and `p_spurious_colour`
+  (clean 0, noisy 0.25·p, non-true samples only), common random numbers, evaluation against each
+  ORF's true samples, policy-specific ceilings.
+- **Alternatives:** keep one realisation with relabelled metrics; draw observations independently
+  per p.
+- **Reason:** independent review findings B and C. Common random numbers make trends across p and
+  the clean/noisy contrast exact rather than confounded by redraws.
+- **Consequence:** RQ1 numbers changed; perf/stress inputs unchanged.
+- **Date / by:** 2026-11-15 · dev agent.
+
+### D-022 — Attribution reconciliation (pending the lead's confirmation)
+- **Decision:** credit Ali with the algorithm design brief in his charter; mark the formal
+  specification as collaborative (drafted by Opus); preserve Ali's edit as commit `3aa59a0` and a
+  patch.
+- **Date / by:** 2026-11-15 · dev agent; **awaiting Ali**.
+
+### D-023 — Remediation implemented by the coordinating agent
+- **Decision:** the v1.0.1 code changes in all three languages were made by Opus directly, not
+  delegated to Sonnet/Haiku.
+- **Reason:** the account's extra-usage budget was exhausted and the 5-hour window nearly full.
+  Re-delegating would have required each agent to re-read the specification.
+- **Date / by:** 2026-11-15 · dev agent.
+
+### D-024 — Scale wording
+- **Decision:** describe the motivating scale as "up to about one million bacterial cells per
+  experiment, each yielding a sparse, incomplete genome".
+- **Reason:** the meeting discusses cells, and the correspondence speaks of a million incomplete
+  genomes, one per cell. The wording covers both; the private sources are not distributed.
+- **Date / by:** 2026-11-15 · dev agent.

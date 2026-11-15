@@ -3,7 +3,7 @@
 **Title:** ColorFrame: Algorithmic Trade-offs and Cross-language Performance of Frame-aware
 Candidate Path Search in Colored Sequence Graphs
 
-**Status:** Delivered (v1.0.0) · charter version 1.0 · 2026-11-14
+**Status:** v1.0.1 release candidate · charter version 1.1 · 2026-11-15
 
 ## 1. People and roles
 
@@ -21,8 +21,8 @@ as hand-written by Ali unless it was.
 ## 2. Origin of the research idea
 
 ColorFrame grew out of a technical discussion (November 2026) about annotating genomes in
-single-cell metagenomic data: up to millions of incomplete bacterial genomes, typically
-represented as a coloured de Bruijn graph. Questions raised there define this study:
+single-cell metagenomic data: up to about one million bacterial cells per experiment, each
+yielding a sparse, incomplete genome, typically summarised as a coloured de Bruijn graph (D-024). Questions raised there define this study:
 
 - How should coding regions be found by walking a branching graph when one cannot follow every
   branch, and how should branches be chosen?
@@ -41,9 +41,9 @@ comparing the same algorithm in three languages, including the AI-assisted devel
   bounded, frame-aware graph traversal?
 - **RQ3 — Computational trade-offs.** How do runtime, memory, throughput, branching and search
   limits interact?
-- **RQ4 — AI-assisted development cost.** How much AI assistance did each equivalent
-  implementation require, and does lower development effort correspond to better runtime or
-  memory performance?
+- **RQ4 — AI-assisted development process (descriptive).** What AI assistance was used to produce
+  each implementation? Reported as a descriptive process trace with incomplete telemetry; v1.0.1
+  makes no inferential claim about effort versus performance (review finding F).
 
 No answer is assumed in advance. This is an engineering and algorithmic study of a simplified
 traversal problem, **not** a gene-calling system.
