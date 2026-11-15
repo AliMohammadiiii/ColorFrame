@@ -80,7 +80,9 @@ A build without a complete provenance file is not used for any reported result.
 
 ## 4. CDS eligibility under current ColorFrame assumptions
 
-A CDS is **eligible** iff all of the following hold:
+A CDS is **eligible** iff all of the following hold. Checks run in the order pseudo, partial,
+strand, alt_start, no_canonical_stop, internal_stop, length; the first failing check is the
+recorded reason (`adapters/cds.py`):
 
 | # | Condition | `exclusion_reason` if not |
 |---|---|---|

@@ -68,7 +68,7 @@ and `rettype=gff3`.
 ## 5. Gates before any analysis
 
 1. **Stock identity (ECOR):** each FDA draft assembly must agree with its complete genome
-   (≥ 99.9% ANI and ≥ 98% of draft k-mers present). Otherwise the isolate is excluded and
+   (minimap2 `asm5`, primary alignments: identity ≥ 99.9% and ≥ 98% of draft bases aligned; `adapters/identity.py`). Otherwise the isolate is excluded and
    replaced by the next candidate in `evidence/ecor_samples.tsv`. Reason: the reads and the
    complete genomes come from different labs and possibly different stocks.
 2. **Read sanity:** read counts and lengths match the ENA metadata.
