@@ -6,6 +6,7 @@ fork time (the high-water mark survives exec). The v1.0.0 Modal run reported a ~
 that reason (D-020). run_benchmarks.measure() must fork through a small wrapper so a child's peak
 reflects the child only. These checks hold on Linux (GNU time) and macOS (BSD time).
 """
+import shutil
 import sys
 import unittest
 from pathlib import Path
@@ -24,7 +25,7 @@ class PeakRssMeasurement(unittest.TestCase):
             cls.ballast[i] = 1
 
     def test_tiny_process_is_not_inflated_by_parent(self):
-        m = rb.measure(["/bin/true"])
+        m = rb.measure([shutil.which("true")])
         self.assertEqual(m["exit"], 0)
         self.assertLess(m["peak_rss_mb"], 20.0)
 
