@@ -1,0 +1,8 @@
+R.4.2.2
+Speed-up = ratio of medians: search_ms (search phase only, spec v1.1) and total_ms (all in-process phases).
+Peak RSS is for the whole process: it includes the Python interpreter itself.
+RQ1: 10 replicates per setting; 95% intervals are exploratory t-intervals across replicates.
+RQ1 search completeness: recovered_within_true_ceiling == true_ceiling in 240 of 240 runs.
+RQ1 recovery is synthetic ground-truth recovery in a simplified model; extra candidates are real ORFs in synthetic background sequence.
+RQ4 table pairs recorded implementation-agent tokens with stress_s800000 performance; n = 3, descriptive only.
+Token totals include only legs whose usage the harness exposed; legs cut off by API errors are NOT_EXPOSED.

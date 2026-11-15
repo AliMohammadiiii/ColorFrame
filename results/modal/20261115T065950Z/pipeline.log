@@ -1,0 +1,221 @@
+commit=cb50ddc27e7dd602c8307972a227fa326749d6b2 dirty=0
+$ python3 --version; g++ --version | head -1; rustc --version; nproc; grep -m1 'model name' /proc/cpuinfo; grep -E 'MemTotal|MemAvailable' /proc/meminfo
+Python 3.12.10
+g++ (Debian 12.2.0-14+deb12u1) 12.2.0
+rustc 1.99.1 (58cf8f9c3 2026-10-13)
+1
+model name	: unknown
+MemTotal:       341416012 kB
+MemAvailable:   341357192 kB
+[exit 0]
+$ env | grep '^MODAL_' | grep -viE 'token|secret|key|password' | sort > /repo/results/run/modal_env.txt
+[exit 0]
+$ python3 tests/check_fixtures.py
+39/39 fixture cases consistent
+[exit 0]
+$ python3 tests/run_cases.py --impl all
+[python] 39/39 cases passed; usage check ok
+[cpp] 39/39 cases passed; usage check ok
+[rust] 39/39 cases passed; usage check ok
+[exit 0]
+$ python3 tests/test_timing_contract.py
+[python] timing contract ok
+[cpp] timing contract ok
+[rust] timing contract ok
+[exit 0]
+$ python3 tests/test_rq1_model.py
+............
+----------------------------------------------------------------------
+Ran 12 tests in 0.219s
+
+OK
+[exit 0]
+$ python3 tests/test_rss_measurement.py
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.097s
+
+OK
+[exit 0]
+$ python3 benchmarks/generate_workloads.py
+perf_n50_low         nodes=    50 edges=    61 mean_deg=1.22 planted=5
+perf_n50_high        nodes=    50 edges=    97 mean_deg=1.94 planted=5
+perf_n200_low        nodes=   200 edges=   239 mean_deg=1.20 planted=20
+perf_n200_high       nodes=   200 edges=   397 mean_deg=1.99 planted=20
+perf_n500_low        nodes=   500 edges=   593 mean_deg=1.19 planted=50
+perf_n500_high       nodes=   500 edges=   997 mean_deg=1.99 planted=50
+perf_n2000_low       nodes=  2000 edges=  2408 mean_deg=1.20 planted=200
+perf_n2000_high      nodes=  2000 edges=  3997 mean_deg=2.00 planted=200
+perf_n10000_low      nodes= 10000 edges= 12048 mean_deg=1.20 planted=1000
+perf_n10000_high     nodes= 10000 edges= 19997 mean_deg=2.00 planted=1000
+stress_s12500        nodes=   200 edges=   400 mean_deg=2.00 planted=0
+stress_s50000        nodes=   200 edges=   400 mean_deg=2.00 planted=0
+stress_s200000       nodes=   200 edges=   400 mean_deg=2.00 planted=0
+stress_s800000       nodes=   200 edges=   400 mean_deg=2.00 planted=0
+rq1: 120 paired workloads (10 replicates x 6 p x 2 conditions)
+[exit 0]
+$ python3 tests/cross_language.py --out /repo/results/run/cross_language.tsv
+OK   perf_n10000_high   candidates=  56264 cand_sha=064084e588297bb6 summ_sha=127ba9c4a0fe0769
+OK   perf_n10000_low    candidates=  21247 cand_sha=f85fa14164f6a663 summ_sha=8f4ce7cc2a117604
+OK   perf_n2000_high    candidates=  10878 cand_sha=abe70e93a045ad54 summ_sha=177add8bd0fbb854
+OK   perf_n2000_low     candidates=   4093 cand_sha=ae3f32d8a240bd2f summ_sha=2ae7e3f80a6f4915
+OK   perf_n200_high     candidates=   1005 cand_sha=b43ba464d4eceac7 summ_sha=78df233fb058cafd
+OK   perf_n200_low      candidates=    390 cand_sha=f8b59730354cd202 summ_sha=3c5d073d9f927701
+OK   perf_n500_high     candidates=   2579 cand_sha=0745bb79fd73d9d1 summ_sha=9cc98507e76bfd67
+OK   perf_n500_low      candidates=   1094 cand_sha=db1e995492465888 summ_sha=2cd4ba637a44a875
+OK   perf_n50_high      candidates=    195 cand_sha=8d0d7e47478608b3 summ_sha=93997f04fb54e892
+OK   perf_n50_low       candidates=     89 cand_sha=7294bca207992d10 summ_sha=41e5420be07061b7
+OK   rq1_r00_p10_clean  candidates=    291 cand_sha=818de86275c39c42 summ_sha=800b5d1b6aa02759
+OK   rq1_r00_p10_noisy  candidates=    362 cand_sha=052d735f7d0f87d3 summ_sha=ee220a863f146c3c
+OK   rq1_r00_p20_clean  candidates=    693 cand_sha=ad3b1b843b6c70f5 summ_sha=1969021788a3a1f1
+OK   rq1_r00_p20_noisy  candidates=    878 cand_sha=a62ef57f042e9937 summ_sha=bebaa2160c318c14
+OK   rq1_r00_p30_clean  candidates=   1108 cand_sha=e39118d91c1a50cb summ_sha=c13b9ceb21d924b9
+OK   rq1_r00_p30_noisy  candidates=   1416 cand_sha=c1a5f2ecb67db430 summ_sha=7a2a925e0821893d
+OK   rq1_r00_p50_clean  candidates=   2262 cand_sha=2391481262a4613e summ_sha=85d877e1b319c838
+OK   rq1_r00_p50_noisy  candidates=   2555 cand_sha=2156727dadc5f481 summ_sha=1749ddfa46b3b50e
+OK   rq1_r00_p70_clean  candidates=   3131 cand_sha=b6ba6495e8a0a6a0 summ_sha=041a49774e2f87d2
+OK   rq1_r00_p70_noisy  candidates=   3306 cand_sha=64d5e4d1ccc549a3 summ_sha=c093ab6618ccb285
+OK   rq1_r00_p90_clean  candidates=   3608 cand_sha=3b63163f0cbdfe93 summ_sha=53926e7808c38fe1
+OK   rq1_r00_p90_noisy  candidates=   3809 cand_sha=b6732c4de1047380 summ_sha=60c04262bf3a9688
+OK   rq1_r01_p10_clean  candidates=    218 cand_sha=a877dd07470a0556 summ_sha=a5c8d0c2d79dcf4c
+OK   rq1_r01_p10_noisy  candidates=    319 cand_sha=317aeb93fd19fb96 summ_sha=a70830ef43a8e3f8
+OK   rq1_r01_p20_clean  candidates=    601 cand_sha=db64ad1c11f5a76c summ_sha=13118c5eb65cd9d5
+OK   rq1_r01_p20_noisy  candidates=    765 cand_sha=aa6797423ea559ce summ_sha=b09c09438548e1c8
+OK   rq1_r01_p30_clean  candidates=   1109 cand_sha=2a0d321f0db8073f summ_sha=42653868c3003338
+OK   rq1_r01_p30_noisy  candidates=   1431 cand_sha=1d946e4dae392da1 summ_sha=878181a03f2e9ad5
+OK   rq1_r01_p50_clean  candidates=   2304 cand_sha=ab51af6eed7d9235 summ_sha=4194aa0dcee233b9
+OK   rq1_r01_p50_noisy  candidates=   2687 cand_sha=62b2502befc5b2c8 summ_sha=0eba287e56c11b86
+OK   rq1_r01_p70_clean  candidates=   3178 cand_sha=c1546606894311fb summ_sha=92f97f4aaa80672a
+OK   rq1_r01_p70_noisy  candidates=   3399 cand_sha=7d9ada497490bcb7 summ_sha=b4e51218184dcec8
+OK   rq1_r01_p90_clean  candidates=   3846 cand_sha=4cb778c0f76b2639 summ_sha=03579e6cf351136f
+OK   rq1_r01_p90_noisy  candidates=   4009 cand_sha=e02f72d089fa0545 summ_sha=ad99a336cf5e8523
+OK   rq1_r02_p10_clean  candidates=    217 cand_sha=23331e88d17dca18 summ_sha=2cf93cb919218ebb
+OK   rq1_r02_p10_noisy  candidates=    272 cand_sha=7ecc14c337e65671 summ_sha=a0a24a89aaa6cba0
+OK   rq1_r02_p20_clean  candidates=    648 cand_sha=11e940ced2993016 summ_sha=54597e0cc24f0fc5
+OK   rq1_r02_p20_noisy  candidates=    871 cand_sha=3cf1c1585be885db summ_sha=020c57001ab7e340
+OK   rq1_r02_p30_clean  candidates=   1167 cand_sha=ccab227954689fd6 summ_sha=7f8196393f233a61
+OK   rq1_r02_p30_noisy  candidates=   1414 cand_sha=bc97b3698451840b summ_sha=7caa02e5175b0b3c
+OK   rq1_r02_p50_clean  candidates=   2199 cand_sha=4eab2063d618e7f0 summ_sha=a5e1de723d8ed92a
+OK   rq1_r02_p50_noisy  candidates=   2527 cand_sha=fcf23ee1c4077130 summ_sha=4e0ad73022146e5d
+OK   rq1_r02_p70_clean  candidates=   2895 cand_sha=12651c7220ebc2e3 summ_sha=6c45bc67e2b6805d
+OK   rq1_r02_p70_noisy  candidates=   3106 cand_sha=9915e585863a2983 summ_sha=d6ac8a5facf0ac2a
+OK   rq1_r02_p90_clean  candidates=   3730 cand_sha=be7827a706ac1f6c summ_sha=f6fd769c341bf323
+OK   rq1_r02_p90_noisy  candidates=   3954 cand_sha=5321594beee53c23 summ_sha=4c8e5057c8a8b307
+OK   rq1_r03_p10_clean  candidates=    232 cand_sha=a47ef01efb944476 summ_sha=cfafe14aebf474a4
+OK   rq1_r03_p10_noisy  candidates=    329 cand_sha=f2a0979dc99f5b42 summ_sha=42f127bf435f11d1
+OK   rq1_r03_p20_clean  candidates=    671 cand_sha=7b63b3cfdf99e0b4 summ_sha=396b594cb8ef9913
+OK   rq1_r03_p20_noisy  candidates=    830 cand_sha=facee405ec172e56 summ_sha=8fc4839454918211
+OK   rq1_r03_p30_clean  candidates=   1086 cand_sha=314e6ca7f59336f4 summ_sha=029230f24325b76d
+OK   rq1_r03_p30_noisy  candidates=   1336 cand_sha=e06b7764040edbb8 summ_sha=3b268299aff49f01
+OK   rq1_r03_p50_clean  candidates=   2558 cand_sha=a63368aec8b10353 summ_sha=84c75efd4361aa9d
+OK   rq1_r03_p50_noisy  candidates=   2741 cand_sha=3e2d532d0f7efeda summ_sha=d874876c76d6c160
+OK   rq1_r03_p70_clean  candidates=   3356 cand_sha=1a0a5321d64b78f4 summ_sha=014d4170d026c323
+OK   rq1_r03_p70_noisy  candidates=   3558 cand_sha=31f058dda3adaf18 summ_sha=586aa0eb0d329b98
+OK   rq1_r03_p90_clean  candidates=   3921 cand_sha=87b74f190749fa22 summ_sha=9c5e997509e116be
+OK   rq1_r03_p90_noisy  candidates=   4116 cand_sha=3b0cf0a9a68ab272 summ_sha=a9df1151a9336e63
+OK   rq1_r04_p10_clean  candidates=    247 cand_sha=ead60ac3cd727188 summ_sha=b3244e6d9ab3753f
+OK   rq1_r04_p10_noisy  candidates=    328 cand_sha=5609b0b36bf4898c summ_sha=fa544609ca9245f1
+OK   rq1_r04_p20_clean  candidates=    754 cand_sha=2a8bcaff9aa309fe summ_sha=c20e780839752c6e
+OK   rq1_r04_p20_noisy  candidates=   1064 cand_sha=92e0206b9c88ee11 summ_sha=abcfd42822e667d2
+OK   rq1_r04_p30_clean  candidates=   1297 cand_sha=12e4b62600c93b64 summ_sha=73fd1ff4f6ff466e
+OK   rq1_r04_p30_noisy  candidates=   1843 cand_sha=820b3c255bb25607 summ_sha=1ed1466932f75f3e
+OK   rq1_r04_p50_clean  candidates=   2659 cand_sha=54a00e6f9cd5ed89 summ_sha=52030e05a2976d1b
+OK   rq1_r04_p50_noisy  candidates=   3022 cand_sha=e59f82c757581bbf summ_sha=086bfd126a62a9bd
+OK   rq1_r04_p70_clean  candidates=   3591 cand_sha=ebc8806d17380bcd summ_sha=133a76894091399c
+OK   rq1_r04_p70_noisy  candidates=   3752 cand_sha=8c7783c5c8dfbc5f summ_sha=c2a9f76ce445f932
+OK   rq1_r04_p90_clean  candidates=   4143 cand_sha=d89e23b43121fa7a summ_sha=fd1f4db7a8ea65c4
+OK   rq1_r04_p90_noisy  candidates=   4413 cand_sha=402e6cdd5a77f3fe summ_sha=9bc21e50a6ca5ff5
+OK   rq1_r05_p10_clean  candidates=    281 cand_sha=a2f081c5adb0649f summ_sha=4a1da35132b27327
+OK   rq1_r05_p10_noisy  candidates=    336 cand_sha=360686bcc7aaff5f summ_sha=5b31811c37600f15
+OK   rq1_r05_p20_clean  candidates=    648 cand_sha=7e646160a57d1d40 summ_sha=057ce950f2d430af
+OK   rq1_r05_p20_noisy  candidates=    917 cand_sha=9538b27c7c8c84de summ_sha=ec29c1f016c84469
+OK   rq1_r05_p30_clean  candidates=   1179 cand_sha=8597b68b61785964 summ_sha=f0ff743131e9461e
+OK   rq1_r05_p30_noisy  candidates=   1522 cand_sha=3a9561c8ba53f1d7 summ_sha=3e52dbea0813f925
+OK   rq1_r05_p50_clean  candidates=   2478 cand_sha=723e1552e7cb1d5b summ_sha=a69cde9c41164afd
+OK   rq1_r05_p50_noisy  candidates=   2749 cand_sha=508ac9b7e8c98809 summ_sha=c398c3ca715b1ace
+OK   rq1_r05_p70_clean  candidates=   3380 cand_sha=d32bf7373f730145 summ_sha=8cd0762d01ad5c35
+OK   rq1_r05_p70_noisy  candidates=   3609 cand_sha=47b00ea6608f0ff6 summ_sha=447241a4c18c66e5
+OK   rq1_r05_p90_clean  candidates=   3940 cand_sha=0e212416de3fd002 summ_sha=f411dcc2ef4d6a28
+OK   rq1_r05_p90_noisy  candidates=   4204 cand_sha=9712c5a3fa4c4eae summ_sha=4b6be21c4f30580b
+OK   rq1_r06_p10_clean  candidates=    187 cand_sha=6b00ab83a08c2d0b summ_sha=c394287e5a01697b
+OK   rq1_r06_p10_noisy  candidates=    283 cand_sha=aadbc0ea0564025b summ_sha=12d0734712e93290
+OK   rq1_r06_p20_clean  candidates=    548 cand_sha=d2956683a7089c55 summ_sha=869ff7879ab6392e
+OK   rq1_r06_p20_noisy  candidates=    716 cand_sha=b18bff3a30005505 summ_sha=35d582676fb37f76
+OK   rq1_r06_p30_clean  candidates=   1176 cand_sha=324c4524b57af9a7 summ_sha=177fb65c409c5354
+OK   rq1_r06_p30_noisy  candidates=   1362 cand_sha=140d6c1c2a079500 summ_sha=fab3ece13a43f3a2
+OK   rq1_r06_p50_clean  candidates=   2059 cand_sha=a137c8f5fdd80748 summ_sha=76892eaf70667831
+OK   rq1_r06_p50_noisy  candidates=   2250 cand_sha=bc8923bc7fd4d7ef summ_sha=3e6c19e39ecabc9b
+OK   rq1_r06_p70_clean  candidates=   2649 cand_sha=dad15981fb2c64f1 summ_sha=dccc559a02ceb2a3
+OK   rq1_r06_p70_noisy  candidates=   2796 cand_sha=8f1471e11025d841 summ_sha=51042a0cdef0cfdf
+OK   rq1_r06_p90_clean  candidates=   3105 cand_sha=df0be973ecbdcbda summ_sha=dabe400b4e44305b
+OK   rq1_r06_p90_noisy  candidates=   3165 cand_sha=9db9e767ea30303c summ_sha=72c956fe415ebdbb
+OK   rq1_r07_p10_clean  candidates=    189 cand_sha=133f7c02a91ef084 summ_sha=416dcb41a5097fea
+OK   rq1_r07_p10_noisy  candidates=    248 cand_sha=c114f3d09d9447be summ_sha=70f9859f6d168279
+OK   rq1_r07_p20_clean  candidates=    520 cand_sha=1f44f9dafe9132a4 summ_sha=8710b7e26ffa5a32
+OK   rq1_r07_p20_noisy  candidates=    732 cand_sha=fd398ca34233dd3a summ_sha=791797aecc7efde1
+OK   rq1_r07_p30_clean  candidates=   1132 cand_sha=ab79d36ee7110343 summ_sha=fc19a2848de26ded
+OK   rq1_r07_p30_noisy  candidates=   1425 cand_sha=b278aaacce7679be summ_sha=8b2458119bc04f0c
+OK   rq1_r07_p50_clean  candidates=   2063 cand_sha=fcc3fe6537ab91c7 summ_sha=3e7663b5d754c178
+OK   rq1_r07_p50_noisy  candidates=   2307 cand_sha=38af90708eb7a1a1 summ_sha=04cf0d8225bfeeea
+OK   rq1_r07_p70_clean  candidates=   2875 cand_sha=9466812ad5326563 summ_sha=e045de0ac828b029
+OK   rq1_r07_p70_noisy  candidates=   3011 cand_sha=cadc65b27b9fd953 summ_sha=90866f7ae77a28bd
+OK   rq1_r07_p90_clean  candidates=   3337 cand_sha=a06a36891733bb16 summ_sha=9c53a1e1bb0e4698
+OK   rq1_r07_p90_noisy  candidates=   3510 cand_sha=44aaa6623f993a7c summ_sha=850e539529c05a54
+OK   rq1_r08_p10_clean  candidates=    237 cand_sha=8a60f3ddd90e5e63 summ_sha=36a88ab7ade64f6b
+OK   rq1_r08_p10_noisy  candidates=    325 cand_sha=570139a83f3ad6b9 summ_sha=f9583c493f377c55
+OK   rq1_r08_p20_clean  candidates=    599 cand_sha=5c4e7e2b3d15c8a2 summ_sha=28039b81829b1208
+OK   rq1_r08_p20_noisy  candidates=    782 cand_sha=2ac5b176186c3af8 summ_sha=4e2a6185ffa7c86c
+OK   rq1_r08_p30_clean  candidates=   1127 cand_sha=ecf12ab76bccb93c summ_sha=b80c0358749e1d06
+OK   rq1_r08_p30_noisy  candidates=   1366 cand_sha=3185d741a030959c summ_sha=383a26936caa83d1
+OK   rq1_r08_p50_clean  candidates=   2268 cand_sha=5fec473798d40b04 summ_sha=477bde86eb195b4d
+OK   rq1_r08_p50_noisy  candidates=   2601 cand_sha=49cd7ecccd2947d8 summ_sha=df19be7bebc5aa0e
+OK   rq1_r08_p70_clean  candidates=   2950 cand_sha=269534dbef2c3702 summ_sha=44fd83966ccea113
+OK   rq1_r08_p70_noisy  candidates=   3116 cand_sha=d7c3335bf363f161 summ_sha=035becd66b5a28dc
+OK   rq1_r08_p90_clean  candidates=   3503 cand_sha=7e684eb37ce24760 summ_sha=6851147a1ba3c320
+OK   rq1_r08_p90_noisy  candidates=   3654 cand_sha=aba3378ebaec1c64 summ_sha=ae31951a7540807b
+OK   rq1_r09_p10_clean  candidates=    281 cand_sha=4b282cedb8c2b6b5 summ_sha=0e23f812c6541874
+OK   rq1_r09_p10_noisy  candidates=    360 cand_sha=441ef4269e0b2ccc summ_sha=4d979c03dc390b24
+OK   rq1_r09_p20_clean  candidates=    729 cand_sha=753a5d440678e3a9 summ_sha=1e9507370d7ed523
+OK   rq1_r09_p20_noisy  candidates=   1009 cand_sha=cca7dd88d0cde2a0 summ_sha=308067ff5378126d
+OK   rq1_r09_p30_clean  candidates=   1322 cand_sha=e03cff32c83b9fb2 summ_sha=ed36ebd33a57add8
+OK   rq1_r09_p30_noisy  candidates=   1643 cand_sha=f097ca8b1eab854c summ_sha=0f08b3e8e664ef05
+OK   rq1_r09_p50_clean  candidates=   2719 cand_sha=24009f968f782188 summ_sha=cc5ddd593e1f80d9
+OK   rq1_r09_p50_noisy  candidates=   3031 cand_sha=5b867cbc3e058f6d summ_sha=3907cdcf6ecbffd1
+OK   rq1_r09_p70_clean  candidates=   3561 cand_sha=7691b2cbb87c0f02 summ_sha=3869d1e717044083
+OK   rq1_r09_p70_noisy  candidates=   3853 cand_sha=84c9a6416a19bde2 summ_sha=32339126e5d120df
+OK   rq1_r09_p90_clean  candidates=   4307 cand_sha=b762f2ab239aa913 summ_sha=c7fc317c6ff622c1
+OK   rq1_r09_p90_noisy  candidates=   4514 cand_sha=00459e3a7befd587 summ_sha=e27e4eb9238e91c0
+OK   stress_s12500      candidates=      0 cand_sha=3692af6d627491bc summ_sha=013b8cf6d1e54256
+OK   stress_s200000     candidates=      0 cand_sha=3692af6d627491bc summ_sha=2c6d81924d88e538
+OK   stress_s50000      candidates=      0 cand_sha=3692af6d627491bc summ_sha=2d7e651d7b64dd5f
+OK   stress_s800000     candidates=      0 cand_sha=3692af6d627491bc summ_sha=2788dd2a77053171
+134/134 workloads equivalent across python, cpp, rust
+[exit 0]
+$ python3 benchmarks/evaluate_rq1.py --impl rust --out /repo/results/run/rq1_recovery.tsv
+wrote 240 rows (120 workloads) to /repo/results/run/rq1_recovery.tsv
+[exit 0]
+$ python3 benchmarks/run_benchmarks.py --out /repo/results/run --reps 7 --warmup 2 
+perf_n10000_high   impls=python,cpp,rust identical=True
+perf_n10000_low    impls=python,cpp,rust identical=True
+perf_n2000_high    impls=python,cpp,rust identical=True
+perf_n2000_low     impls=python,cpp,rust identical=True
+perf_n200_high     impls=python,cpp,rust identical=True
+perf_n200_low      impls=python,cpp,rust identical=True
+perf_n500_high     impls=python,cpp,rust identical=True
+perf_n500_low      impls=python,cpp,rust identical=True
+perf_n50_high      impls=python,cpp,rust identical=True
+perf_n50_low       impls=python,cpp,rust identical=True
+rq1_r00_p10_clean  impls=python,cpp,rust identical=True
+rq1_r00_p20_clean  impls=python,cpp,rust identical=True
+rq1_r00_p30_clean  impls=python,cpp,rust identical=True
+rq1_r00_p50_clean  impls=python,cpp,rust identical=True
+rq1_r00_p70_clean  impls=python,cpp,rust identical=True
+rq1_r00_p90_clean  impls=python,cpp,rust identical=True
+stress_s12500      impls=python,cpp,rust identical=True
+stress_s200000     impls=python,cpp,rust identical=True
+stress_s50000      impls=python,cpp,rust identical=True
+stress_s800000     impls=python,cpp,rust identical=True
+[exit 0]
+$ cat /proc/cpuinfo > /repo/results/run/cpuinfo.txt; cat /proc/meminfo > /repo/results/run/meminfo.txt
+[exit 0]
+container_wall_seconds=179.5

@@ -1,0 +1,4 @@
+language	total_tokens	search_ms	rss_mb
+cpp	116682	88.654	6.74
+python	108958	8185.814	16.56
+rust	126251	77.027	4.7

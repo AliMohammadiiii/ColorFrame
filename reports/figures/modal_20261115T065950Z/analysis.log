@@ -1,0 +1,16 @@
+null device 
+          1 
+null device 
+          1 
+analysis complete
+Warning messages:
+1: In arrows(e$p_true_observation, e$ci95_low, e$p_true_observation,  :
+  zero-length arrow is of indeterminate angle and so skipped
+2: In arrows(e$p_true_observation, e$ci95_low, e$p_true_observation,  :
+  zero-length arrow is of indeterminate angle and so skipped
+3: In arrows(e$p_true_observation, e$ci95_low, e$p_true_observation,  :
+  zero-length arrow is of indeterminate angle and so skipped
+4: In arrows(e$p_true_observation, e$ci95_low, e$p_true_observation,  :
+  zero-length arrow is of indeterminate angle and so skipped
+
+[exit 0]
