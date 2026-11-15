@@ -25,3 +25,4 @@ Every item is accountable to Ali (project lead). Agent attribution: `AI_USAGE.md
 | R1–R9 | v1.0.1 remediation | merged into main | Opus | Validated (`remediation/REMEDIATION_STATUS.md`) |
 | F1–F10 | v1.0.1-rc2 precision pass | merged into main | Opus | Validated (`remediation/RC2_REMEDIATION_STATUS.md`) |
 | — | v1.0.1 final: docs/ layout, licence, CI, single branch | main | Opus | Validated (tag `v1.0.1`) |
+| — | Biological validation: feasibility + pilot stage 1 | feat/biological-validation | Opus | Stage 1 done; identity diagnostic written, not run (see `biological_validation/PILOT_STATUS.md`) |
