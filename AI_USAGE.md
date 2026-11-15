@@ -1,23 +1,28 @@
 # AI Usage and Attribution
 
-**Status:** Complete for v1 development (2026-11-14).
+**Status:** Updated for v1.0.1 (2026-11-15).
 
 This is the authoritative record of who did what. Under D-001, Git commits use the project
 lead's identity and contain no tool or model names, so this file, not `git log`, shows AI
 involvement.
 
-## Roles
+## Roles (reconciled in v1.0.1 from the recorded prompts, commits and decision log)
 
-| Contributor | Contribution |
+| Contributor | Contribution that the records substantiate |
 |---|---|
-| **Ali Mohammadi** (project lead) | Research direction and questions (RQ1–RQ4), the idea of frame-aware candidate path search with colour-support policies, three-language comparison and AI-effort measurement, Algorithm specification , the detailed charter, choice of Modal/TDD/Git practices, supervision of the agents, and final responsibility for all content. |
-| Claude Opus 5.5 (coordinating development agent, high effort) | I/O schema; fixture design with hand-derived expectations; brute-force oracle; conformance and cross-language runners; workload generator; benchmark runner; Modal app; R analysis; code review; integration; all documentation. |
-| Claude Sonnet 5.5 (implementation agents) | Python, C++17 and Rust implementations and their unit tests. |
-| Claude Haiku 5.5 (supporting agents) | Makefile and CI workflow; Crossref verification of bibliographic metadata. |
+| **Ali Mohammadi** (project lead) | Original project idea and research direction; research questions RQ1–RQ4; the intended comparisons (strict vs permissive support, Python/C++/Rust, AI-assisted effort); scope; **the algorithm design brief** in the charter he wrote (graph model, data-contract columns, traversal state, 13-step core algorithm, search limits, both support policies, the ten fixture scenarios, workload sizes/branching/seed, benchmark protocol, token-ledger columns); the decision to commission the independent review and this remediation; final scientific decisions and interpretation. |
+| **Collaborative** | **Algorithm specification.** Ali's design brief (above) defined the algorithm. Opus turned it into the formal, normative `ALGORITHM_SPEC.md` (pseudocode, start-position ownership, uniform overlap, counter definitions, exploration order) and `INPUT_OUTPUT_SCHEMA.md` (formats, validation order, error codes). No explicit review of the formal text by Ali is recorded. |
+| Claude Opus 5.5 (coordinating development agent, high effort) | Formal spec and schema as above; fixture contents with hand-derived expectations (including the two errors later corrected, D-014); brute-force oracle; conformance, cross-language, timing-contract, RQ1 and RSS test harnesses; workload generator; benchmark runner; Modal app; R analysis; code review; integration; documentation. **v1.0.1:** all remediation code and docs, including the timing-phase changes in the Python, C++ and Rust implementations (done directly rather than delegated, to stay within the account's usage limits). |
+| Claude Sonnet 5.5 (implementation agents) | v1.0.0 Python, C++17 and Rust implementations and their unit tests. |
+| Claude Haiku 5.5 (supporting agents) | Makefile and CI workflow; Crossref verification of bibliographic metadata (v1.0.0). |
 
-No code in this repository was written by hand by Ali. His contribution is the research design,
-direction, review and decisions. That is the point of the AI-assisted engineering part of the
-study (RQ4).
+No code in this repository was written by hand by Ali.
+
+**Record of the lead's edit.** On 2026-11-14/15 Ali edited this table to move "Algorithm
+specification" from Opus to himself (preserved as commit `3aa59a0` and as
+`archive/remediation/ai_usage_uncommitted_edit_2026-11-15.patch`). The reconciliation above
+credits him with the algorithm design and marks the formal specification as collaborative,
+because the formal text was drafted by Opus. **Pending Ali's confirmation.**
 
 ## Commit → producing agent
 
@@ -37,7 +42,9 @@ study (RQ4).
 | 5533352 | feat: add seeded workload generator, cross-language check, RQ1 evaluator, benchmark runner and Modal app | Opus |
 | 2bd8c27 | feat: implement Rust bounded traversal | Sonnet (Rust agent) |
 | 77d63d3 | feat: add AI agent usage ledger | Opus (also accidentally contains `analysis/analysis.R` and `references.bib`; see CHANGELOG) |
-| later | documentation, results, report | Opus |
+| later (v1.0.0) | documentation, results, report | Opus |
+| 3aa59a0 | docs: preserve lead's uncommitted attribution edit | Ali's edit, committed by Opus |
+| c74ce82 … all later v1.0.1 commits | timing-phase, RSS, RQ1, literature, documentation remediation | Opus (see `REMEDIATION_LOG.md`) |
 
 Merge commits were made by Opus after review.
 
