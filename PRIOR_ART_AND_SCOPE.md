@@ -1,34 +1,43 @@
 # Prior Art and Scope
 
-**Status:** Validated.
+**Status:** Validated for v1.0.1 (ggCaller workflow verified from the full text).
+
+## ColorFrame versus ggCaller
+
+| Aspect | ggCaller (Horsfield et al. 2023) | ColorFrame |
+|---|---|---|
+| Graph | Bifrost coloured compacted DBG built from assemblies | hand-made or synthetic directed sequence graph with explicit node sequences and one declared overlap `K`; no graph construction |
+| ORF discovery | DFS from stop codons, pairing stops in the same reading frame | DFS from every owned `ATG`, ending at the first in-frame stop |
+| Path validity | FM-index query against the input sequences removes walks that no input contains ("short-circuits") | **none**: any walk allowed by the bounds is a candidate |
+| Colour evidence | number of colours shared in a node, used in start scoring | strict (one colour on every node) or permissive (some colour on each node) pruning policies |
+| Start selection | scored by translation-initiation context, colour coverage and orthologue consistency | none: every `ATG` yields its own candidate |
+| Downstream | COG clustering, Balrog scoring, functional annotation | none |
+| Validation | simulated and real bacterial populations | synthetic fixtures and workloads only; no biological validation |
+| Engineering focus | a production tool | a fully specified traversal, explicit truncation accounting, three byte-equivalent implementations |
 
 ## Not claimed as new
 
-| Idea | Established by (examples) |
-|---|---|
-| Colour sets on graph nodes | Iqbal et al. 2012; Holley & Melsted 2020 |
-| Gene calling by traversing a sequence graph | Horsfield et al. 2023 (ggCaller) |
-| Making the reading frame explicit during graph construction or traversal | Peng et al. 2016; Jaromczyk et al. 2012 |
-| ORF = ATG … first in-frame stop | standard textbook definition |
-| Bounding path enumeration on cyclic graphs | standard algorithmic practice |
+Graph-based ORF discovery, frame-aware DFS, colour-based evidence, bounded path enumeration and
+the ATG-to-first-stop ORF definition are all established (see `LITERATURE_REVIEW.md`).
 
 ## What ColorFrame contributes
 
-1. **A precise, testable problem statement.** Spec v1.0 defines start-position ownership under
-   overlaps, exploration order, and a counter for every pruning and truncation event, so that
-   independent implementations can be compared byte for byte.
-2. **Truncation is a first-class output.** `exhaustive = 0` whenever a bound hides part of
-   the walk space. A bounded search is never reported as complete.
-3. **A controlled policy comparison (RQ1)** with known planted ORFs and a simple dropout model
-   of sparse per-cell evidence.
-4. **An engineering case study (RQ2–RQ4):** three byte-equivalent implementations, benchmarked
-   in one pinned environment, with the AI-assisted development effort recorded alongside.
+1. **A precise, testable problem statement.** The spec defines start ownership under overlaps,
+   exploration order, and a counter for every pruning and truncation event, so independent
+   implementations can be compared byte for byte.
+2. **Truncation as an output.** `exhaustive = 0` whenever a bound hid part of the walk space.
+3. **A controlled synthetic comparison of two colour-support policies (RQ1).** Planted ORFs carry
+   known true samples, with explicit true-observation and spurious-colour processes and 10 paired
+   replicates.
+4. **An engineering case study (RQ2–RQ3):** three implementations under one semantic contract,
+   with equivalent timing phases, in one pinned environment.
+5. **A descriptive record of the AI-assisted development process.**
 
 ## Explicitly not claimed
 
-- That ColorFrame finds genes. It enumerates ORF candidates in a toy model.
-- That results transfer to real coloured de Bruijn graphs, real single-cell data, or genome
-  scale. The synthetic graphs have at most 10 000 nodes.
-- That one programming language is faster in general. Results describe *these*
-  implementations, on *this* hardware, for *this* algorithm.
-- That lower AI token usage means better engineering.
+- That ColorFrame finds genes, or that a recovered candidate is a validated gene.
+- That colour support, strict or permissive, proves a walk exists in any single cell.
+- That results transfer to real coloured DBGs, real single-cell data or genome scale.
+- That one programming language is faster in general. Results describe these implementations,
+  with their language-idiomatic data structures, on the recorded hardware.
+- Any relationship between AI token use and code quality or performance.
