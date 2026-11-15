@@ -4,6 +4,8 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <string>
+#include <utility>
 
 #include "colorframe.hpp"
 
@@ -71,9 +73,10 @@ Options parse_args(int argc, char** argv) {
         else if (flag == "--max-node-visits") o.limits.max_node_visits = limit_value(flag, v, 1);
         else o.limits.max_states = limit_value(flag, v, 1);
     }
-    for (auto& req : {std::make_pair("--nodes", &o.nodes), std::make_pair("--edges", &o.edges),
-                      std::make_pair("--policy", &o.policy), std::make_pair("--out", &o.out),
-                      std::make_pair("--summary", &o.summary)})
+    const std::pair<const char*, const std::string*> required[] = {
+        {"--nodes", &o.nodes}, {"--edges", &o.edges}, {"--policy", &o.policy},
+        {"--out", &o.out}, {"--summary", &o.summary}};
+    for (const auto& req : required)
         if (req.second->empty()) throw UsageError{std::string("missing required flag ") + req.first};
     if (o.policy != "strict" && o.policy != "permissive" && o.policy != "both")
         throw UsageError{"--policy must be strict, permissive or both"};
