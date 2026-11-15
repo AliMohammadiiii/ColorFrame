@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Release-archive privacy and completeness check (v1.0.1, mission section 12).
+"""Release-archive privacy and completeness check (v1.0.1; extended in rc2).
 
     python3 tests/check_release_archive.py ARCHIVE.zip|.tar.gz
 
@@ -13,7 +13,10 @@ import zipfile
 
 FORBIDDEN = [r"(^|/)private/", r"(^|/)\.git/", r"(^|/)\.worktrees/", r"(^|/)cpp/build/", r"(^|/)rust/target/",
              r"(^|/)__MACOSX/", r"\.DS_Store$", r"(^|/)__pycache__/", r"\.pyc$", r"(^|/)generated/(?!README\.md$)",
-             r"(^|/)\.env", r"\.modal\.toml$", r"\.pem$", r"(?i)johan", r"(?i)transcript", r"(?i)defen[cs]e_notes"]
+             r"(^|/)\.env", r"\.modal\.toml$", r"\.pem$", r"(?i)johan", r"(?i)transcript", r"(?i)defen[cs]e_notes",
+             r"(^|/)archive/remediation/", r"(^|/)tmp/", r"\.(tmp|swp|bak|orig)$", r"~$"]  # rc2: internal patches, temp files
+# rc2: account-level billing details (subscription caps, extra-usage spend) are not project data.
+BILLING = re.compile(rb"(?i)(extra[- ]usage|monthly (cap|limit)|monthlyLimit|USD\s?\d+(\.\d+)?\s+of\s+a\s+USD)")
 SECRET = re.compile(rb"(ak-[A-Za-z0-9]{12,}|as-[A-Za-z0-9]{12,}|MODAL_TOKEN_SECRET\s*=\s*\S+|-----BEGIN [A-Z ]*PRIVATE KEY)")
 REQUIRED = ["README.md", "ALGORITHM_SPEC.md", "INPUT_OUTPUT_SCHEMA.md", "Makefile", "python/colorframe.py",
             "cpp/Makefile", "rust/Cargo.toml", "rust/Cargo.lock", "tests/run_cases.py",
@@ -38,6 +41,8 @@ def main(path):
     for (n, read), rel in zip(items, names):
         if SECRET.search(read()) and rel != "SECURITY.md" and not rel.startswith("tests/check_release_archive.py"):
             problems.append(f"credential-like string in {rel}")
+        if BILLING.search(read()) and rel != "tests/check_release_archive.py":
+            problems.append(f"account-level billing detail in {rel}")
     problems += [f"missing required file: {r}" for r in REQUIRED if r not in names]
     for p in problems[:40]:
         print("FAIL", p)
