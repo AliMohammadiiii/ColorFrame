@@ -1,5 +1,5 @@
 //! ColorFrame: bounded ORF enumeration over small coloured sequence graphs.
-//! Pipeline: parse -> validate -> search -> write (ALGORITHM_SPEC.md, INPUT_OUTPUT_SCHEMA.md).
+//! Pipeline: parse -> validate -> search -> canonicalize -> write (ALGORITHM_SPEC.md, INPUT_OUTPUT_SCHEMA.md).
 
 pub mod cli;
 pub mod error;

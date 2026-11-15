@@ -2,7 +2,20 @@
 
 All notable changes. Format: Keep a Changelog; versions follow the charter's release plan.
 
-## [1.0.1-rc2] — 2026-11-15 (release candidate, unmerged)
+## [1.0.1] — 2026-11-15 (final)
+
+Final release: rc2 plus the lead's decisions and repository tidy-up, merged into `main`.
+
+### Added
+- MIT `LICENSE` and `CITATION.cff` (D-026).
+- CI installs GNU `time` and also builds and tests the C++ code with GCC 14 under `-Werror`.
+
+### Changed
+- Documentation moved to `docs/` (remediation records in `docs/remediation/`), all linked from the README (D-027).
+- Authorship policy: owner identity plus `Co-Authored-By` trailers (D-025); specification credit confirmed (D-022).
+- All development branches merged into `main` and removed; history kept, releases tagged.
+
+## [1.0.1-rc2] — 2026-11-15
 
 ### Fixed
 - C++ CLI builds with GCC 14 under `-Werror` (typed array instead of an initializer list of temporaries).
@@ -13,7 +26,7 @@ All notable changes. Format: Keep a Changelog; versions follow the charter's rel
 ### Added
 - Required-flag CLI tests; Modal GCC 14 and Linux RSS checks; stricter release-archive checker.
 
-## [1.0.1] — 2026-11-15 (release candidate, unmerged)
+## [1.0.1-rc1] — 2026-11-15
 
 ### Fixed
 - Equivalent timing phases (new `canonicalize`), strict-then-permissive in all implementations (D-019).
