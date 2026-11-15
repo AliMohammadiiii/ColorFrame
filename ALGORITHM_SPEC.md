@@ -227,14 +227,58 @@ Summary rows are sorted by `(graph_id, policy)`.
 outcomes of the graph and the policy. `exhaustive = 0` means the bounds hid part of the walk
 space, and results must be read as a lower bound.
 
-## 5. Complexity
+## 5. Complexity (v1.1)
 
-Let `B` be the maximum out-degree, `P = max_path_nodes`. Per start frame, the number of walks
-explored is `O(B^(P−1))` in the worst case (bounded additionally by `max_node_visits` and
-`max_states`), and each base is processed in `O(1)` amortised time. Total work is therefore
-bounded by `O(max_states · L_max)` where `L_max` is the longest node sequence. Memory is
-`O(P + max_orf_nt)` for the walk plus the emitted candidates. The state limit is what makes the
-search total on cycle-rich graphs.
+Variables: `N` nodes, `E` edges, `B` maximum out-degree, `Σ` total bases in the graph,
+`L` longest node sequence, `C` largest colour set, `P = max_path_nodes`,
+`R = max_orf_nt`, `ι` longest node-id length, `S` search states actually entered
+(`S ≤ max_states` per graph and policy), `M` emitted candidates.
+
+**Time, per phase**
+
+| Phase | Work | Bound |
+|---|---|---|
+| parse | read and split both files | `O(Σ + N + E)` |
+| validate | DNA/id/colour checks, overlap suffix–prefix comparison, sort ids and successors | `O(Σ + N·C + E·K + N log N + E log B)` |
+| search, per state | colour intersection (sorted merge or hash set) | `O(C)` |
+| | read the node's contribution, codon check every third base | `O(L)` |
+| | bound checks for each successor | `O(B)` |
+| search, per emitted candidate | build path string, copy sequence, dedup key insert | `O(P·ι + R)` (hash sets); `O(P·ι·log M + R)` (C++ ordered set) |
+| search, total | | `O(S·(C + L + B) + M·(P·ι + R))` |
+| canonicalize | sort candidates per run, then sort runs | `O(M log M · P·ι)` (string comparisons) |
+| write | serialise and write records | `O(M·(P·ι + R + C))` |
+
+Without the state limit, `S` is bounded per start frame by the number of walks of at most `P`
+nodes with at most `max_node_visits` visits per node, which is `O(B^(P−1))` in the worst case.
+The state limit makes `S ≤ max_states` regardless of topology. This is the only bound that makes
+cycle-rich graphs tractable, and it is reported when it binds.
+
+**Space**
+
+| Item | Bound |
+|---|---|
+| graph | `O(Σ + E + N·C)` |
+| traversal state (walk, visit counts, ORF buffer, per-depth colour buffers) | `O(N + P + R + P·C)` |
+| emitted candidates and dedup set | `O(M·(P·ι + R + C))` |
+
+Candidate storage dominates memory on large outputs; traversal state stays small.
+
+## 5a. Semantic contract versus physical representation
+
+The specification fixes **semantics**: inputs, validation, traversal order, counters and byte-exact
+outputs. It does **not** fix data structures. The three implementations differ physically:
+
+| Concern | Python | C++17 | Rust |
+|---|---|---|---|
+| colour set | `frozenset[int]`; intersection with `&` (hash-based) | sorted `std::vector<uint32_t>`; `std::set_intersection` into per-depth buffers | sorted `Vec<u32>`; custom linear merge into reusable per-depth buffers |
+| ORF buffer | `bytearray`, truncated on backtrack | `std::string`, resized on backtrack | `Vec<u8>`, truncated on backtrack |
+| adjacency | list of sorted index lists | `std::vector<std::vector<int>>` | `Vec<Vec<u32>>` |
+| dedup set | hash `set` of `(path, offset)` | ordered `std::set` of `(path, offset)` (tree, `O(log M)` insert) | `HashSet` of `(path, offset)` |
+| build | CPython 3.12 (Modal) / 3.15 (local), standard library | `-O3 -DNDEBUG`, GCC 12 (Modal) / Apple clang (local) | `--release`, `opt-level = 3`, Rust 1.99.1 |
+
+Benchmark results therefore compare **these idiomatic implementations under one semantic
+contract**, not language runtimes in isolation. A tighter language comparison (one shared
+physical representation in all three) would be a separate experiment and is future work.
 
 ## 6. Out of scope for v1
 
