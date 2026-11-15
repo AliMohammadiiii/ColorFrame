@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use ColorFrame, please cite it as below. Implementation by AI development agents under the author's direction; see docs/AI_USAGE.md."
+title: "ColorFrame: frame-aware candidate path search in coloured sequence graphs"
+type: software
+authors:
+  - family-names: Mohammadi
+    given-names: Ali
+version: 1.0.1
+date-released: 2026-11-15
+license: MIT
+repository-code: "https://github.com/AliMohammadiiii/ColorFrame"
+abstract: >-
+  A controlled algorithmic and engineering prototype that enumerates forward-strand ORFs along
+  walks of small coloured sequence graphs under strict and permissive sample-support policies,
+  implemented in Python, C++17 and Rust with byte-identical outputs. Not a gene caller.
+keywords: [coloured de Bruijn graph, open reading frame, graph traversal, benchmarking]
