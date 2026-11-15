@@ -1,6 +1,6 @@
 # Input / Output Schema
 
-**Status:** Frozen for v1 (schema version `1.0`). Shared by all three implementations.
+**Status:** Frozen (schema version `1.1`, 2026-11-15: six timing phases). Shared by all three implementations.
 
 All files are UTF-8 (ASCII content), tab-separated, `\n` line endings, with exactly one header
 row. Fields never contain tabs. A trailing newline at end of file is optional on input and always
@@ -113,16 +113,30 @@ One row per `(graph_id, policy)` searched, sorted by `(graph_id, policy)`. Defin
 `ALGORITHM_SPEC.md` §4.6. A graph that appears in `nodes.tsv` always gets a row, even with zero
 candidates.
 
-### `timings.tsv` (optional, not part of equivalence checks)
+### `timings.tsv` (optional, not part of equivalence checks) — schema v1.1
 
 ```
 phase  ms
 ```
 
-Rows, in this order: `parse`, `validate`, `search`, `write`, `total`. Milliseconds as decimal
-numbers measured with a monotonic clock inside the process (`time.perf_counter_ns`,
-`std::chrono::steady_clock`, `std::time::Instant`). Interpreter start-up is outside `total`;
-the benchmark harness measures end-to-end wall time separately.
+Rows, in this order, with these exact boundaries:
+
+| Row | Covers | Excludes |
+|---|---|---|
+| `parse` | reading both files, splitting rows/fields | validation |
+| `validate` | every check of section 2, building graphs (sorted ids, sorted successors) | |
+| `search` | traversal, candidate discovery and construction, colour-policy evaluation, the emit-time dedup set (spec 4.4) | any sorting, formatting, I/O |
+| `canonicalize` | canonical ordering of runs and candidates (spec 4.5) | formatting, I/O |
+| `write` | serialisation to TSV text and writing `--out` and `--summary` | the timings file itself |
+| `total` | `parse` through `write` | interpreter/process start-up |
+
+Timestamps are contiguous, so `total` equals the sum of the five phases (up to printing
+precision). Milliseconds with 3 decimals from a monotonic clock (`time.perf_counter_ns`,
+`std::chrono::steady_clock`, `std::time::Instant`). Process start-up is measured outside the
+program by the benchmark harness (`wall_ms`). Contract test: `tests/test_timing_contract.py`.
+
+With `--policy both`, every implementation searches each graph **strict first, then
+permissive** (execution order); the output order is fixed by `canonicalize`.
 
 ## 5. Equivalence
 

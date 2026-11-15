@@ -1,7 +1,8 @@
 # ColorFrame Algorithm Specification
 
-**Status:** Frozen for v1 (spec version `1.0`). Any change requires a `DECISION_LOG.md` entry
-approved by the project lead and a spec-version bump.
+**Status:** Frozen (spec version `1.1`, 2026-11-15). v1.1 changes no output: it fixes the
+execution order of policies and the phase boundary between search and canonical ordering
+(D-019). Any change requires a `DECISION_LOG.md` entry and a spec-version bump.
 
 This document is **authoritative**. The Python, C++17 and Rust implementations must follow it
 exactly; where an implementation and this document disagree, the implementation is wrong.
@@ -81,8 +82,9 @@ The bounds are computational safeguards, not biological limits.
 ## 4. Search procedure
 
 Graphs are processed independently, in ascending byte order of `graph_id`. For `--policy both`,
-each graph is searched once with `strict` and once with `permissive`; the two searches share no
-state. All string orderings in this document are **byte-wise lexicographic** on ASCII.
+each graph is searched once with `strict` and then once with `permissive` (v1.1: this execution
+order is fixed); the two searches share no state. Search leaves candidates in discovery order;
+canonical ordering (§4.5) is a separate phase after all searches. All string orderings in this document are **byte-wise lexicographic** on ASCII.
 
 ### 4.1 Per-search state
 
