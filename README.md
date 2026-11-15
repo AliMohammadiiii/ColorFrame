@@ -138,6 +138,11 @@ modal run --detach benchmarks/modal_app.py  # authoritative benchmark + RQ1 + R 
 - [Reproducibility](docs/REPRODUCIBILITY.md): what ran locally and what ran on Modal
 - [Modal execution](docs/MODAL_EXECUTION.md)
 
+**Biological validation (proposal, awaiting approval)**
+- [Decision memo](docs/biological_validation/BIOLOGICAL_VALIDATION_DECISION.md) · [Plan](docs/biological_validation/BIOLOGICAL_VALIDATION_PLAN.md) · [Feasibility matrix](docs/biological_validation/DATASET_FEASIBILITY_MATRIX.csv) · [Dataset manifest](docs/biological_validation/DATASET_MANIFEST.csv) · [Sample manifest](docs/biological_validation/SAMPLE_MANIFEST.csv)
+- [Path-level evidence protocol](docs/biological_validation/PATH_LEVEL_EVIDENCE_PROTOCOL.md) · [Ground-truth schema](docs/biological_validation/GROUND_TRUTH_SCHEMA.md) · [Graph schema v2 proposal](docs/biological_validation/GRAPH_SCHEMA_V2_PROPOSAL.md) · [Adapter spec](docs/biological_validation/DATASET_ADAPTER_SPEC.md)
+- [Download plan](docs/biological_validation/DOWNLOAD_PLAN.md) · [Validation limitations](docs/biological_validation/VALIDATION_LIMITATIONS.md) · [Prior-art update](docs/biological_validation/PRIOR_ART_UPDATE.md) · [Evidence](docs/biological_validation/evidence/README.md)
+
 **Literature**
 - [Literature review](docs/LITERATURE_REVIEW.md) · [Prior art and scope](docs/PRIOR_ART_AND_SCOPE.md) · [References (BibTeX)](docs/references.bib)
 

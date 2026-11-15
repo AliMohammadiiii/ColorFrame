@@ -236,3 +236,13 @@ scope Ali set; they do not change the research questions.
   branch, are merged into `main` and deleted; releases stay reachable through tags (`v0.2.0`,
   `v1.0.0`, `v1.0.1`).
 - **Date / by:** 2026-11-15 · Ali; carried out by dev agent.
+
+### D-028 — Biological validation: dataset selection and pilot (PENDING Ali)
+- **Context:** Ali's biological-validation programme (research direction: Ali). Feasibility
+  package in `docs/biological_validation/`.
+- **Proposal:** primary ECOR (Illumina per isolate, independent complete ONT genomes);
+  secondary CAMISIM simulated from the ECOR genomes; optional single-cell de Bourcy 2014.
+  Pilot ≈ 1.86 GB. No engine change for the pilot; schema v2 (`edge_support.tsv`,
+  `strict_edge`) deferred until the pilot data are in.
+- **Decision:** awaiting Ali. No data downloaded; no graph-semantics change.
+- **Date / by:** 2026-11-15 · dev agent (Opus).
