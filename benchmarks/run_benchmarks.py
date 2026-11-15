@@ -147,6 +147,8 @@ def main():
               "peak_rss_mb\t" + "\t".join(SUMMARY_COUNTERS) + "\toutput_sha256_16\n")
     for w in wdirs:
         params = json.loads((w / "params.json").read_text())
+        if not params.get("benchmark", True):     # RQ1 replicates beyond r00/clean are not timed
+            continue
         args = params["cli_args"].split()
         meta["workloads"][w.name] = {
             "params": params,
