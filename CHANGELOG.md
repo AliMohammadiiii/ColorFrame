@@ -2,6 +2,17 @@
 
 All notable changes. Format: Keep a Changelog; versions follow the charter's release plan.
 
+## [1.0.1-rc2] — 2026-11-15 (release candidate, unmerged)
+
+### Fixed
+- C++ CLI builds with GCC 14 under `-Werror` (typed array instead of an initializer list of temporaries).
+- RSS tests are baseline-relative; no fixed Python memory ceiling.
+- RQ1 reporting: precise criterion wording (240/240 within criterion, 182/240 raw), exact metric definitions, replicate-mean labels.
+- Documentation reconciled; account-level billing details removed; internal patches excluded from archives.
+
+### Added
+- Required-flag CLI tests; Modal GCC 14 and Linux RSS checks; stricter release-archive checker.
+
 ## [1.0.1] — 2026-11-15 (release candidate, unmerged)
 
 ### Fixed
