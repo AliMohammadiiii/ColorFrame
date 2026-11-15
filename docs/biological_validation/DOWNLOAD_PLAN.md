@@ -11,7 +11,7 @@ approves `BIOLOGICAL_VALIDATION_DECISION.md`.
 | ECOR Illumina reads, 4 isolates | 8 fastq.gz | 905,242,623 |
 | de Bourcy reads: unamplified bulk + 3 MDA single cells | 8 fastq.gz | 928,043,766 |
 | ECOR complete genomes + PGAP annotation, 4 isolates | 4 NCBI Datasets packages (genome FASTA, GFF3, CDS FASTA) | ~12 MB (NCBI estimate: 3 MB each) |
-| DH10B proxy reference CP000948.1 (FASTA + GFF3) | 2 files | ~10 MB (estimate) |
+| DH10B proxy reference GCF_000019425.1 (FASTA + GFF3 + CDS) | 1 NCBI Datasets package | ~3 MB (estimate) |
 | **Total** | | **≈ 1.86 GB** |
 
 Not downloaded: ONT raw signal (any dataset), full projects, GORG-Dark, CAMI reads, MBARC-26,
@@ -48,8 +48,9 @@ ACC ∈ GCF_062083226.1 (ECOR01), GCF_062082974.1 (ECOR56), GCF_062082961.1 (ECO
 Plus the matching FDA draft assemblies GCA_003334405.1, GCA_003334485.1, GCA_003334435.1 and
 GCA_003334425.1 (genome FASTA only; for the stock-identity gate in §5).
 
-DH10B proxy: `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=CP000948.1&rettype=fasta`
-and `rettype=gff3`.
+DH10B proxy: NCBI Datasets package GCF_000019425.1 (E. coli K-12 substr. DH10B, Complete
+Genome; contains CP000948.1), with genome FASTA, GFF3 and CDS FASTA. (efetch does not serve
+GFF3 for nucleotide records: the first pilot run got HTTP 500 there.)
 
 ## 4. Tools, storage and checksums
 

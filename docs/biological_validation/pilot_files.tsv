@@ -23,5 +23,4 @@ ecor	ECOR69	genome_package	https://api.ncbi.nlm.nih.gov/datasets/v2/genome/acces
 ecor	ECOR69	genome_package	https://api.ncbi.nlm.nih.gov/datasets/v2/genome/accession/GCA_003334435.1/download?include_annotation_type=GENOME_FASTA	-	package	ecor/ECOR69/GCA_003334435.1_draft.zip
 ecor	ECOR72	genome_package	https://api.ncbi.nlm.nih.gov/datasets/v2/genome/accession/GCF_062082958.1/download?include_annotation_type=GENOME_FASTA&include_annotation_type=GENOME_GFF&include_annotation_type=CDS_FASTA	-	package	ecor/ECOR72/GCF_062082958.1.zip
 ecor	ECOR72	genome_package	https://api.ncbi.nlm.nih.gov/datasets/v2/genome/accession/GCA_003334425.1/download?include_annotation_type=GENOME_FASTA	-	package	ecor/ECOR72/GCA_003334425.1_draft.zip
-debourcy2014	DB_PROXY	reference_fasta	https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=CP000948.1&rettype=fasta	-	-	debourcy2014/reference/CP000948.1.fasta
-debourcy2014	DB_PROXY	reference_gff	https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=CP000948.1&rettype=gff3	-	-	debourcy2014/reference/CP000948.1.gff3
+debourcy2014	DB_PROXY	genome_package	https://api.ncbi.nlm.nih.gov/datasets/v2/genome/accession/GCF_000019425.1/download?include_annotation_type=GENOME_FASTA&include_annotation_type=GENOME_GFF&include_annotation_type=CDS_FASTA	-	package	debourcy2014/reference/GCF_000019425.1.zip

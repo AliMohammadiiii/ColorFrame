@@ -1,0 +1,7 @@
+{
+  "tool_versions": {
+    "minimap2": "2.24-r1122"
+  },
+  "volume": "colorframe-bioval",
+  "fetch_wall_s": 258.5
+}

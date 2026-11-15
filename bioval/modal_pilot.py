@@ -37,7 +37,10 @@ def fetch_one(row: dict) -> dict:
     if done.exists() and (raw / row["dest"]).exists():
         return json.loads(done.read_text()) | {"skipped": True}
     t0 = time.time()
-    rec = fetch.fetch(row, raw)
+    try:
+        rec = fetch.fetch(row, raw)
+    except Exception as e:  # re-raise as a plain, picklable error naming the file
+        raise RuntimeError(f"{row['dest']}: {type(e).__name__}: {e}") from None
     rec["seconds"] = round(time.time() - t0, 1)
     rec["retrieved_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     done.write_text(json.dumps(rec))
@@ -125,7 +128,14 @@ def main():
     from adapters import pilot_files
     rows = pilot_files.load(BV / "pilot_files.tsv")
     t0 = time.time()
-    fetched = list(fetch_one.map(rows, order_outputs=False))
+    results = list(fetch_one.map(rows, order_outputs=False, return_exceptions=True))
+    failed = [str(r) for r in results if isinstance(r, BaseException)]
+    fetched = [r for r in results if not isinstance(r, BaseException)]
+    print(f"fetched {len(fetched)}/{len(rows)}")
+    if failed:
+        for f in failed:
+            print("FAILED", f)
+        raise SystemExit(1)
     res = analyse.remote()
     res["fetch_wall_s"] = round(time.time() - t0, 1)
     d = ROOT / "results" / "bioval" / ("pilot_" + time.strftime("%Y%m%dT%H%M%SZ", time.gmtime()))
