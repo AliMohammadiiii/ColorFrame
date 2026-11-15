@@ -124,12 +124,7 @@ pub fn search(graph: &Graph, policy: Policy, limits: &Limits) -> SearchResult {
         dup_dropped: 0,
     };
     s.run();
-    // Canonical order (section 4.5): path bytes, then start offset.
-    s.candidates.sort_by(|a, b| {
-        a.path
-            .cmp(&b.path)
-            .then(a.start_offset.cmp(&b.start_offset))
-    });
+    // Candidates stay in discovery order; sorting is the canonicalize phase (spec v1.1).
     SearchResult {
         candidates: s.candidates,
         stats: s.stats,

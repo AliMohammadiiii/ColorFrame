@@ -274,5 +274,8 @@ fn search_returns_candidates_in_emission_order() {
         Policy::Strict,
         Limits::default(),
     );
-    assert_eq!(paths(&r), vec![("a>c".to_string(), 0), ("a>b".to_string(), 4)]);
+    assert_eq!(
+        paths(&r),
+        vec![("a>c".to_string(), 0), ("a>b".to_string(), 4)]
+    );
 }

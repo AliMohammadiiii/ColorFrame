@@ -106,9 +106,14 @@ struct Run {
     SearchResult result;
 };
 
-// Searches every graph; candidates sorted canonically (spec 4.5), runs sorted by (graph, policy).
+// Policies in execution order: strict before permissive (spec v1.1).
+std::vector<Policy> policies_for(PolicyChoice choice);
+// Search phase: every graph in id order, policies in execution order; candidates stay in
+// discovery order and runs in execution order (no sorting here).
 std::vector<Run> run_all(const std::vector<Graph>& graphs, PolicyChoice choice,
                          const Limits& limits);
+// Canonicalize phase (spec 4.5): runs by (graph, policy name), candidates by (path, start).
+void canonicalize(std::vector<Run>& runs);
 std::string render_candidates(const std::vector<Run>& runs);
 std::string render_summary(const std::vector<Run>& runs);
 

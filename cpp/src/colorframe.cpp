@@ -367,30 +367,34 @@ SearchResult search_graph(const Graph& g, Policy policy, const Limits& limits) {
 // Runs and output
 // ============================================================================
 
-std::vector<Run> run_all(const std::vector<Graph>& graphs, PolicyChoice choice,
-                         const Limits& limits) {
+std::vector<Policy> policies_for(PolicyChoice choice) {
     std::vector<Policy> policies;
     if (choice != PolicyChoice::Permissive) policies.push_back(Policy::Strict);
     if (choice != PolicyChoice::Strict) policies.push_back(Policy::Permissive);
+    return policies;
+}
+
+std::vector<Run> run_all(const std::vector<Graph>& graphs, PolicyChoice choice,
+                         const Limits& limits) {
+    const std::vector<Policy> policies = policies_for(choice);
     std::vector<Run> runs;
-    for (const Graph& g : graphs) {
-        for (Policy p : policies) {
-            Run r{g.id, p, search_graph(g, p, limits)};
-            // Canonical order within the group (spec 4.5).
-            std::sort(r.result.candidates.begin(), r.result.candidates.end(),
-                      [](const Candidate& a, const Candidate& b) {
-                          int c = a.path.compare(b.path);
-                          return c != 0 ? c < 0 : a.start_offset < b.start_offset;
-                      });
-            runs.push_back(std::move(r));
-        }
-    }
+    for (const Graph& g : graphs)
+        for (Policy p : policies) runs.push_back(Run{g.id, p, search_graph(g, p, limits)});
+    return runs;
+}
+
+void canonicalize(std::vector<Run>& runs) {
+    for (Run& r : runs)
+        std::sort(r.result.candidates.begin(), r.result.candidates.end(),
+                  [](const Candidate& a, const Candidate& b) {
+                      int c = a.path.compare(b.path);
+                      return c != 0 ? c < 0 : a.start_offset < b.start_offset;
+                  });
     std::sort(runs.begin(), runs.end(), [](const Run& a, const Run& b) {
         int c = a.graph_id.compare(b.graph_id);
         if (c != 0) return c < 0;
         return std::string(policy_name(a.policy)) < policy_name(b.policy);
     });
-    return runs;
 }
 
 std::string render_candidates(const std::vector<Run>& runs) {

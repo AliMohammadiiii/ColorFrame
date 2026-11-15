@@ -12,6 +12,23 @@ pub const CANDIDATE_HEADER: &str =
 pub const SUMMARY_HEADER: &str = "graph_id\tpolicy\tsearch_states\tmax_depth\tcandidates\tstart_rejected\tcolor_pruned\tdead_ends\torf_length_cuts\tpath_length_cuts\tnode_visit_cuts\tstate_limit_hit\texhaustive\n";
 
 /// Runs must already be in (graph_id, policy) order; candidate_id is the rank within a run.
+/// Canonicalize phase (spec 4.5): runs by (graph id bytes, policy name), candidates by
+/// (path bytes, start offset). Search leaves both in execution/discovery order.
+pub fn canonicalize(runs: &mut [GraphRun]) {
+    for r in runs.iter_mut() {
+        r.result.candidates.sort_by(|a, b| {
+            a.path
+                .cmp(&b.path)
+                .then(a.start_offset.cmp(&b.start_offset))
+        });
+    }
+    runs.sort_by(|a, b| {
+        a.graph_id
+            .cmp(&b.graph_id)
+            .then(a.policy.name().cmp(b.policy.name()))
+    });
+}
+
 pub fn render_candidates(runs: &[GraphRun]) -> String {
     let mut out = String::from(CANDIDATE_HEADER);
     for run in runs {

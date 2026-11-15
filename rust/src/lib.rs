@@ -43,7 +43,7 @@ pub fn run(cfg: &cli::Config) -> Result<(), CfError> {
     let graphs = graph::validate(&nodes, &edges, &cfg.nodes, &cfg.edges)?;
     let t2 = Instant::now();
 
-    // search: graphs ascending, policies in byte order
+    // search: graphs ascending, policies in execution order (strict, permissive)
     let mut runs = Vec::new();
     for g in &graphs {
         for &policy in &cfg.policies {
@@ -57,18 +57,24 @@ pub fn run(cfg: &cli::Config) -> Result<(), CfError> {
     }
     let t3 = Instant::now();
 
-    // write
-    write_output(&cfg.out, &output::render_candidates(&runs))?;
-    write_output(&cfg.summary, &output::render_summary(&runs))?;
+    // canonicalize: output order (spec 4.5)
+    output::canonicalize(&mut runs);
     let t4 = Instant::now();
 
+    // write: serialisation and file output
+    write_output(&cfg.out, &output::render_candidates(&runs))?;
+    write_output(&cfg.summary, &output::render_summary(&runs))?;
+    let t5 = Instant::now();
+
+    // contiguous phases: total == sum (schema section 4)
     if let Some(path) = &cfg.timings {
         let rows = [
             ("parse", ms(t0, t1)),
             ("validate", ms(t1, t2)),
             ("search", ms(t2, t3)),
-            ("write", ms(t3, t4)),
-            ("total", ms(t0, t4)),
+            ("canonicalize", ms(t3, t4)),
+            ("write", ms(t4, t5)),
+            ("total", ms(t0, t5)),
         ];
         write_output(path, &output::render_timings(&rows))?;
     }

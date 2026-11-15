@@ -71,7 +71,10 @@ fn timings_format() {
 fn canonicalize_orders_runs_and_candidates() {
     // Spec v1.1: runs arrive in execution order (strict first) with candidates in emission order.
     let unsorted = || vec![cand("a>c", 0, vec![1]), cand("a>b", 4, vec![1])];
-    let mut runs = vec![run(Policy::Strict, unsorted()), run(Policy::Permissive, unsorted())];
+    let mut runs = vec![
+        run(Policy::Strict, unsorted()),
+        run(Policy::Permissive, unsorted()),
+    ];
     canonicalize(&mut runs);
     assert_eq!(runs[0].policy, Policy::Permissive);
     for r in &runs {

@@ -340,12 +340,30 @@ def search(graph, policy, limits):
 
 # --------------------------------------------------------------------------- output
 
+POLICY_ORDER = ("strict", "permissive")                  # execution order for --policy both (v1.1)
+
+
+def policies_for(choice):
+    """Policies searched, in execution order: strict before permissive (spec 4)."""
+    return list(POLICY_ORDER) if choice == "both" else [choice]
+
+
+def canonicalize(results):
+    """Canonical output order (spec 4.5), timed as its own phase.
+
+    Runs are ordered by (graph_id, policy) and candidates by (path, start_offset); ids are ASCII,
+    so Python's code-point string order equals the byte order the spec requires.
+    """
+    return [(gid, policy, res._replace(candidates=sorted(res.candidates, key=lambda c: (c.path, c.start_offset))))
+            for gid, policy, res in sorted(results, key=lambda r: (r[0], r[1]))]
+
+
 def format_outputs(results):
-    """results: list of (graph_id, policy, SearchResult). Returns (candidates_text, summary_text)."""
+    """Serialise canonicalized results: list of (graph_id, policy, SearchResult) -> (candidates, summary)."""
     cand_lines = ["\t".join(CANDIDATES_HEADER)]
     sum_lines = ["\t".join(SUMMARY_HEADER)]
-    for gid, policy, res in sorted(results, key=lambda r: (r[0], r[1])):   # spec 4.5
-        for rank, c in enumerate(sorted(res.candidates, key=lambda c: (c.path, c.start_offset)), 1):
+    for gid, policy, res in results:
+        for rank, c in enumerate(res.candidates, 1):
             cand_lines.append("\t".join([gid, policy, str(rank), c.path, str(c.start_offset),
                                          str(c.length_nt), c.sequence, c.support_colors, c.status]))
         t = res.stats
@@ -413,16 +431,17 @@ def run_pipeline(args):
     graphs = build_graphs(node_rows, edge_rows)
     t2 = clock()
     limits = Limits(args.max_orf_nt, args.max_path_nodes, args.max_node_visits, args.max_states)
-    policies = ["strict", "permissive"] if args.policy == "both" else [args.policy]
-    results = [(g.graph_id, pol, search(g, pol, limits)) for g in graphs for pol in policies]
+    results = [(g.graph_id, pol, search(g, pol, limits)) for g in graphs for pol in policies_for(args.policy)]
     t3 = clock()
+    results = canonicalize(results)
+    t4 = clock()
     cand_text, sum_text = format_outputs(results)
     _write(args.out, cand_text)
     _write(args.summary, sum_text)
-    t4 = clock()
-    if args.timings:
+    t5 = clock()
+    if args.timings:                                     # contiguous phases: total == sum (schema 4)
         phases = [("parse", t1 - t0), ("validate", t2 - t1), ("search", t3 - t2),
-                  ("write", t4 - t3), ("total", t4 - t0)]
+                  ("canonicalize", t4 - t3), ("write", t5 - t4), ("total", t5 - t0)]
         _write(args.timings, "phase\tms\n" + "".join("%s\t%.3f\n" % (n, d / 1e6) for n, d in phases))
 
 

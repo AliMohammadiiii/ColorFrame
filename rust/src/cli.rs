@@ -83,11 +83,11 @@ pub fn parse_args(args: &[String]) -> Result<Config, CfError> {
         v.ok_or_else(|| usage(format!("missing required flag {flag}")))
     };
     let policy = need(policy, "--policy")?;
-    // Output order is by policy name bytes: permissive < strict.
+    // Execution order (spec v1.1): strict before permissive. Output order is set by canonicalize.
     let policies = match policy.as_str() {
         "strict" => vec![Policy::Strict],
         "permissive" => vec![Policy::Permissive],
-        "both" => vec![Policy::Permissive, Policy::Strict],
+        "both" => vec![Policy::Strict, Policy::Permissive],
         other => {
             return Err(usage(format!(
                 "invalid --policy '{other}' (expected strict, permissive or both)"

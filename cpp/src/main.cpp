@@ -104,15 +104,18 @@ int main(int argc, char** argv) {
                                                              : cf::PolicyChoice::Both;
         std::vector<cf::Run> runs = cf::run_all(graphs, choice, o.limits);
         auto t3 = Clock::now();
+        cf::canonicalize(runs);
+        auto t4 = Clock::now();
         write_file(o.out, cf::render_candidates(runs));
         write_file(o.summary, cf::render_summary(runs));
-        auto t4 = Clock::now();
-        if (!o.timings.empty()) {
-            char buf[256];
+        auto t5 = Clock::now();
+        if (!o.timings.empty()) {  // contiguous phases: total == sum (schema section 4)
+            char buf[320];
             std::snprintf(buf, sizeof buf,
-                          "phase\tms\nparse\t%.3f\nvalidate\t%.3f\nsearch\t%.3f\nwrite\t%.3f\ntotal\t%.3f\n",
+                          "phase\tms\nparse\t%.3f\nvalidate\t%.3f\nsearch\t%.3f\n"
+                          "canonicalize\t%.3f\nwrite\t%.3f\ntotal\t%.3f\n",
                           ms_since(t0, t1), ms_since(t1, t2), ms_since(t2, t3), ms_since(t3, t4),
-                          ms_since(t0, t4));
+                          ms_since(t4, t5), ms_since(t0, t5));
             write_file(o.timings, buf);
         }
         return 0;
