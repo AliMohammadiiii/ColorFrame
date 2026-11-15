@@ -27,8 +27,9 @@ commissioned review, but no line-level code review by Ali, so "reviewed the work
 No code in this repository was written by hand by Ali.
 
 **Record of the lead's edit.** On 2026-11-14/15 Ali edited this table to move "Algorithm
-specification" from Opus to himself (preserved as commit `3aa59a0` and as
-`archive/remediation/ai_usage_uncommitted_edit_2026-11-15.patch`). The reconciliation above
+specification" from Opus to himself (preserved as commit `3aa59a0` and, in the development
+repository only, as `archive/remediation/ai_usage_uncommitted_edit_2026-11-15.patch`; excluded
+from release archives). The reconciliation above
 credits him with the algorithm design and marks the formal specification as collaborative,
 because the formal text was drafted by Opus. **Pending Ali's confirmation.**
 

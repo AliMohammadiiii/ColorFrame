@@ -33,6 +33,7 @@ conformance: build
 	$(PYTHON) tests/test_timing_contract.py
 	$(PYTHON) tests/test_rq1_model.py
 	$(PYTHON) tests/test_rss_measurement.py
+	$(PYTHON) tests/test_cli_required_flags.py
 	$(PYTHON) tests/run_cases.py --impl all
 
 cross: build
