@@ -16,10 +16,12 @@ Every item is accountable to Ali (project lead). Agent attribution: `AI_USAGE.md
 | T08 | Token accounting ledger | feat/token-accounting, fix/usage-ledger-csv | Opus | Implemented (telemetry partly NOT_EXPOSED) |
 | T09 | R analysis | (in feat/token-accounting commit), fix/rq1-limits-and-memory | Opus | Validated (ran on Modal, R 4.2.2) |
 | T10 | Literature metadata verification | docs/literature-review | Haiku, Opus | Validated: metadata at primary sources; ggCaller workflow verified from the full text (v1.0.1); TIPE partial (metadata only) |
-| T11 | CI workflow + Makefile | feat/ci, fix/ci-cross-workloads | Haiku, Opus | Tested locally (`make test`); not run on GitHub (no remote) |
+| T11 | CI workflow + Makefile | feat/ci, fix/ci-cross-workloads | Haiku, Opus | Validated: `make test` locally and GitHub Actions (private remote, v1.0.1); GCC 14 job added |
 | T12 | Final report, limitations, reproducibility | docs/final-report | Opus | Validated |
 | — | Reverse strand, partial genes, candidate scoring | — | — | Deferred (out of v1 scope) |
-| — | Publish to a public remote | — | Ali | Planned (requires lead's permission) |
+| — | Private GitHub remote | main | Ali | Done (2026-11-15, AliMohammadiiii/ColorFrame, private) |
+| — | Make the repository public | — | Ali | Not done: the billing figure in two historical commits would need a history rewrite first |
 | — | Rotate the Modal token pasted in chat | — | Ali | Planned (owner action, see SECURITY.md) |
-| R1–R9 | v1.0.1 remediation | remediation/v1.0.1 | Opus | see `REMEDIATION_STATUS.md` |
-| F1–F10 | v1.0.1-rc2 precision pass | remediation/v1.0.1-rc2 | Opus | see `RC2_REMEDIATION_STATUS.md` |
+| R1–R9 | v1.0.1 remediation | merged into main | Opus | Validated (`remediation/REMEDIATION_STATUS.md`) |
+| F1–F10 | v1.0.1-rc2 precision pass | merged into main | Opus | Validated (`remediation/RC2_REMEDIATION_STATUS.md`) |
+| — | v1.0.1 final: docs/ layout, licence, CI, single branch | main | Opus | Validated (tag `v1.0.1`) |

@@ -10,10 +10,10 @@
 | F6 | RSS test portability | **PASS** on macOS and Modal Debian; mutation control fails as required. The ~93 MB-baseline Python of the audit environment was not available (NOT RUN there) |
 | F7 | Stale docs | **PASS** |
 | F8 | Billing details | **PASS**: removed; archive checker now rejects them |
-| F9 | Authorship policy | **DEFERRED to Ali** (D-025; Option B recommended). rc2 commits carry attribution trailers |
+| F9 | Authorship policy | **PASS**: Ali chose Option B (D-025); rc2 commits already follow it |
 | F10 | Internal patch in archive | **PASS**: `export-ignore`; checker rejects it |
 | — | Benchmark rerun | **NOT RUN, by design**: no search/timing/data-structure/benchmark-execution change |
 | — | R analysis rerun | **NOT RUN**: no analysis change; no local R |
-| — | `LICENSE`, `CITATION.cff` | **DEFERRED**: lead's decision |
-| — | GitHub CI | **NOT RUN**: no remote; publishing needs approval |
-| — | Merge to `main`, tag | **NOT DONE**: awaiting review |
+| — | `LICENSE`, `CITATION.cff` | **PASS**: MIT chosen by Ali (D-026) |
+| — | GitHub CI | private remote created on Ali's instruction; see `CHANGELOG.md` [1.0.1] for the CI result |
+| — | Merge to `main`, tag | done on Ali's instruction (D-027), tag `v1.0.1` |

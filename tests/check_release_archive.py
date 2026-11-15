@@ -18,11 +18,12 @@ FORBIDDEN = [r"(^|/)private/", r"(^|/)\.git/", r"(^|/)\.worktrees/", r"(^|/)cpp/
 # rc2: account-level billing details (subscription caps, extra-usage spend) are not project data.
 BILLING = re.compile(rb"(?i)(extra[- ]usage|monthly (cap|limit)|monthlyLimit|USD\s?\d+(\.\d+)?\s+of\s+a\s+USD)")
 SECRET = re.compile(rb"(ak-[A-Za-z0-9]{12,}|as-[A-Za-z0-9]{12,}|MODAL_TOKEN_SECRET\s*=\s*\S+|-----BEGIN [A-Z ]*PRIVATE KEY)")
-REQUIRED = ["README.md", "ALGORITHM_SPEC.md", "INPUT_OUTPUT_SCHEMA.md", "Makefile", "python/colorframe.py",
+REQUIRED = ["README.md", "LICENSE", "CITATION.cff", "docs/ALGORITHM_SPEC.md", "docs/INPUT_OUTPUT_SCHEMA.md",
+            "Makefile", "python/colorframe.py",
             "cpp/Makefile", "rust/Cargo.toml", "rust/Cargo.lock", "tests/run_cases.py",
             "benchmarks/generate_workloads.py", "benchmarks/modal_app.py", "analysis/analysis.R",
             "fixtures/cases/G01_single_node_orf/nodes.tsv", "reports/TECHNICAL_REPORT.md",
-            "REMEDIATION_REPORT.md", "SECURITY.md"]
+            "docs/remediation/REMEDIATION_REPORT.md", "SECURITY.md"]
 
 
 def entries(path):

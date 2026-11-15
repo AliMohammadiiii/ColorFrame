@@ -1,12 +1,12 @@
 # AI Usage and Attribution
 
-**Status:** Updated for v1.0.1-rc2 (2026-11-15).
+**Status:** Final for v1.0.1 (2026-11-15).
 
 This is the authoritative record of who did what. All commits use the project lead's Git
 identity (D-001), so the author field of a commit does **not** identify the agent that produced
 it; this file does. Commits up to rc1 (`44fbbf3`) carry no model names. The rc2 commits carry a
 `Co-Authored-By: Claude Opus 5.5` trailer, which departs from D-001; the policy for future work
-is pending the lead's decision (D-025, below).
+is Option B, decided by the lead (D-025, below).
 
 **Contribution statement.** The implementation code in this repository was produced by AI agents.
 Ali supplied the research direction and the algorithm design brief, directed the work and its
@@ -31,14 +31,14 @@ specification" from Opus to himself (preserved as commit `3aa59a0` and, in the d
 repository only, as `archive/remediation/ai_usage_uncommitted_edit_2026-11-15.patch`; excluded
 from release archives). The reconciliation above
 credits him with the algorithm design and marks the formal specification as collaborative,
-because the formal text was drafted by Opus. **Pending Ali's confirmation.**
+because the formal text was drafted by Opus. **Confirmed by Ali on 2026-11-15 (D-022).**
 
-## Git authorship policy for future development (D-025, pending Ali)
+## Git authorship policy (D-025, decided by Ali: Option B)
 
 | Option | What it means | Assessment |
 |---|---|---|
 | A | agent/bot Git identities as commit authors; Ali as committer or merger | most explicit in metadata; needs identities configured per agent |
-| **B (recommended)** | Ali's identity as author, plus truthful trailers (`Co-Authored-By: <model>`) on every agent-produced commit, plus this ledger | keeps accountability with Ali, makes AI involvement visible in `git log`; rc2 already follows it |
+| **B (adopted)** | Ali's identity as author, plus truthful trailers (`Co-Authored-By: <model>`) on every agent-produced commit, plus this ledger | keeps accountability with Ali, makes AI involvement visible in `git log`; rc2 already follows it |
 | D-001 as is | Ali's identity, no model names; ledger only | git metadata alone does not show AI authorship (audit finding 9) |
 
 Historical commits are not rewritten under any option.

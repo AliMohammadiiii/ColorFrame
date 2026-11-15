@@ -3,9 +3,12 @@
 **Frame-aware candidate path search in coloured sequence graphs: a controlled algorithmic and
 engineering prototype.**
 
-Project lead: Ali Mohammadi · Status: **v1.0.1 release candidate** (remediated after an independent
-review; see `REMEDIATION_REPORT.md`) · Engineering by AI development agents under the lead's
-direction (`AI_USAGE.md`).
+[![ci](https://github.com/AliMohammadiiii/ColorFrame/actions/workflows/ci.yml/badge.svg)](https://github.com/AliMohammadiiii/ColorFrame/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+Project lead: Ali Mohammadi · Status: **v1.0.1 (final)**, after two independent reviews
+([remediation report](docs/remediation/REMEDIATION_REPORT.md), [rc2 review](docs/remediation/RC2_FINAL_REVIEW.md)) ·
+Implementation by AI development agents under the lead's direction ([AI usage](docs/AI_USAGE.md)).
 
 ColorFrame enumerates forward-strand ORFs (`ATG` … first in-frame stop) along walks of a small
 coloured sequence graph. It tracks the reading frame across overlaps, branches, loops and
@@ -16,9 +19,9 @@ repeats, and applies one of two sample-evidence policies:
 Every bound that truncates the search is reported. The same algorithm is implemented in Python,
 C++17 and Rust, with byte-identical outputs. It is **not** a gene caller. ggCaller already
 performs frame-aware DFS ORF discovery on population-wide coloured DBGs, with FM-index path
-validation (`PRIOR_ART_AND_SCOPE.md`).
+validation ([prior art and scope](docs/PRIOR_ART_AND_SCOPE.md)).
 
-## Results (authoritative run `results/modal/20261115T065950Z`, Modal 1 CPU, Linux/GCC)
+## Results (authoritative run [`results/modal/20261115T065950Z`](results/modal/20261115T065950Z), Modal 1 CPU, Linux/GCC)
 
 - **RQ1, synthetic support-policy trade-off** (10 paired replicates; 100 planted ORFs each).
   In all 240 workload-policy runs, every planted ORF meeting the policy-specific true-sample support criterion was recovered. In noisy conditions, additional candidates could also be retained through non-true colour evidence (raw recovered count = criterion count in 182/240 runs; all 58 exceptions are noisy).
@@ -34,10 +37,10 @@ validation (`PRIOR_ART_AND_SCOPE.md`).
   workloads. Linux peak RSS (wrapper floor 2.9 MB, Python interpreter 13.9 MB): stress C++
   6.7 MB, Rust 4.7 MB, Python 16.6 MB.
 - **AI-assisted development:** a descriptive process trace with incomplete telemetry
-  (`TOKEN_ACCOUNTING.md`). No effort–performance claim.
+  ([token accounting](docs/TOKEN_ACCOUNTING.md)). No effort–performance claim.
 
 v1.0.0 search speed-ups and Modal memory figures were **invalid** (unequal timing phases; RSS
-inherited from the harness) and are superseded (`archive/v1.0.0/`).
+inherited from the harness) and are superseded ([`archive/v1.0.0/`](archive/v1.0.0)).
 
 ## Quick start
 
@@ -46,9 +49,45 @@ make test                                   # fixtures, unit tests, lint, timing
 modal run --detach benchmarks/modal_app.py  # authoritative benchmark + RQ1 + R analysis
 ```
 
-## Documents
+## Repository layout
 
-`reports/TECHNICAL_REPORT.md` (results) · `REMEDIATION_REPORT.md` (what changed and why) ·
-`ALGORITHM_SPEC.md` (v1.1) · `INPUT_OUTPUT_SCHEMA.md` · `fixtures/FIXTURES.md` ·
-`BENCHMARK_PROTOCOL.md` · `LITERATURE_REVIEW.md` · `PRIOR_ART_AND_SCOPE.md` · `LIMITATIONS.md` ·
-`AI_USAGE.md` · `TOKEN_ACCOUNTING.md` · `DECISION_LOG.md` · `REPRODUCIBILITY.md` · `SECURITY.md`.
+| Path | Contents |
+|---|---|
+| [`python/`](python), [`cpp/`](cpp), [`rust/`](rust) | the three implementations and their unit tests |
+| [`fixtures/`](fixtures) | 39 hand-derived conformance cases ([FIXTURES.md](fixtures/FIXTURES.md)) |
+| [`tests/`](tests) | oracle, conformance, cross-language, contract, RQ1, RSS, CLI and release checks |
+| [`benchmarks/`](benchmarks) | workload generator, benchmark runner, RQ1 evaluator, Modal app |
+| [`analysis/`](analysis) | R analysis (base R) |
+| [`results/`](results) | raw benchmark runs and the AI-usage ledger (superseded runs are labelled) |
+| [`reports/`](reports) | technical report and figures |
+| [`docs/`](docs) | all project documentation (below) |
+| [`archive/`](archive) | the v1.0.0 README and report, kept for the record |
+
+## Documentation
+
+**Results**
+- [Technical report](reports/TECHNICAL_REPORT.md): method, results for RQ1–RQ3, limitations
+- [Limitations](docs/LIMITATIONS.md)
+
+**Specification and design**
+- [Project charter](docs/PROJECT_CHARTER.md): research questions and scope
+- [Algorithm specification](docs/ALGORITHM_SPEC.md) (v1.1): traversal, policies, counters, complexity
+- [Input/output schema](docs/INPUT_OUTPUT_SCHEMA.md): formats, validation, error codes, timing phases
+- [Architecture](docs/ARCHITECTURE.md)
+- [Test plan](docs/TEST_PLAN.md) · [Fixtures](fixtures/FIXTURES.md)
+
+**Benchmarking and reproducibility**
+- [Benchmark protocol](docs/BENCHMARK_PROTOCOL.md)
+- [Reproducibility](docs/REPRODUCIBILITY.md): what ran locally and what ran on Modal
+- [Modal execution](docs/MODAL_EXECUTION.md)
+
+**Literature**
+- [Literature review](docs/LITERATURE_REVIEW.md) · [Prior art and scope](docs/PRIOR_ART_AND_SCOPE.md) · [References (BibTeX)](docs/references.bib)
+
+**Process and provenance**
+- [AI usage and attribution](docs/AI_USAGE.md) · [Token accounting](docs/TOKEN_ACCOUNTING.md)
+- [Decision log](docs/DECISION_LOG.md) · [Task board](docs/TASK_BOARD.md) · [Changelog](CHANGELOG.md)
+- Remediation records: [v1.0.1 report](docs/remediation/REMEDIATION_REPORT.md), [plan](docs/remediation/REMEDIATION_PLAN.md), [status](docs/remediation/REMEDIATION_STATUS.md), [log](docs/remediation/REMEDIATION_LOG.md); rc2 [final review](docs/remediation/RC2_FINAL_REVIEW.md), [plan](docs/remediation/RC2_REMEDIATION_PLAN.md), [status](docs/remediation/RC2_REMEDIATION_STATUS.md), [log](docs/remediation/RC2_REMEDIATION_LOG.md)
+
+**Project**
+- [Security](SECURITY.md) · [Licence (MIT)](LICENSE) · [How to cite](CITATION.cff)

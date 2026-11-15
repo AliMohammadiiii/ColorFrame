@@ -191,11 +191,11 @@ scope Ali set; they do not change the research questions.
 - **Consequence:** RQ1 numbers changed; perf/stress inputs unchanged.
 - **Date / by:** 2026-11-15 · dev agent.
 
-### D-022 — Attribution reconciliation (pending the lead's confirmation)
+### D-022 — Attribution reconciliation (confirmed by Ali, 2026-11-15)
 - **Decision:** credit Ali with the algorithm design brief in his charter; mark the formal
   specification as collaborative (drafted by Opus); preserve Ali's edit as commit `3aa59a0` and a
   patch.
-- **Date / by:** 2026-11-15 · dev agent; **awaiting Ali**.
+- **Date / by:** 2026-11-15 · dev agent; **confirmed by Ali on 2026-11-15**.
 
 ### D-023 — Remediation implemented by the coordinating agent
 - **Decision:** the v1.0.1 code changes in all three languages were made by Opus directly, not
@@ -210,7 +210,7 @@ scope Ali set; they do not change the research questions.
   genomes, one per cell. The wording covers both; the private sources are not distributed.
 - **Date / by:** 2026-11-15 · dev agent.
 
-### D-025 — Git authorship policy for future development (PENDING Ali)
+### D-025 — Git authorship policy for future development (DECIDED: Option B)
 - **Context:** independent rc1 audit, finding 9. D-001 (Ali's instruction, 2026-11-14) uses Ali's
   identity and no model names in commits. The rc2 commits nonetheless carry a
   `Co-Authored-By: Claude Opus 5.5` trailer, added by the development harness; this is recorded
@@ -219,5 +219,20 @@ scope Ali set; they do not change the research questions.
   `AI_USAGE.md` ledger; or keep D-001.
 - **Recommendation:** B. It keeps accountability with the owner and makes AI involvement visible
   in Git metadata without per-agent identities.
-- **Decision:** awaiting Ali. No history rewrite under any option.
+- **Decision (Ali, 2026-11-15):** Option B. Commits keep Ali's identity and carry truthful
+  `Co-Authored-By` trailers naming the model for agent-produced work; `AI_USAGE.md` remains the
+  authoritative ledger. Supersedes D-001 from rc2 onwards. History is not rewritten.
 - **Date / by:** 2026-11-15 · dev agent (Opus).
+
+### D-026 — Licence and citation
+- **Decision (Ali, 2026-11-15):** MIT licence; `CITATION.cff` with Ali Mohammadi as author (no
+  contact details) and a pointer to `docs/AI_USAGE.md`.
+- **Date / by:** 2026-11-15 · Ali; files added by dev agent.
+
+### D-027 — Final repository layout and single branch
+- **Decision (Ali, 2026-11-15):** documentation moves to `docs/` (remediation records in
+  `docs/remediation/`), linked from the README; root keeps README, CHANGELOG, SECURITY, LICENSE,
+  CITATION.cff and build files. All branches, each verified to be contained in the release
+  branch, are merged into `main` and deleted; releases stay reachable through tags (`v0.2.0`,
+  `v1.0.0`, `v1.0.1`).
+- **Date / by:** 2026-11-15 · Ali; carried out by dev agent.
