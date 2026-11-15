@@ -7,8 +7,8 @@ shuffled with a seeded RNG so drift affects all implementations alike.
 
 Per measured run we record
   wall_ms      end-to-end wall time around the child process (includes interpreter start-up)
-  parse/validate/search/write/total_ms   in-process phase timings (--timings)
-  peak_rss_mb  child's maximum resident set size from os.wait4 rusage
+  parse/validate/search/canonicalize/write/total_ms   in-process phase timings (--timings, spec v1.1)
+  peak_rss_mb  child's peak resident set size via /usr/bin/time (see measure(); D-020)
 plus search counters summed over the summary rows. Correctness: the first run of each
 implementation is byte-compared with the others; the workload is marked invalid otherwise.
 
@@ -20,8 +20,10 @@ import json
 import os
 import platform
 import random
+import shutil
 import subprocess
 import sys
+import tempfile
 import time
 from pathlib import Path
 
@@ -33,30 +35,55 @@ SUMMARY_COUNTERS = ["search_states", "candidates", "color_pruned", "dead_ends", 
                     "path_length_cuts", "node_visit_cuts", "state_limit_hit"]
 
 
-def rss_mb(ru_maxrss):
-    # Linux reports kilobytes, macOS bytes.
-    return ru_maxrss / 1024.0 if sys.platform.startswith("linux") else ru_maxrss / (1024.0 * 1024.0)
+TIME_BIN = "/usr/bin/time"
+
+
+def measure(cmd):
+    """Run cmd once; return {"wall_ms", "peak_rss_mb", "exit", "stderr"}.
+
+    Peak RSS comes from /usr/bin/time (GNU `-f %M` in KiB on Linux, BSD `-l` in bytes on macOS),
+    which forks the measured program itself. Forking it directly from this (large) Python process
+    would make its ru_maxrss inherit our RSS on Linux, because the high-water mark survives exec;
+    that produced the ~51 MB floor of the v1.0.0 Modal run (D-020). wall_ms includes the wrapper's
+    start-up, which is measured separately as a baseline (`true`).
+    """
+    with tempfile.NamedTemporaryFile(suffix=".rss", delete=False) as fh:
+        rss_file = fh.name
+    try:
+        if sys.platform.startswith("linux"):
+            wrapper = [TIME_BIN, "-f", "%M", "-o", rss_file]
+        elif sys.platform == "darwin":
+            wrapper = [TIME_BIN, "-l", "-o", rss_file]
+        else:
+            raise RuntimeError(f"peak-RSS measurement not supported on {sys.platform}")
+        t0 = time.perf_counter_ns()
+        p = subprocess.run(wrapper + cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        wall = (time.perf_counter_ns() - t0) / 1e6
+        text = Path(rss_file).read_text()
+    finally:
+        os.unlink(rss_file)
+    if sys.platform.startswith("linux"):
+        rss = int(text.strip().splitlines()[-1]) / 1024.0                 # KiB -> MiB
+    else:
+        line = next(l for l in text.splitlines() if "maximum resident set size" in l)
+        rss = int(line.split()[0]) / (1024.0 * 1024.0)                     # bytes -> MiB
+    return {"wall_ms": wall, "peak_rss_mb": rss, "exit": p.returncode, "stderr": p.stderr.decode()}
 
 
 def run_once(impl, wdir, args, tmp):
     out, summ, tim = tmp / "c.tsv", tmp / "s.tsv", tmp / "t.tsv"
     cmd = IMPLS[impl] + ["--nodes", str(wdir / "nodes.tsv"), "--edges", str(wdir / "edges.tsv"),
                          "--out", str(out), "--summary", str(summ), "--timings", str(tim)] + args
-    t0 = time.perf_counter_ns()
-    proc = subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
-    _, status, ru = os.wait4(proc.pid, 0)
-    wall = (time.perf_counter_ns() - t0) / 1e6
-    proc.returncode = os.waitstatus_to_exitcode(status)
-    err = proc.stderr.read().decode()
-    proc.stderr.close()
-    if proc.returncode != 0:
-        raise RuntimeError(f"{impl} on {wdir.name}: exit {proc.returncode}: {err[:300]}")
+    m = measure(cmd)
+    if m["exit"] != 0:
+        raise RuntimeError(f"{impl} on {wdir.name}: exit {m['exit']}: {m['stderr'][:300]}")
+    wall = m["wall_ms"]
     phases = dict(line.split("\t") for line in tim.read_text().splitlines()[1:])
     srows = [dict(zip(*[l.split("\t") for l in (summ.read_text().splitlines()[0], r)]))
              for r in summ.read_text().splitlines()[1:]]
     counters = {k: sum(int(r[k]) for r in srows) for k in SUMMARY_COUNTERS}
     digest = hashlib.sha256(out.read_bytes() + summ.read_bytes()).hexdigest()[:16]
-    return wall, phases, rss_mb(ru.ru_maxrss), counters, digest
+    return wall, phases, m["peak_rss_mb"], counters, digest
 
 
 def tool_version(cmd):
@@ -107,9 +134,16 @@ def main():
     skip = set(a.skip)
 
     meta = environment()
+    # Measurement floor and runtime baselines, measured with the same wrapper (median of 7).
+    base = {}
+    for name, cmd in (("wrapper_floor_true", [shutil.which("true")]), ("python_interpreter", [sys.executable, "-c", "pass"])):
+        ms = [measure(cmd) for _ in range(7)]
+        base[name] = {"peak_rss_mb_median": sorted(x["peak_rss_mb"] for x in ms)[3],
+                      "wall_ms_median": sorted(x["wall_ms"] for x in ms)[3]}
+    meta["measurement_baselines"] = base
     meta.update({"reps": a.reps, "warmup": a.warmup, "order_seed": a.seed, "impls": impls, "workloads": {}})
     raw = open(outdir / "raw_runs.tsv", "w")
-    raw.write("workload\timpl\trep\torder\twall_ms\tparse_ms\tvalidate_ms\tsearch_ms\twrite_ms\ttotal_ms\t"
+    raw.write("workload\timpl\trep\torder\twall_ms\tparse_ms\tvalidate_ms\tsearch_ms\tcanonicalize_ms\twrite_ms\ttotal_ms\t"
               "peak_rss_mb\t" + "\t".join(SUMMARY_COUNTERS) + "\toutput_sha256_16\n")
     for w in wdirs:
         params = json.loads((w / "params.json").read_text())
@@ -130,7 +164,7 @@ def main():
             wall, ph, rss, cnt, dg = run_once(i, w, args, tmp)
             digests.setdefault(i, set()).add(dg)
             raw.write("\t".join(map(str, [w.name, i, r, order, f"{wall:.3f}", ph["parse"], ph["validate"],
-                                          ph["search"], ph["write"], ph["total"], f"{rss:.2f}"]
+                                          ph["search"], ph["canonicalize"], ph["write"], ph["total"], f"{rss:.2f}"]
                                      + [cnt[k] for k in SUMMARY_COUNTERS] + [dg])) + "\n")
             raw.flush()
         all_d = set().union(*digests.values()) if digests else set()
