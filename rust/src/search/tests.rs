@@ -264,3 +264,15 @@ fn candidates_sorted_and_no_duplicates() {
     assert_eq!(p.len(), 2);
     assert_eq!(r.dup_dropped, 0);
 }
+
+#[test]
+fn search_returns_candidates_in_emission_order() {
+    // Spec v1.1: sorting belongs to the canonicalize phase, not to search.
+    let r = run(
+        "G\ta\tATGCATGC\t1\nG\tb\tCCTAA\t1\nG\tc\tATAA\t1\n",
+        "G\ta\tb\t0\nG\ta\tc\t0\n",
+        Policy::Strict,
+        Limits::default(),
+    );
+    assert_eq!(paths(&r), vec![("a>c".to_string(), 0), ("a>b".to_string(), 4)]);
+}

@@ -302,5 +302,30 @@ class SearchTests(unittest.TestCase):
         self.assertEqual(graphs, [])
 
 
+class PipelineContractTests(unittest.TestCase):
+    """Spec v1.1: execution order and the search/canonicalize phase boundary."""
+
+    GRAPH = ([("a", "ATGCATGC", "1"), ("b", "CCTAA", "1"), ("c", "ATAA", "1")],
+             [("a", "b", 0), ("a", "c", 0)])
+
+    def test_both_runs_strict_then_permissive(self):
+        self.assertEqual(cf.policies_for("both"), ["strict", "permissive"])
+        self.assertEqual(cf.policies_for("strict"), ["strict"])
+        self.assertEqual(cf.policies_for("permissive"), ["permissive"])
+
+    def test_search_returns_candidates_in_emission_order(self):
+        # DFS emits (a>c, 0) from the start at offset 0 before (a>b, 4) from offset 4.
+        res = cf.search(graph_of(*self.GRAPH), "strict", LIMITS)
+        self.assertEqual([(c.path, c.start_offset) for c in res.candidates], [("a>c", 0), ("a>b", 4)])
+
+    def test_canonicalize_orders_runs_and_candidates(self):
+        g = graph_of(*self.GRAPH)
+        runs = [("G", p, cf.search(g, p, LIMITS)) for p in cf.policies_for("both")]
+        canon = cf.canonicalize(runs)
+        self.assertEqual([(gid, pol) for gid, pol, _ in canon], [("G", "permissive"), ("G", "strict")])
+        for _, _, res in canon:
+            self.assertEqual([(c.path, c.start_offset) for c in res.candidates], [("a>b", 4), ("a>c", 0)])
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -364,6 +364,7 @@ static void test_render_and_ordering() {
     auto gs = build("z\tn\tATGCCCTAAC\t1\ny\tn\tATGCCCTAAC\t.\n", "");
     auto runs = run_all(gs, PolicyChoice::Both, Limits());
     CHECK_EQ(runs.size(), 4u);
+    canonicalize(runs);
     const std::string cand = render_candidates(runs);
     const std::string expect_c =
         "graph_id\tpolicy\tcandidate_id\tpath\tstart_offset\tlength_nt\tsequence\t"
@@ -387,6 +388,7 @@ static void test_render_fragmented_and_candidate_ids() {
     auto gs = build("g\tn1\tATGCCC\t1\ng\tn2\tGCCTAACC\t2\ng\tn3\tGCCTGACC\t1\n",
                     "g\tn1\tn2\t0\ng\tn1\tn3\t0\n");
     auto runs = run_all(gs, PolicyChoice::Permissive, Limits());
+    canonicalize(runs);
     const std::string cand = render_candidates(runs);
     CHECK(cand.find("g\tpermissive\t1\tn1>n2\t0\t12\tATGCCCGCCTAA\t.\tfragmented_support\n") !=
           std::string::npos);
@@ -400,6 +402,25 @@ static void test_empty_graph_set() {
     auto runs = run_all(gs, PolicyChoice::Both, Limits());
     CHECK(runs.empty());
     CHECK_EQ(render_candidates(runs).find('\n'), render_candidates(runs).size() - 1);  // header only
+}
+
+// Spec v1.1: strict runs before permissive; run_all keeps emission order; canonicalize sorts.
+static void test_pipeline_contract() {
+    std::vector<Policy> both = policies_for(PolicyChoice::Both);
+    CHECK(both.size() == 2 && both[0] == Policy::Strict && both[1] == Policy::Permissive);
+    auto gs = build("G\ta\tATGCATGC\t1\nG\tb\tCCTAA\t1\nG\tc\tATAA\t1\n",
+                    "G\ta\tb\t0\nG\ta\tc\t0\n");
+    auto runs = run_all(gs, PolicyChoice::Both, Limits());
+    CHECK_EQ(runs.size(), 2u);
+    CHECK(runs[0].policy == Policy::Strict);  // execution order, not output order
+    CHECK_EQ(runs[0].result.candidates.size(), 2u);
+    CHECK_EQ(runs[0].result.candidates[0].path, std::string("a>c"));  // DFS emission order
+    CHECK_EQ(runs[0].result.candidates[1].path, std::string("a>b"));
+    canonicalize(runs);
+    CHECK(runs[0].policy == Policy::Permissive);  // permissive < strict (bytes)
+    CHECK_EQ(runs[0].result.candidates[0].path, std::string("a>b"));
+    CHECK_EQ(runs[0].result.candidates[0].start_offset, 4);
+    CHECK_EQ(runs[0].result.candidates[1].path, std::string("a>c"));
 }
 
 int main() {
@@ -432,6 +453,7 @@ int main() {
     test_render_and_ordering();
     test_render_fragmented_and_candidate_ids();
     test_empty_graph_set();
+    test_pipeline_contract();
     std::cout << (g_checks - g_failures) << "/" << g_checks << " checks passed\n";
     return g_failures == 0 ? 0 : 1;
 }
