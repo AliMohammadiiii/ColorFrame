@@ -22,5 +22,15 @@ jobs:
         with:
           workspaces: rust
 
-      - name: Run tests
+      - name: Install GNU time (peak-RSS measurement, D-020) and GCC 14
+        run: sudo apt-get update -q && sudo apt-get install -y -q time g++-14
+
+      - name: Run tests (default compiler)
         run: make test
+
+      - name: C++ with GCC 14 under -Werror (portability, rc2)
+        run: |
+          make -C cpp clean
+          make -C cpp CXX=g++-14 all test
+          python3 tests/run_cases.py --impl cpp
+          python3 tests/test_cli_required_flags.py cpp
