@@ -27,6 +27,7 @@ import modal
 
 REPO = Path(__file__).resolve().parent.parent
 RUST_TOOLCHAIN = "1.99.1"      # must match rust/rust-toolchain.toml
+CPU, MEMORY_MB = 1.0, 4096     # benchmark container allocation (recorded in every run)
 PYTHON_VERSION = "3.12"
 
 
@@ -47,13 +48,14 @@ IGNORE = [".git", ".git/**", ".worktrees", ".worktrees/**", "private", "private/
 
 bench_image = (
     modal.Image.debian_slim(python_version=PYTHON_VERSION)
-    .apt_install("build-essential", "curl", "ca-certificates", "git")
+    .apt_install("build-essential", "curl", "ca-certificates", "git", "time")  # GNU time: peak RSS (D-020)
     .run_commands(
         "curl -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal "
         f"--default-toolchain {RUST_TOOLCHAIN} -c rustfmt -c clippy"
     )
     .env({"PATH": "/root/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
           "COLORFRAME_ENV": "modal", "COLORFRAME_COMMIT": COMMIT, "COLORFRAME_DIRTY": DIRTY,
+          "COLORFRAME_CPU": str(CPU), "COLORFRAME_MEMORY_MB": str(MEMORY_MB),
           "CXX": "g++"})
     .add_local_dir(REPO, "/repo", copy=True, ignore=IGNORE)
     .run_commands("make -C /repo/cpp CXX=g++", "cd /repo/rust && cargo build --release --locked")
@@ -88,7 +90,7 @@ def _tar(path: Path) -> bytes:
     return buf.getvalue()
 
 
-@app.function(image=bench_image, cpu=1.0, memory=4096, timeout=4 * 3600, volumes={"/vol": results_volume})
+@app.function(image=bench_image, cpu=CPU, memory=MEMORY_MB, timeout=4 * 3600, volumes={"/vol": results_volume})
 def pipeline(reps: int = 7, warmup: int = 2, skip: str = "", run_id: str = "run") -> bytes:
     out = Path("/repo/results/run")
     out.mkdir(parents=True, exist_ok=True)
@@ -99,8 +101,13 @@ def pipeline(reps: int = 7, warmup: int = 2, skip: str = "", run_id: str = "run"
         _sh("python3 --version; g++ --version | head -1; rustc --version; nproc; "
             "grep -m1 'model name' /proc/cpuinfo; grep -E 'MemTotal|MemAvailable' /proc/meminfo", log,
             required=False)
+        _sh("env | grep '^MODAL_' | grep -viE 'token|secret|key|password' | sort > "
+            f"{out}/modal_env.txt", log, required=False)
         _sh("python3 tests/check_fixtures.py", log)
         _sh("python3 tests/run_cases.py --impl all", log)
+        _sh("python3 tests/test_timing_contract.py", log)
+        _sh("python3 tests/test_rq1_model.py", log)
+        _sh("python3 tests/test_rss_measurement.py", log)   # validates the RSS method on this Linux host
         _sh("python3 benchmarks/generate_workloads.py", log)
         _sh(f"python3 tests/cross_language.py --out {out}/cross_language.tsv", log)
         _sh(f"python3 benchmarks/evaluate_rq1.py --impl rust --out {out}/rq1_recovery.tsv", log)
