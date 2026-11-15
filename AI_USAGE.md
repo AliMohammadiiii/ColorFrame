@@ -1,10 +1,18 @@
 # AI Usage and Attribution
 
-**Status:** Updated for v1.0.1 (2026-11-15).
+**Status:** Updated for v1.0.1-rc2 (2026-11-15).
 
-This is the authoritative record of who did what. Under D-001, Git commits use the project
-lead's identity and contain no tool or model names, so this file, not `git log`, shows AI
-involvement.
+This is the authoritative record of who did what. All commits use the project lead's Git
+identity (D-001), so the author field of a commit does **not** identify the agent that produced
+it; this file does. Commits up to rc1 (`44fbbf3`) carry no model names. The rc2 commits carry a
+`Co-Authored-By: Claude Opus 5.5` trailer, which departs from D-001; the policy for future work
+is pending the lead's decision (D-025, below).
+
+**Contribution statement.** The implementation code in this repository was produced by AI agents.
+Ali supplied the research direction and the algorithm design brief, directed the work and its
+remediation, commissioned the independent reviews, and owns the final scientific decisions and
+interpretation. *(Adapted from the audit's suggested sentence: the records show direction and
+commissioned review, but no line-level code review by Ali, so "reviewed the work" is not claimed.)*
 
 ## Roles (reconciled in v1.0.1 from the recorded prompts, commits and decision log)
 
@@ -12,7 +20,7 @@ involvement.
 |---|---|
 | **Ali Mohammadi** (project lead) | Original project idea and research direction; research questions RQ1–RQ4; the intended comparisons (strict vs permissive support, Python/C++/Rust, AI-assisted effort); scope; **the algorithm design brief** in the charter he wrote (graph model, data-contract columns, traversal state, 13-step core algorithm, search limits, both support policies, the ten fixture scenarios, workload sizes/branching/seed, benchmark protocol, token-ledger columns); the decision to commission the independent review and this remediation; final scientific decisions and interpretation. |
 | **Collaborative** | **Algorithm specification.** Ali's design brief (above) defined the algorithm. Opus turned it into the formal, normative `ALGORITHM_SPEC.md` (pseudocode, start-position ownership, uniform overlap, counter definitions, exploration order) and `INPUT_OUTPUT_SCHEMA.md` (formats, validation order, error codes). No explicit review of the formal text by Ali is recorded. |
-| Claude Opus 5.5 (coordinating development agent, high effort) | Formal spec and schema as above; fixture contents with hand-derived expectations (including the two errors later corrected, D-014); brute-force oracle; conformance, cross-language, timing-contract, RQ1 and RSS test harnesses; workload generator; benchmark runner; Modal app; R analysis; code review; integration; documentation. **v1.0.1:** all remediation code and docs, including the timing-phase changes in the Python, C++ and Rust implementations (done directly rather than delegated, to stay within the account's usage limits). |
+| Claude Opus 5.5 (coordinating development agent, high effort) | Formal spec and schema as above; fixture contents with hand-derived expectations (including the two errors later corrected, D-014); brute-force oracle; conformance, cross-language, timing-contract, RQ1 and RSS test harnesses; workload generator; benchmark runner; Modal app; R analysis; code review; integration; documentation. **v1.0.1:** all remediation code and docs, including the timing-phase changes in the Python, C++ and Rust implementations (done directly rather than delegated, D-023). **rc2:** RQ1 wording, C++ GCC 14 fix, RSS tests, GCC 14 and RSS Modal checks, documentation, release check (also not delegated). |
 | Claude Sonnet 5.5 (implementation agents) | v1.0.0 Python, C++17 and Rust implementations and their unit tests. |
 | Claude Haiku 5.5 (supporting agents) | Makefile and CI workflow; Crossref verification of bibliographic metadata (v1.0.0). |
 
@@ -23,6 +31,16 @@ specification" from Opus to himself (preserved as commit `3aa59a0` and as
 `archive/remediation/ai_usage_uncommitted_edit_2026-11-15.patch`). The reconciliation above
 credits him with the algorithm design and marks the formal specification as collaborative,
 because the formal text was drafted by Opus. **Pending Ali's confirmation.**
+
+## Git authorship policy for future development (D-025, pending Ali)
+
+| Option | What it means | Assessment |
+|---|---|---|
+| A | agent/bot Git identities as commit authors; Ali as committer or merger | most explicit in metadata; needs identities configured per agent |
+| **B (recommended)** | Ali's identity as author, plus truthful trailers (`Co-Authored-By: <model>`) on every agent-produced commit, plus this ledger | keeps accountability with Ali, makes AI involvement visible in `git log`; rc2 already follows it |
+| D-001 as is | Ali's identity, no model names; ledger only | git metadata alone does not show AI authorship (audit finding 9) |
+
+Historical commits are not rewritten under any option.
 
 ## Commit → producing agent
 

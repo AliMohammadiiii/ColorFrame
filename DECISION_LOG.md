@@ -209,3 +209,15 @@ scope Ali set; they do not change the research questions.
 - **Reason:** the meeting discusses cells, and the correspondence speaks of a million incomplete
   genomes, one per cell. The wording covers both; the private sources are not distributed.
 - **Date / by:** 2026-11-15 · dev agent.
+
+### D-025 — Git authorship policy for future development (PENDING Ali)
+- **Context:** independent rc1 audit, finding 9. D-001 (Ali's instruction, 2026-11-14) uses Ali's
+  identity and no model names in commits. The rc2 commits nonetheless carry a
+  `Co-Authored-By: Claude Opus 5.5` trailer, added by the development harness; this is recorded
+  here rather than hidden, and those commits are not rewritten.
+- **Options:** A, agent identities; B, Ali's identity plus truthful attribution trailers and the
+  `AI_USAGE.md` ledger; or keep D-001.
+- **Recommendation:** B. It keeps accountability with the owner and makes AI involvement visible
+  in Git metadata without per-agent identities.
+- **Decision:** awaiting Ali. No history rewrite under any option.
+- **Date / by:** 2026-11-15 · dev agent (Opus).
