@@ -7,7 +7,7 @@
 | R3 | RQ1 true-sample accounting and explicit noise | **Validated**: 12 tests; evaluator used in the authoritative run |
 | R4 | RQ1 replicates | **Validated**: 10 paired replicates × 6 p × 2 conditions |
 | R5 | Clean release archive | **Validated** for the archive built in this session (see `REMEDIATION_REPORT.md` §7) |
-| R6 | Prior art | **Validated**: TIPE content not reviewed (metadata only) |
+| R6 | Prior art | **Validated** except TIPE: **partial review — metadata verified; full-text methodological assessment not completed** |
 | R7 | Token accounting framing | **Implemented** |
 | R8 | Attribution | **Implemented, pending the lead's confirmation** |
 | R9 | Documentation consistency | **Implemented** for the documents listed in the report; see open items |

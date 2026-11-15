@@ -1,4 +1,4 @@
-// ColorFrame CLI (INPUT_OUTPUT_SCHEMA.md section 3). Stages: parse, validate, search, write.
+// ColorFrame CLI (INPUT_OUTPUT_SCHEMA.md section 3). Stages: parse, validate, search, canonicalize, write.
 #include <chrono>
 #include <cstdio>
 #include <fstream>

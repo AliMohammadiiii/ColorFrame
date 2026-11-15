@@ -58,7 +58,8 @@ even one with shared colours, need not exist contiguously in any input.
 - **Jaromczyk, Moore & Schardl 2012** [`jaromczyk2012orf`]: a linear-time maximum-length ORF in a
   splice graph. That is an acyclic setting with a single optimum, versus ColorFrame's cyclic
   graphs and enumeration of every candidate. Abstract-level reading only.
-- **Kalatzis 2026** [`kalatzis2026tipe`]: bounded path construction in genome graphs. Metadata
+- **Kalatzis 2026** [`kalatzis2026tipe`] — *Partial review — metadata verified; full-text
+  methodological assessment not completed.* Bounded path construction in genome graphs. Metadata
   verified via Crossref (IEEE Access 14, 108558–108570), which settles the DOI inconsistency
   raised by the review. **The content was not read**, so no comparison is claimed beyond
   "adjacent work on bounded path construction".

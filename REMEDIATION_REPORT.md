@@ -60,7 +60,7 @@ order) and R analysis, on Modal in one pinned container. Container wall time 179
   lead's decision.
 - **GitHub CI:** not run (no remote; publishing needs approval).
 - **Graph-ID permutation sensitivity:** not tested (limitation).
-- **TIPE (Kalatzis 2026):** metadata verified, content unread.
+- **TIPE (Kalatzis 2026):** partial review — metadata verified; full-text methodological assessment not completed.
 - **Elicit / Scite:** unavailable in this session.
 - **Token usage:** v1.0.1 Opus usage is `NOT_EXPOSED`.
 - **Branch status:** not merged to `main`, not tagged; awaiting review.

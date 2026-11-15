@@ -44,7 +44,11 @@ discrepancy into a concrete diff.
 | parse | read TSV, check shape, build records | `parse` |
 | validate | identifier/DNA/colour/overlap rules, build per-graph adjacency (sorted) | `validate` |
 | search | recursive DFS per `ALGORITHM_SPEC.md` §4.2, per graph and policy | `search` |
-| write | canonical sort, emit TSV | `write` |
+| canonicalize | sort runs by (graph id, policy) and candidates by (path, start offset), spec §4.5 | `canonicalize` |
+| write | serialise TSV and write `--out` / `--summary` | `write` |
+
+Timed phases are contiguous in all three implementations (`total` = sum), contract-tested by
+`tests/test_timing_contract.py`; boundaries in `INPUT_OUTPUT_SCHEMA.md` §4 (spec v1.1).
 
 Data representation (common shape, language-idiomatic types):
 
