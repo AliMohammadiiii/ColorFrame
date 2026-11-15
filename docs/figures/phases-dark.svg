@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 268" width="860" height="268" role="img" font-family="system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif">
+<title>Stacked bars: share of time per phase on the 10,000-node graph; totals Python 1318 ms, C++17 149 ms, Rust 131 ms</title>
+<rect x="0.5" y="0.5" width="859" height="267" rx="12" fill="#1a1a19" stroke="rgba(255,255,255,0.10)"/>
+<text x="28.0" y="38.0" font-size="17" font-weight="600" fill="#f0efec" text-anchor="start">Where the time goes on a 10,000-node graph</text>
+<text x="28.0" y="60.0" font-size="12.5" font-weight="400" fill="#c3c2b7" text-anchor="start">Share of in-process time by pipeline phase (56,264 candidates written); total at right</text>
+<text x="28.0" y="252.0" font-size="11" font-weight="400" fill="#898781" text-anchor="start">Source: Modal run 20261115T065950Z (1 vCPU, Debian, GCC 12.2, Rust 1.99.1, Python 3.12) · median of 7 runs</text>
+<rect x="28.0" y="78.0" width="12" height="12" rx="3" fill="#184f95"/>
+<text x="54.0" y="84.0" font-size="12.5" font-weight="400" fill="#c3c2b7" text-anchor="start" dominant-baseline="central">parse</text>
+<rect x="111.0" y="78.0" width="12" height="12" rx="3" fill="#256abf"/>
+<text x="137.0" y="84.0" font-size="12.5" font-weight="400" fill="#c3c2b7" text-anchor="start" dominant-baseline="central">validate</text>
+<rect x="215.0" y="78.0" width="12" height="12" rx="3" fill="#3987e5"/>
+<text x="241.0" y="84.0" font-size="12.5" font-weight="400" fill="#c3c2b7" text-anchor="start" dominant-baseline="central">search</text>
+<rect x="305.0" y="78.0" width="12" height="12" rx="3" fill="#6da7ec"/>
+<text x="331.0" y="84.0" font-size="12.5" font-weight="400" fill="#c3c2b7" text-anchor="start" dominant-baseline="central">canonicalize</text>
+<rect x="437.0" y="78.0" width="12" height="12" rx="3" fill="#9ec5f4"/>
+<text x="463.0" y="84.0" font-size="12.5" font-weight="400" fill="#c3c2b7" text-anchor="start" dominant-baseline="central">write</text>
+<text x="92.0" y="124.0" font-size="12.5" font-weight="500" fill="#f0efec" text-anchor="end" dominant-baseline="central">Python</text>
+<path d="M104.0,112.0 H113.4 Q113.4,112.0 113.4,112.0 V136.0 Q113.4,136.0 113.4,136.0 H104.0 Z" stroke="none" fill="#184f95" stroke-width="0" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M115.4,112.0 H151.9 Q151.9,112.0 151.9,112.0 V136.0 Q151.9,136.0 151.9,136.0 H115.4 Z" stroke="none" fill="#256abf" stroke-width="0" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="133.6" y="124.0" font-size="11" font-weight="500" fill="#ffffff" text-anchor="middle" dominant-baseline="central">6%</text>
+<path d="M153.9,112.0 H678.0 Q678.0,112.0 678.0,112.0 V136.0 Q678.0,136.0 678.0,136.0 H153.9 Z" stroke="none" fill="#3987e5" stroke-width="0" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="415.9" y="124.0" font-size="11" font-weight="500" fill="#ffffff" text-anchor="middle" dominant-baseline="central">search 84%</text>
+<path d="M680.0,112.0 H694.3 Q694.3,112.0 694.3,112.0 V136.0 Q694.3,136.0 694.3,136.0 H680.0 Z" stroke="none" fill="#6da7ec" stroke-width="0" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M696.3,112.0 H728.0 Q732.0,112.0 732.0,116.0 V132.0 Q732.0,136.0 728.0,136.0 H696.3 Z" stroke="none" fill="#9ec5f4" stroke-width="0" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="713.2" y="124.0" font-size="11" font-weight="500" fill="#0b0b0b" text-anchor="middle" dominant-baseline="central">6%</text>
+<text x="744.0" y="124.0" font-size="12.5" font-weight="600" fill="#f0efec" text-anchor="start" dominant-baseline="central">1,318 ms</text>
+<text x="92.0" y="166.0" font-size="12.5" font-weight="500" fill="#f0efec" text-anchor="end" dominant-baseline="central">C++17</text>
+<path d="M104.0,154.0 H158.2 Q158.2,154.0 158.2,154.0 V178.0 Q158.2,178.0 158.2,178.0 H104.0 Z" stroke="none" fill="#184f95" stroke-width="0" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="131.1" y="166.0" font-size="11" font-weight="500" fill="#ffffff" text-anchor="middle" dominant-baseline="central">9%</text>
+<path d="M160.2,154.0 H280.3 Q280.3,154.0 280.3,154.0 V178.0 Q280.3,178.0 280.3,178.0 H160.2 Z" stroke="none" fill="#256abf" stroke-width="0" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="220.2" y="166.0" font-size="11" font-weight="500" fill="#ffffff" text-anchor="middle" dominant-baseline="central">validate 19%</text>
+<path d="M282.3,154.0 H564.4 Q564.4,154.0 564.4,154.0 V178.0 Q564.4,178.0 564.4,178.0 H282.3 Z" stroke="none" fill="#3987e5" stroke-width="0" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="423.3" y="166.0" font-size="11" font-weight="500" fill="#ffffff" text-anchor="middle" dominant-baseline="central">search 45%</text>
+<path d="M566.4,154.0 H590.5 Q590.5,154.0 590.5,154.0 V178.0 Q590.5,178.0 590.5,178.0 H566.4 Z" stroke="none" fill="#6da7ec" stroke-width="0" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M592.5,154.0 H728.0 Q732.0,154.0 732.0,158.0 V174.0 Q732.0,178.0 728.0,178.0 H592.5 Z" stroke="none" fill="#9ec5f4" stroke-width="0" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="661.3" y="166.0" font-size="11" font-weight="500" fill="#0b0b0b" text-anchor="middle" dominant-baseline="central">write 22%</text>
+<text x="744.0" y="166.0" font-size="12.5" font-weight="600" fill="#f0efec" text-anchor="start" dominant-baseline="central">149 ms</text>
+<text x="92.0" y="208.0" font-size="12.5" font-weight="500" fill="#f0efec" text-anchor="end" dominant-baseline="central">Rust</text>
+<path d="M104.0,196.0 H165.1 Q165.1,196.0 165.1,196.0 V220.0 Q165.1,220.0 165.1,220.0 H104.0 Z" stroke="none" fill="#184f95" stroke-width="0" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="134.6" y="208.0" font-size="11" font-weight="500" fill="#ffffff" text-anchor="middle" dominant-baseline="central">10%</text>
+<path d="M167.1,196.0 H212.5 Q212.5,196.0 212.5,196.0 V220.0 Q212.5,220.0 212.5,220.0 H167.1 Z" stroke="none" fill="#256abf" stroke-width="0" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="189.8" y="208.0" font-size="11" font-weight="500" fill="#ffffff" text-anchor="middle" dominant-baseline="central">8%</text>
+<path d="M214.5,196.0 H487.7 Q487.7,196.0 487.7,196.0 V220.0 Q487.7,220.0 487.7,220.0 H214.5 Z" stroke="none" fill="#3987e5" stroke-width="0" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="351.1" y="208.0" font-size="11" font-weight="500" fill="#ffffff" text-anchor="middle" dominant-baseline="central">search 44%</text>
+<path d="M489.7,196.0 H551.2 Q551.2,196.0 551.2,196.0 V220.0 Q551.2,220.0 551.2,220.0 H489.7 Z" stroke="none" fill="#6da7ec" stroke-width="0" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="520.4" y="208.0" font-size="11" font-weight="500" fill="#0b0b0b" text-anchor="middle" dominant-baseline="central">10%</text>
+<path d="M553.2,196.0 H728.0 Q732.0,196.0 732.0,200.0 V216.0 Q732.0,220.0 728.0,220.0 H553.2 Z" stroke="none" fill="#9ec5f4" stroke-width="0" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="641.6" y="208.0" font-size="11" font-weight="500" fill="#0b0b0b" text-anchor="middle" dominant-baseline="central">write 28%</text>
+<text x="744.0" y="208.0" font-size="12.5" font-weight="600" fill="#f0efec" text-anchor="start" dominant-baseline="central">131 ms</text>
+</svg>

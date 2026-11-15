@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 164" width="860" height="164" role="img" font-family="system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif">
+<title>ColorFrame key numbers: 108× faster search than Python (Rust, stress graph C++ 94×); 10.4 M search states per second (Rust · C++ 9.0 M Python 0.10 M); 134 / 134 workloads byte-identical (outputs of Python, C++ and Rust); 518 k agent tokens recorded (lower bound: Opus usage not exposed)</title>
+<rect x="0.5" y="0.5" width="859" height="163" rx="12" fill="#fcfcfb" stroke="rgba(11,11,11,0.10)"/>
+<rect x="20.0" y="20" width="196.0" height="124" rx="10" fill="none" stroke="rgba(11,11,11,0.10)"/>
+<text x="38.0" y="66.0" font-size="34" font-weight="650" fill="#0b0b0b" text-anchor="start">108×</text>
+<text x="38.0" y="92.0" font-size="13" font-weight="500" fill="#52514e" text-anchor="start">faster search than Python</text>
+<text x="38.0" y="112.0" font-size="11" font-weight="400" fill="#898781" text-anchor="start">Rust, stress graph</text>
+<text x="38.0" y="127.0" font-size="11" font-weight="400" fill="#898781" text-anchor="start">C++ 94×</text>
+<rect x="228.0" y="20" width="196.0" height="124" rx="10" fill="none" stroke="rgba(11,11,11,0.10)"/>
+<text x="246.0" y="66.0" font-size="34" font-weight="650" fill="#0b0b0b" text-anchor="start">10.4 M</text>
+<text x="246.0" y="92.0" font-size="13" font-weight="500" fill="#52514e" text-anchor="start">search states per second</text>
+<text x="246.0" y="112.0" font-size="11" font-weight="400" fill="#898781" text-anchor="start">Rust · C++ 9.0 M</text>
+<text x="246.0" y="127.0" font-size="11" font-weight="400" fill="#898781" text-anchor="start">Python 0.10 M</text>
+<rect x="436.0" y="20" width="196.0" height="124" rx="10" fill="none" stroke="rgba(11,11,11,0.10)"/>
+<text x="454.0" y="66.0" font-size="34" font-weight="650" fill="#0b0b0b" text-anchor="start">134 / 134</text>
+<text x="454.0" y="92.0" font-size="13" font-weight="500" fill="#52514e" text-anchor="start">workloads byte-identical</text>
+<text x="454.0" y="112.0" font-size="11" font-weight="400" fill="#898781" text-anchor="start">outputs of Python,</text>
+<text x="454.0" y="127.0" font-size="11" font-weight="400" fill="#898781" text-anchor="start">C++ and Rust</text>
+<rect x="644.0" y="20" width="196.0" height="124" rx="10" fill="none" stroke="rgba(11,11,11,0.10)"/>
+<text x="662.0" y="66.0" font-size="34" font-weight="650" fill="#0b0b0b" text-anchor="start">518 k</text>
+<text x="662.0" y="92.0" font-size="13" font-weight="500" fill="#52514e" text-anchor="start">agent tokens recorded</text>
+<text x="662.0" y="112.0" font-size="11" font-weight="400" fill="#898781" text-anchor="start">lower bound:</text>
+<text x="662.0" y="127.0" font-size="11" font-weight="400" fill="#898781" text-anchor="start">Opus usage not exposed</text>
+</svg>

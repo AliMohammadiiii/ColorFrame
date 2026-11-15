@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 420" width="860" height="420" role="img" font-family="system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif">
+<title>Line chart: median search time versus graph size for Python, C++ and Rust; at 10,000 nodes Python 1104 ms, C++17 67 ms, Rust 58 ms</title>
+<rect x="0.5" y="0.5" width="859" height="419" rx="12" fill="#fcfcfb" stroke="rgba(11,11,11,0.10)"/>
+<text x="28.0" y="38.0" font-size="17" font-weight="600" fill="#0b0b0b" text-anchor="start">Search time grows linearly with graph size, in every language</text>
+<text x="28.0" y="60.0" font-size="12.5" font-weight="400" fill="#52514e" text-anchor="start">Median search-phase time (ms) on high-branching synthetic graphs · log–log scale</text>
+<text x="28.0" y="404.0" font-size="11" font-weight="400" fill="#898781" text-anchor="start">Source: Modal run 20261115T065950Z (1 vCPU, Debian, GCC 12.2, Rust 1.99.1, Python 3.12) · median of 7 runs</text>
+<line x1="78.0" y1="338.0" x2="710.0" y2="338.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="68.0" y="338.0" font-size="11" font-weight="400" fill="#898781" text-anchor="end" dominant-baseline="central">0.1</text>
+<line x1="78.0" y1="287.5" x2="710.0" y2="287.5" stroke="#e1e0d9" stroke-width="1"/>
+<text x="68.0" y="287.5" font-size="11" font-weight="400" fill="#898781" text-anchor="end" dominant-baseline="central">1</text>
+<line x1="78.0" y1="237.0" x2="710.0" y2="237.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="68.0" y="237.0" font-size="11" font-weight="400" fill="#898781" text-anchor="end" dominant-baseline="central">10</text>
+<line x1="78.0" y1="186.6" x2="710.0" y2="186.6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="68.0" y="186.6" font-size="11" font-weight="400" fill="#898781" text-anchor="end" dominant-baseline="central">100</text>
+<line x1="78.0" y1="136.1" x2="710.0" y2="136.1" stroke="#e1e0d9" stroke-width="1"/>
+<text x="68.0" y="136.1" font-size="11" font-weight="400" fill="#898781" text-anchor="end" dominant-baseline="central">1,000</text>
+<line x1="78.0" y1="338.0" x2="710.0" y2="338.0" stroke="#c3c2b7" stroke-width="1"/>
+<text x="102.5" y="358.0" font-size="11" font-weight="400" fill="#898781" text-anchor="middle">50</text>
+<text x="255.1" y="358.0" font-size="11" font-weight="400" fill="#898781" text-anchor="middle">200</text>
+<text x="355.9" y="358.0" font-size="11" font-weight="400" fill="#898781" text-anchor="middle">500</text>
+<text x="508.4" y="358.0" font-size="11" font-weight="400" fill="#898781" text-anchor="middle">2,000</text>
+<text x="685.5" y="358.0" font-size="11" font-weight="400" fill="#898781" text-anchor="middle">10,000</text>
+<text x="394.0" y="378.0" font-size="11.5" font-weight="400" fill="#52514e" text-anchor="middle">nodes in graph</text>
+<line x1="28.0" y1="84.0" x2="46.0" y2="84.0" stroke="#2a78d6" stroke-width="2.5"/>
+<circle cx="37.0" cy="84.0" r="4.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<text x="54.0" y="84.0" font-size="12.5" font-weight="400" fill="#52514e" text-anchor="start" dominant-baseline="central">Python</text>
+<line x1="118.0" y1="84.0" x2="136.0" y2="84.0" stroke="#eb6834" stroke-width="2.5"/>
+<circle cx="127.0" cy="84.0" r="4.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<text x="144.0" y="84.0" font-size="12.5" font-weight="400" fill="#52514e" text-anchor="start" dominant-baseline="central">C++17</text>
+<line x1="201.0" y1="84.0" x2="219.0" y2="84.0" stroke="#1baf7a" stroke-width="2.5"/>
+<circle cx="210.0" cy="84.0" r="4.5" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<text x="227.0" y="84.0" font-size="12.5" font-weight="400" fill="#52514e" text-anchor="start" dominant-baseline="central">Rust</text>
+<path d="M102.5,258.4 L255.1,222.6 L355.9,201.8 L508.4,168.9 L685.5,133.9" stroke="#2a78d6" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="102.5" cy="258.4" r="4.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="255.1" cy="222.6" r="4.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="355.9" cy="201.8" r="4.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="508.4" cy="168.9" r="4.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="685.5" cy="133.9" r="4.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<path d="M102.5,324.2 L255.1,286.2 L355.9,267.2 L508.4,231.5 L685.5,195.2" stroke="#eb6834" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="102.5" cy="324.2" r="4.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="255.1" cy="286.2" r="4.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="355.9" cy="267.2" r="4.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="508.4" cy="231.5" r="4.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="685.5" cy="195.2" r="4.5" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<path d="M102.5,320.9 L255.1,287.2 L355.9,269.2 L508.4,234.0 L685.5,198.7" stroke="#1baf7a" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="102.5" cy="320.9" r="4.5" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="255.1" cy="287.2" r="4.5" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="355.9" cy="269.2" r="4.5" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="508.4" cy="234.0" r="4.5" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="685.5" cy="198.7" r="4.5" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<line x1="716.0" y1="133.9" x2="724.0" y2="133.9" stroke="#c3c2b7" stroke-width="1"/>
+<text x="728.0" y="133.9" font-size="12" font-weight="500" fill="#0b0b0b" text-anchor="start" dominant-baseline="central">Python  1,104 ms</text>
+<line x1="716.0" y1="195.2" x2="724.0" y2="195.2" stroke="#c3c2b7" stroke-width="1"/>
+<text x="728.0" y="195.2" font-size="12" font-weight="500" fill="#0b0b0b" text-anchor="start" dominant-baseline="central">C++17  67 ms</text>
+<line x1="716.0" y1="198.7" x2="724.0" y2="213.2" stroke="#c3c2b7" stroke-width="1"/>
+<text x="728.0" y="213.2" font-size="12" font-weight="500" fill="#0b0b0b" text-anchor="start" dominant-baseline="central">Rust  58 ms</text>
+</svg>
