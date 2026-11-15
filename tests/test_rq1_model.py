@@ -53,6 +53,22 @@ class SupportFlags(unittest.TestCase):
         self.assertTrue(f["spurious_shared_only"])
         self.assertFalse(f["spurious_local_only"])
 
+    def test_spurious_local_only_means_some_node_lacks_true_support(self):
+        # Nodes 1 and 3 carry a true sample; node 2 carries only a non-true colour. The flag is
+        # set although most of the path has true evidence: it means "local support exists, but
+        # at least one node lacks true-sample support", NOT "supported only by spurious colours".
+        f = self.flags({1}, {7}, {1})
+        self.assertTrue(f["all_local"])
+        self.assertFalse(f["true_local"])
+        self.assertTrue(f["spurious_local_only"])
+
+    def test_strict_can_pass_on_shared_non_true_colour(self):
+        # True samples cover every node but no single true sample spans the path, while the
+        # non-true colour 7 does: strict support exists without the true shared criterion.
+        f = self.flags({1, 7}, {2, 7}, {1, 7})
+        self.assertTrue(f["all_shared"] and f["spurious_shared_only"])
+        self.assertFalse(ev.policy_ceiling("strict", f))
+
     def test_policy_specific_ceilings(self):
         f = self.flags({1}, {2}, {1})
         self.assertFalse(ev.policy_ceiling("strict", f))
