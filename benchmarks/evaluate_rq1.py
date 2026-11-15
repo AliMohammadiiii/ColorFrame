@@ -10,7 +10,8 @@ walk's nodes and its true sample set T:
   all_shared             one colour is on every node                (what strict can see)
   true_local             every node has >= 1 colour in T
   true_shared            one colour in T is on every node
-  spurious_local_only    all_local but not true_local    (local support exists only via noise)
+  spurious_local_only    all_local but not true_local    (>= 1 node lacks true-sample support;
+                         NOT "every node supported only by non-true colours")
   spurious_shared_only   all_shared but not true_shared  (the shared colour is not a true sample)
 
 Policy ceilings: strict -> true_shared, permissive -> true_local. Per (workload, policy):
@@ -18,7 +19,7 @@ Policy ceilings: strict -> true_shared, permissive -> true_local. Per (workload,
   recovered                       planted ORFs found with identical (path, start, sequence)
   true_ceiling                    planted ORFs meeting the policy's true-support ceiling
   recovered_within_true_ceiling   recovered and meeting the ceiling
-  recovered_via_spurious_only     recovered although the ceiling is not met (noise-enabled)
+  recovered_via_spurious_only     recovered although the policy's true-support criterion is not met
   candidates / extra_candidates / fragmented   output volume
 
 "Recovery" is synthetic ground-truth recovery in a simplified graph model; a recovered candidate

@@ -65,7 +65,7 @@ on each pass (fixture G11).
 
 ### RQ1 — support policies (synthetic ground truth; mean and exploratory 95% t-interval over 10 replicates)
 
-| p | strict ceiling (true shared) | permissive ceiling (true local) | candidates strict / permissive (clean) | noisy: retained via spurious colours only, strict / permissive |
+| p | strict criterion met (true sample shared by all nodes) | permissive criterion met (true sample on every node) | mean candidates per replicate (clean), strict / permissive | noisy: recovered without meeting the policy's true-support criterion, strict / permissive |
 |---:|---:|---:|---:|---:|
 | 0.1 | 0.4 [0.0, 0.8] | 3.2 [1.4, 5.0] | 79 / 159 | 0.0 / 2.9 [1.7, 4.1] |
 | 0.2 | 2.2 [1.2, 3.2] | 19.7 [15.8, 23.6] | 157 / 484 | 0.1 / 8.9 [6.1, 11.7] |
@@ -76,13 +76,28 @@ on each pass (fixture G11).
 
 ![RQ1](figures/modal_20261115T065950Z/fig4_rq1_policies.png)
 
-- **The search loses nothing.** In all 240 (workload, policy) runs, recovered planted ORFs equal
-  the policy's true-support ceiling. The policy and the evidence decide; the bounds don't.
-- **Trade-off.** At sparse observation, path-coherent support (strict) is rare: 10% of planted
-  ORFs at p = 0.3. Local support (permissive) covers 44%, at 3.5× the candidate volume.
-- **Robustness to spurious colours.** With noise, permissive retains up to 10.9 planted ORFs
-  whose local support exists only through spurious colours. Strict retains at most 0.5, because a
-  single spurious colour rarely spans a whole path.
+All values are replicate means (10 replicates, 100 planted ORFs per replicate), with
+exploratory 95% t-intervals for the criterion and noisy columns. In the figure, the middle
+panel's title "recovery via spurious colours only" means the last column, as defined below.
+
+**Metric definitions** (`benchmarks/evaluate_rq1.py`; column names kept for schema stability):
+- `spurious_local_only` = every node has at least one observed colour, **and at least one node
+  lacks true-sample support**. It does not mean every node is supported only by non-true colours.
+- `spurious_shared_only` = some colour is shared by all nodes, but no true sample is.
+- `recovered_via_spurious_only` = a planted ORF was recovered although it does **not** meet the
+  policy's true-support criterion.
+
+- **No qualifying ORF is lost.** In all 240 workload-policy runs, every planted ORF meeting the policy-specific true-sample support criterion was recovered. In noisy conditions, additional candidates could also be retained through non-true colour evidence. Raw `recovered` equals the criterion count in
+  182/240 runs: all clean runs, 48/60 noisy strict and 14/60 noisy permissive runs.
+- **Trade-off.** At sparse observation, same-sample support across all nodes (strict) is rare:
+  10% of planted ORFs at p = 0.3. True-sample support on every node (permissive) covers 44%, at
+  3.5× the candidate volume. A colour shared by all nodes is not proof that the spelled walk
+  occurs contiguously in that sample (`LIMITATIONS.md` 11a).
+- **Non-true colour evidence.** Permissive support can retain planted paths for which at least
+  one node lacks true-sample support, because the algorithm accepts local colour evidence without
+  requiring one true sample to support every node (up to 10.9 per replicate, p = 0.3). Strict
+  support can retain a path when a non-true colour is shared across all nodes, even though no
+  planted true sample is shared across the full path (at most 0.5 per replicate).
 - **Caveats.** This is synthetic recovery under a simple independent-observation model, and no
   candidate is a validated gene. Intervals are exploratory, and the lower bounds near zero come
   from t-intervals on near-zero counts.

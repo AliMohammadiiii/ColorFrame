@@ -20,12 +20,14 @@ validation (`PRIOR_ART_AND_SCOPE.md`).
 
 ## Results (authoritative run `results/modal/20261115T065950Z`, Modal 1 CPU, Linux/GCC)
 
-- **RQ1, synthetic support-policy trade-off** (10 paired replicates, clean condition): both
-  policies recover exactly their true-support ceilings (240/240 runs). At
-  p_true_observation = 0.3, 10.1 planted ORFs (95% CI 7.6–12.6) have true *shared* support and
-  43.6 (40.7–46.5) have true *local* support; permissive outputs 3.5× more candidates. With
-  spurious colours (`p_spurious = 0.25·p`), permissive additionally retains up to 10.9 planted
-  ORFs that have **no** true local support; strict retains ≤ 0.5.
+- **RQ1, synthetic support-policy trade-off** (10 paired replicates; 100 planted ORFs each).
+  In all 240 workload-policy runs, every planted ORF meeting the policy-specific true-sample support criterion was recovered. In noisy conditions, additional candidates could also be retained through non-true colour evidence (raw recovered count = criterion count in 182/240 runs; all 58 exceptions are noisy).
+  Clean, p_true_observation = 0.3: 10.1 planted ORFs (95% CI 7.6–12.6) have a true sample shared
+  by all their nodes (strict criterion), and 43.6 (40.7–46.5) have true-sample support on every
+  node (permissive criterion); permissive outputs 3.5× more candidates. Noisy
+  (`p_spurious = 0.25·p`): permissive also retains up to 10.9 planted paths (replicate mean) in
+  which **at least one node lacks true-sample support**; strict retains ≤ 0.5 paths whose only
+  all-node shared colour is non-true. None of this is gene validation.
 - **RQ2/RQ3, these three implementations:** search phase vs Python, C++ 16–30× and Rust 17–42×
   faster on graph workloads, 92–108× on the stress workload; all in-process phases (`total_ms`),
   C++ 3.7–9.5× and Rust 8.6–12.4× on the perf graphs. Rust's search beats C++ on 19 of 20

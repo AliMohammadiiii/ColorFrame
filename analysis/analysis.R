@@ -183,7 +183,7 @@ if (file.exists(rq1_file)) {
   legend("topleft", c("strict: true shared support", "permissive: true local support"), col = pc, pch = 19, bty = "n")
   ymax <- max(rs$ci95_high[rs$metric == "recovered_via_spurious_only"], 1, na.rm = TRUE)
   plot(NA, xlim = c(0, 1), ylim = c(0, ymax * 1.1), xlab = "p_true_observation",
-       ylab = "planted ORFs recovered without true support", main = "noisy: recovery via spurious colours only")
+       ylab = "planted ORFs recovered without true support", main = "noisy: recovered without true-support criterion")
   band(get("noisy", "strict", "recovered_via_spurious_only"), pc["strict"])
   band(get("noisy", "permissive", "recovered_via_spurious_only"), pc["permissive"])
   plot(NA, xlim = c(0, 1), ylim = c(0, max(rs$ci95_high[rs$metric == "candidates"], na.rm = TRUE) * 1.05),

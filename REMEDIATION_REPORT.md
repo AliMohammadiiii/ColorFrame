@@ -24,11 +24,12 @@ order) and R analysis, on Modal in one pinned container. Container wall time 179
 
 ## 3. What the corrected results show
 
-- **RQ1:** both policies recover exactly their true-support ceilings (240/240). At p = 0.3, strict
-  sees 10.1 [7.6, 12.6] and permissive 43.6 [40.7, 46.5] of 100 planted ORFs, at 3.5× the
-  candidate volume. With spurious colours, permissive retains up to 10.9 ORFs that lack true
-  support; strict at most 0.5. The previous claim that permissive recovers 63% at p = 0.3 is
-  withdrawn: 11 of those 63 were due to noise, and the design has changed.
+- **RQ1:** In all 240 workload-policy runs, every planted ORF meeting the policy-specific true-sample support criterion was recovered. In noisy conditions, additional candidates could also be retained through non-true colour evidence (raw recovered = criterion count in 182/240). At p = 0.3 (clean),
+  10.1 [7.6, 12.6] of 100 planted ORFs meet the strict criterion and 43.6 [40.7, 46.5] the
+  permissive one, at 3.5× the candidate volume. Noisy: permissive retains up to 10.9 planted paths
+  in which at least one node lacks true-sample support; strict at most 0.5. The v1.0.0 claim that
+  permissive recovers 63% at p = 0.3 is withdrawn: it counted non-true colours as evidence, and
+  the design has changed. *(Wording corrected in rc2.)*
 - **RQ2:** corrected search-phase speed-ups are *larger* than v1.0.0's (C++ 16–30×, Rust 17–42×
   on graph workloads; 92–108× on stress), because the old compiled "search" included sorting.
   In-process totals are 3.7–12.4× on the perf graphs.
@@ -40,8 +41,9 @@ order) and R analysis, on Modal in one pinned container. Container wall time 179
   their timing phases cover equivalent work.
 - On these synthetic workloads, on this hardware, these implementations rank Rust > C++ ≫ Python
   for the search phase.
-- In this synthetic model, path-coherent (strict) support is rarer but robust to spurious
-  colours; local (permissive) support recovers more but admits noise-enabled candidates.
+- In this synthetic model, same-sample support across all nodes (strict) is rarer and seldom
+  satisfied by non-true colours; per-node support (permissive) covers more planted ORFs but also
+  retains paths in which some node lacks true-sample support. *(Wording corrected in rc2.)*
 
 ## 5. Claims that must not be made
 
