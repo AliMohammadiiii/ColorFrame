@@ -1,53 +1,52 @@
 # ColorFrame
 
-**Frame-aware candidate path search in coloured sequence graphs: algorithmic trade-offs and
-cross-language performance.**
+**Frame-aware candidate path search in coloured sequence graphs: a controlled algorithmic and
+engineering prototype.**
 
-Project lead: Ali Mohammadi · Status: **v1.0.0, validated** · Engineering by AI development
-agents under the lead's direction (see `AI_USAGE.md`).
+Project lead: Ali Mohammadi · Status: **v1.0.1 release candidate** (remediated after an independent
+review; see `REMEDIATION_REPORT.md`) · Engineering by AI development agents under the lead's
+direction (`AI_USAGE.md`).
 
 ColorFrame enumerates forward-strand ORFs (`ATG` … first in-frame stop) along walks of a small
-coloured sequence graph. It tracks the reading frame across node boundaries, overlaps, branches,
-loops and repeats, and applies one of two sample-evidence policies (**strict**: one sample must
-cover every node; **permissive**: every node must be seen in some sample). Every search bound
-that truncates the search is reported. The same algorithm is implemented in **Python, C++17 and
-Rust**, and all three produce byte-identical output.
+coloured sequence graph. It tracks the reading frame across overlaps, branches, loops and
+repeats, and applies one of two sample-evidence policies:
+- **strict**: one colour must be shared by every node of the walk;
+- **permissive**: every node must have some colour.
 
-It is a deliberately simplified research prototype, **not** a gene caller (see `LIMITATIONS.md`).
+Every bound that truncates the search is reported. The same algorithm is implemented in Python,
+C++17 and Rust, with byte-identical outputs. It is **not** a gene caller. ggCaller already
+performs frame-aware DFS ORF discovery on population-wide coloured DBGs, with FM-index path
+validation (`PRIOR_ART_AND_SCOPE.md`).
 
-## Results at a glance (`reports/TECHNICAL_REPORT.md`)
+## Results (authoritative run `results/modal/20261115T065950Z`, Modal 1 CPU, Linux/GCC)
 
-- **RQ1:** each policy recovers exactly the planted ORFs its evidence rule allows. With 30%
-  per-cell observation probability, strict recovers 18% and permissive 63% of planted ORFs.
-  Permissive emits 3.3× more candidates, 69% of them without a shared sample.
-- **RQ2:** median search time vs Python: C++ 15–28× and Rust 17–39× faster on graph workloads;
-  83× and 103× on the stress workload. Rust beats C++ on 19 of 20 workloads (Linux/GCC).
-- **RQ3:** time is linear in graph size and in the state limit; memory is dominated by stored
-  candidates (compiled) or the interpreter baseline (Python).
-- **RQ4:** the recorded AI tokens per implementation differ by about 15% (incomplete telemetry);
-  no effort–performance relationship can be claimed.
+- **RQ1, synthetic support-policy trade-off** (10 paired replicates, clean condition): both
+  policies recover exactly their true-support ceilings (240/240 runs). At
+  p_true_observation = 0.3, 10.1 planted ORFs (95% CI 7.6–12.6) have true *shared* support and
+  43.6 (40.7–46.5) have true *local* support; permissive outputs 3.5× more candidates. With
+  spurious colours (`p_spurious = 0.25·p`), permissive additionally retains up to 10.9 planted
+  ORFs that have **no** true local support; strict retains ≤ 0.5.
+- **RQ2/RQ3, these three implementations:** search phase vs Python, C++ 16–30× and Rust 17–42×
+  faster on graph workloads, 92–108× on the stress workload; all in-process phases (`total_ms`),
+  C++ 3.7–9.5× and Rust 8.6–12.4× on the perf graphs. Rust's search beats C++ on 19 of 20
+  workloads. Linux peak RSS (wrapper floor 2.9 MB, Python interpreter 13.9 MB): stress C++
+  6.7 MB, Rust 4.7 MB, Python 16.6 MB.
+- **AI-assisted development:** a descriptive process trace with incomplete telemetry
+  (`TOKEN_ACCOUNTING.md`). No effort–performance claim.
+
+v1.0.0 search speed-ups and Modal memory figures were **invalid** (unequal timing phases; RSS
+inherited from the harness) and are superseded (`archive/v1.0.0/`).
 
 ## Quick start
 
 ```bash
-make test                                  # fixtures, unit tests, lint, 39 conformance cases × 3, cross-language
-python3 python/colorframe.py --nodes fixtures/cases/G11_frame_shifting_loop/nodes.tsv \
-  --edges fixtures/cases/G11_frame_shifting_loop/edges.tsv --policy both \
-  --out candidates.tsv --summary summary.tsv
-modal run --detach benchmarks/modal_app.py # authoritative benchmark + R analysis
+make test                                   # fixtures, unit tests, lint, timing/RQ1/RSS contracts, 39 cases x 3, 134-workload equivalence
+modal run --detach benchmarks/modal_app.py  # authoritative benchmark + RQ1 + R analysis
 ```
 
-## Where things are
+## Documents
 
-| Start here | |
-|---|---|
-| `PROJECT_CHARTER.md` | roles, research questions, scope |
-| `ALGORITHM_SPEC.md` | the algorithm (normative) |
-| `fixtures/FIXTURES.md` | hand-derived ground truth, with worked examples |
-| `reports/TECHNICAL_REPORT.md` | results and discussion |
-| `DECISION_LOG.md` | every non-obvious decision, including corrections |
-| `AI_USAGE.md`, `TOKEN_ACCOUNTING.md` | who did what, and what it cost |
-
-Other documents: `ARCHITECTURE.md`, `INPUT_OUTPUT_SCHEMA.md`, `TEST_PLAN.md`,
-`BENCHMARK_PROTOCOL.md`, `MODAL_EXECUTION.md`, `REPRODUCIBILITY.md`, `LITERATURE_REVIEW.md`,
-`PRIOR_ART_AND_SCOPE.md`, `LIMITATIONS.md`, `SECURITY.md`, `TASK_BOARD.md`, `CHANGELOG.md`.
+`reports/TECHNICAL_REPORT.md` (results) · `REMEDIATION_REPORT.md` (what changed and why) ·
+`ALGORITHM_SPEC.md` (v1.1) · `INPUT_OUTPUT_SCHEMA.md` · `fixtures/FIXTURES.md` ·
+`BENCHMARK_PROTOCOL.md` · `LITERATURE_REVIEW.md` · `PRIOR_ART_AND_SCOPE.md` · `LIMITATIONS.md` ·
+`AI_USAGE.md` · `TOKEN_ACCOUNTING.md` · `DECISION_LOG.md` · `REPRODUCIBILITY.md` · `SECURITY.md`.
