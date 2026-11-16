@@ -141,6 +141,7 @@ modal run --detach benchmarks/modal_app.py  # authoritative benchmark + RQ1 + R 
 **Literature**
 - [Literature review](docs/LITERATURE_REVIEW.md) · [Prior art and scope](docs/PRIOR_ART_AND_SCOPE.md) · [References (BibTeX)](docs/references.bib)
 
+
 **Process and provenance**
 - [AI usage and attribution](docs/AI_USAGE.md) · [Token accounting](docs/TOKEN_ACCOUNTING.md)
 - [Decision log](docs/DECISION_LOG.md) · [Task board](docs/TASK_BOARD.md) · [Changelog](CHANGELOG.md)
